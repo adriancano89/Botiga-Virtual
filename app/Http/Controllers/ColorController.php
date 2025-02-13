@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Color;
 
 class ColorController extends Controller
 {
@@ -11,7 +12,7 @@ class ColorController extends Controller
      */
     public function index()
     {
-        //
+        echo "Mostrar colores";
     }
 
     /**
@@ -19,7 +20,7 @@ class ColorController extends Controller
      */
     public function create()
     {
-        //
+        return view("Colores.crearColores");
     }
 
     /**
@@ -27,7 +28,9 @@ class ColorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Color::create([
+            'nombre' => $request->nombre
+        ]);
     }
 
     /**

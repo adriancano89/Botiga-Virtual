@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Talla;
 use Illuminate\Http\Request;
 
 class TallaController extends Controller
@@ -11,7 +12,7 @@ class TallaController extends Controller
      */
     public function index()
     {
-        //
+        echo "Mostrar tallas";
     }
 
     /**
@@ -19,7 +20,7 @@ class TallaController extends Controller
      */
     public function create()
     {
-        //
+        return view("Tallas.crearTallas");
     }
 
     /**
@@ -27,7 +28,9 @@ class TallaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Talla::create([
+            'nombre' => $request->nombre
+        ]);
     }
 
     /**
