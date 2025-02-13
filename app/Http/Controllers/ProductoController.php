@@ -11,7 +11,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        echo "inicio productos";
     }
 
     /**
@@ -19,7 +19,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        //
+        return view('Productos.crearProductos');
     }
 
     /**
@@ -27,7 +27,7 @@ class ProductoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        echo "hola";
     }
 
     /**
