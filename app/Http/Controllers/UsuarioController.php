@@ -11,7 +11,7 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        //
+        return view("Usuarios.perfil");
     }
 
     /**
@@ -60,5 +60,9 @@ class UsuarioController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function admin() {
+        return view('Usuarios.admin');
     }
 }
