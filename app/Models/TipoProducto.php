@@ -9,4 +9,12 @@ class TipoProducto extends Model
     protected $table = "tipos_producto";
 
     protected $fillable = ['categoria_id', 'codigo', 'foto', 'nombre', 'precio', 'destacado', 'descripcion'];
+
+    public function fotos():HasMany {
+        return $this->hasMany(Foto::class);
+    }
+
+    public function categoria() {
+        return $this->hasOne(Categoria::class);
+    }
 }
