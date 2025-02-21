@@ -22,7 +22,7 @@ class TipoProductoController extends Controller
     public function create()
     {
         $todasCategorias = Categoria::all();
-        return view('admin.productos.crearTipoProducto', compact('todasCategorias'));
+        return view('TiposProductos.crearTipoProducto', compact('todasCategorias'));
     }
 
     /**
@@ -31,7 +31,13 @@ class TipoProductoController extends Controller
     public function store(Request $request)
     {
         TipoProducto::create([
-            'categoria_id' => $request->categoria_id, 'codigo' => $request->codigo, 'foto' => $request->foto, 'nombre' => $request->nombre, 'precio' => $request->precio, 'destacado' => $request->has('destacado'), 'descripcion' => $request->descripcion
+            'categoria_id' => $request->categoria_id, 
+            'codigo' => $request->codigo, 
+            'foto' => $request->foto, 
+            'nombre' => $request->nombre, 
+            'precio' => $request->precio, 
+            'destacado' => $request->has('destacado'), 
+            'descripcion' => $request->descripcion
         ]);
     }
 
