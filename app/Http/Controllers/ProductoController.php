@@ -13,7 +13,7 @@ class ProductoController extends Controller
     public function index()
     {
         $productos = TipoProducto::all();
-        return view("Productos.productos", ["productos" => $productos]);
+        return view("admin.productos.productos", ["productos" => $productos]);
     }
 
     /**
@@ -21,7 +21,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('Productos.crearProductos');
+        return view('admin.productos.crearProductos');
     }
 
     /**

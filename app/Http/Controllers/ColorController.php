@@ -20,7 +20,7 @@ class ColorController extends Controller
      */
     public function create()
     {
-        return view("Colores.crearColores");
+        return view("admin.colores.crearColores");
     }
 
     /**

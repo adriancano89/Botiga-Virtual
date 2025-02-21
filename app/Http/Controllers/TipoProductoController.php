@@ -22,7 +22,7 @@ class TipoProductoController extends Controller
     public function create()
     {
         $todasCategorias = Categoria::all();
-        return view('TiposProductos.crearTipoProducto', compact('todasCategorias'));
+        return view('admin.productos.crearTipoProducto', compact('todasCategorias'));
     }
 
     /**

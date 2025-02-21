@@ -20,7 +20,7 @@ class TallaController extends Controller
      */
     public function create()
     {
-        return view("Tallas.crearTallas");
+        return view("admin.tallas.crearTallas");
     }
 
     /**
