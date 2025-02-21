@@ -9,5 +9,6 @@
 <body>
     @include('General.header')
     @include('Usuarios.barraLateral')
+    @include('General.footer')
 </body>
 </html>
