@@ -12,8 +12,12 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = TipoProducto::all();
-        return view("admin.productos.productos", ["productos" => $productos]);
+        return view('admin.productos.productos');
+    }
+
+    public function obtenerProductos() {
+        $productos = TipoProducto::paginate(6);
+        return response()->json($productos);
     }
 
     /**

@@ -1,4 +1,4 @@
-<nav class="flex flex-col items-start justify-between gap-4 text-[20px] bg-[#131620] text-white p-0  w-[15%]">
+<nav class="flex flex-col items-start justify-start gap-4 text-[20px] bg-[#131620] text-white p-0  w-[15%]">
     <div class="flex flex-col items-center mx-auto w-[100px]">
         <img src="{{asset('icons/general/perfil_usuario.png')}}" alt="Perfil Usuario" class="w-[100px] mb-1">
         <span>X</span>

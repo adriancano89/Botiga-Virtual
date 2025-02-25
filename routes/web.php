@@ -15,6 +15,8 @@ Route::get('/', function () {
 
 Route::get('/usuario/admin', [UsuarioController::class, 'admin'])->name('usuario.admin');
 
+Route::get('/productos', [ProductoController::class, 'obtenerProductos'])->name('productos');
+
 Route::resources([
     'producto' => ProductoController::class,
     'categoria' => CategoriaController::class,
