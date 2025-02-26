@@ -42,6 +42,14 @@
                     <input type="checkbox" name="destacado" id="destacado" value="1">
                 @endif
             </div>
+            <div>
+                <label for="estado">Estado:</label>
+                @if ($producto->estado)
+                    <input type="checkbox" name="estado" id="estado" checked value="1">
+                @else
+                    <input type="checkbox" name="estado" id="estado" value="1">
+                @endif
+            </div>
         </div>
         <input type="submit" value="Editar">
     </form>
