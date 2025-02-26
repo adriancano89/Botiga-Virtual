@@ -20,6 +20,7 @@ return new class extends Migration
             $table->decimal('precio', 8, 2);
             $table->boolean('destacado');
             $table->text('descripcion');
+            $table->boolean('estado');
             $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
             $table->timestamps();
         });

@@ -48,7 +48,8 @@ class TipoProductoController extends Controller
             'nombre' => $request->nombre, 
             'precio' => $request->precio, 
             'destacado' => $request->has('destacado'), 
-            'descripcion' => $request->descripcion
+            'descripcion' => $request->descripcion,
+            'estado' => $request->has('estado')
         ]);
 
         // Guardamos la imagen en: storage/app/public/fotos/id (producto creado)
@@ -115,7 +116,8 @@ class TipoProductoController extends Controller
             'nombre' => $request->nombre, 
             'precio' => $request->precio, 
             'destacado' => $request->has('destacado'), 
-            'descripcion' => $request->descripcion
+            'descripcion' => $request->descripcion,
+            'estado' => $request->has('estado')
         ]);
     }
 

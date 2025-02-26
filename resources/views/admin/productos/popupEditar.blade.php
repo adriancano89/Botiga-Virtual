@@ -51,6 +51,14 @@
                 <label for="descripcion">Descripción</label>
                 <textarea name="descripcion" id="descripcion">{{$producto->descripcion}}</textarea>
             </div>
+            <div>
+                <label for="estado">Estado:</label>
+                @if ($producto->estado)
+                    <input type="checkbox" name="estado" id="estado" checked value="1">
+                @else
+                    <input type="checkbox" name="estado" id="estado" value="1">
+                @endif
+            </div>
         </div>
         <input type="submit" value="Editar">
     </form>

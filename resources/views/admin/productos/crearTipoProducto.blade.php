@@ -39,7 +39,11 @@
         </div>
         <div>
             <label for="descripcion">Descripcion:</label>
-            <input type="descripcion" name="descripcion" id="descripcion">
+            <textarea name="descripcion" id="descripcion"></textarea>
+        </div>
+        <div>
+            <label for="estado">Estado:</label>
+            <input type="checkbox" name="estado" id="estado" value="1">
         </div>
         <input type="submit" value="Crear">
     </form>
