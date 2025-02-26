@@ -13,7 +13,12 @@ class TipoProductoController extends Controller
      */
     public function index()
     {
-        echo "Bienbenido a Tipo Productos";
+        return view('admin.productos.productos');
+    }
+
+    public function obtenerProductos() {
+        $productos = TipoProducto::paginate(6);
+        return response()->json($productos);
     }
 
     /**
@@ -54,7 +59,9 @@ class TipoProductoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $producto = TipoProducto::find($id);
+        $categorias = Categoria::all();
+        return view('admin.productos.popupEditar', ["producto" => $producto, "categorias" => $categorias]);
     }
 
     /**
@@ -62,7 +69,17 @@ class TipoProductoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $producto = TipoProducto::findOrFail($id);
+
+        $producto->update([
+            'categoria_id' => $request->categoria_id, 
+            'codigo' => $request->codigo, 
+            'foto' => 'foto',
+            'nombre' => $request->nombre, 
+            'precio' => $request->precio, 
+            'destacado' => $request->has('destacado'), 
+            'descripcion' => $request->descripcion
+        ]);
     }
 
     /**

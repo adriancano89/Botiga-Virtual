@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TipoProducto;
+use App\Models\Categoria;
+use App\Models\Producto;
 
 class ProductoController extends Controller
 {
@@ -12,12 +14,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        return view('admin.productos.productos');
-    }
-
-    public function obtenerProductos() {
-        $productos = TipoProducto::paginate(6);
-        return response()->json($productos);
+        //
     }
 
     /**
@@ -25,7 +22,7 @@ class ProductoController extends Controller
      */
     public function create()
     {
-        return view('admin.productos.crearProductos');
+        //
     }
 
     /**
