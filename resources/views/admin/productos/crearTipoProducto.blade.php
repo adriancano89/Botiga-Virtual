@@ -6,7 +6,7 @@
     <title>Tipo Producto</title>
 </head>
 <body>
-<form action="{{route('tipoProducto.store')}}" method="POST">
+<form action="{{route('tipoProducto.store')}}" method="POST" enctype="multipart/form-data">
         @csrf
         
         <div>

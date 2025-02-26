@@ -27,7 +27,7 @@ class TipoProductoController extends Controller
     public function create()
     {
         $todasCategorias = Categoria::all();
-        return view('TiposProductos.crearTipoProducto', compact('todasCategorias'));
+        return view('admin.productos.crearTipoProducto', compact('todasCategorias'));
     }
 
     /**
@@ -35,15 +35,26 @@ class TipoProductoController extends Controller
      */
     public function store(Request $request)
     {
-        TipoProducto::create([
+        // Para que nos se pongan ficheros que no sean imagenes
+        $request->validate([
+            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+        ]);
+
+        // Crear el registro en la base de datos primero
+        $tipoProducto = TipoProducto::create([
             'categoria_id' => $request->categoria_id, 
             'codigo' => $request->codigo, 
-            'foto' => $request->foto, 
+            'foto' => '', // Vacio porque luego lo agragaremos
             'nombre' => $request->nombre, 
             'precio' => $request->precio, 
             'destacado' => $request->has('destacado'), 
             'descripcion' => $request->descripcion
         ]);
+
+        // Guardamos la imagen en: storage/app/public/fotos/id (producto creado)
+        $path = $request->file('foto')->store('fotos/' . $tipoProducto->id, 'public');
+
+        $tipoProducto->update(['foto' => $path]); // path porque es la ruta de la imagen
     }
 
     /**
@@ -71,10 +82,36 @@ class TipoProductoController extends Controller
     {
         $producto = TipoProducto::findOrFail($id);
 
+        $imagenAntiguaPath = public_path('storage/' . $producto->foto); // Optengo la ruta de la imagen antigua
+
+        if ($request->file('foto')) {
+
+            // Para que nos se pongan ficheros que no sean imagenes
+            $request->validate([
+                'foto' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            ]);
+    
+            if ($producto->foto) {
+                $imagenAntiguaPath = public_path('storage/' . $producto->foto); // Optengo la ruta de la imagen antigua
+                if (file_exists($imagenAntiguaPath)) {
+                    unlink($imagenAntiguaPath); // Para eliminar la ruta antigua
+                }
+            }
+            // Guardar la nueva imagen en: storage/app/public/fotos/id/adicionales
+            $nuevaImagenPath = $request->file('foto')->store('fotos/' . $id, 'public');
+        }
+
+        if(isset($nuevaImagenPath)) {
+            $path = $nuevaImagenPath;
+        } else {
+            $path = $producto->foto;
+        }
+
+        
         $producto->update([
             'categoria_id' => $request->categoria_id, 
             'codigo' => $request->codigo, 
-            'foto' => 'foto',
+            'foto' => $path,
             'nombre' => $request->nombre, 
             'precio' => $request->precio, 
             'destacado' => $request->has('destacado'), 
