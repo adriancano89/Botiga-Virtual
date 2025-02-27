@@ -13,7 +13,7 @@
         <section class="w-[85%] p-4">
             <div class="flex flex-row justify-between items-center">
                 <h1 class="text-xl font-bold">Colores</h1>
-                <a href="{{route('color.create')}}"><button>+ Añadir nuevo color</button></a>
+                <a href="{{route('colores.create')}}"><button>+ Añadir nuevo color</button></a>
             </div>
             <div>
                 <div>
@@ -37,7 +37,7 @@
                             <td class="border-2 border-[#131620]">{{$color->nombre}}</td>
                             <td class="border-2 border-[#131620]">{{$color->hexadecimal}}</td>
                             <td class="border-2 border-[#131620]" style="background-color: {{$color->hexadecimal}};"></td>
-                            <td class="border-2 border-[#131620]"><a href="{{route('color.edit', $color->id)}}" class="flex flex-row justify-center"><img src="icons/general/editar.png" alt="Editar Color" class="w-8 h-8 mt-2" title="Editar color"></a></td>
+                            <td class="border-2 border-[#131620]"><a href="{{route('colores.edit', $color->id)}}" class="flex flex-row justify-center"><img src="icons/general/editar.png" alt="Editar Color" class="w-8 h-8 mt-2" title="Editar color"></a></td>
                         </tr>
                     @endforeach
                     </table>

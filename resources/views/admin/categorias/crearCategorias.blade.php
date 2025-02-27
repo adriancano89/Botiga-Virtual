@@ -6,7 +6,7 @@
     <title>Crear Categorias</title>
 </head>
 <body>
-    <form action="{{route('categoria.store')}}" method="POST">
+    <form action="{{route('categorias.store')}}" method="POST">
         @csrf
         <div>
             <label for="codigo">Codigo:</label>

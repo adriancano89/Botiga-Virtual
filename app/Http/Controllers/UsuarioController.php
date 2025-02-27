@@ -38,7 +38,7 @@ class UsuarioController extends Controller
             'email' => $request->email, 
             'telefono' => $request->telefono, 
             'direcion' => $request->direcion, 
-            'rol' => $request->has('rol')
+            'rol' => $request->rol
         ]);
     }
 

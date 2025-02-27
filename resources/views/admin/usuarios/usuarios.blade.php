@@ -13,7 +13,7 @@
         <section class="w-[85%] p-4">
             <div class="flex flex-row justify-between items-center">
                 <h1 class="text-xl font-bold">Usuarios</h1>
-                <a href="{{route('usuario.create')}}"><button>+ Añadir nuevo usuario</button></a>
+                <a href="{{route('usuarios.create')}}"><button>+ Añadir nuevo usuario</button></a>
             </div>
             <div>
                 <div>

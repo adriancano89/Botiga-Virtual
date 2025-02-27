@@ -6,7 +6,7 @@
     <title>Creación de colores</title>
 </head>
 <body>
-    <form action="{{route('color.store')}}" method="POST">
+    <form action="{{route('colores.store')}}" method="POST">
         @csrf
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" id="nombre">

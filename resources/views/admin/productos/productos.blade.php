@@ -15,7 +15,7 @@
         <section class="w-[85%] p-4">
             <div class="flex flex-row justify-between items-center p-2">
                 <h1 class="text-xl font-bold">Productos</h1>
-                <a href="{{route('tipoProducto.create')}}"><button>Añadir nuevo producto</button></a>
+                <a href="{{route('tiposProductos.create')}}"><button>Añadir nuevo producto</button></a>
             </div>
             <div>
                 <div class="flex flex-row justify-between p-2">

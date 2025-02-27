@@ -13,7 +13,7 @@
         <section class="w-[85%] p-4">
             <div class="flex flex-row justify-between items-center">
                 <h1 class="text-xl font-bold">Categorias</h1>
-                <a href="{{route('categoria.create')}}"><button>+ Añadir nueva categoria</button></a>
+                <a href="{{route('categorias.create')}}"><button>+ Añadir nueva categoria</button></a>
             </div>
             <div>
                 <div>
@@ -35,7 +35,7 @@
                         <tr class="border-2 border-[#131620]">
                             <td class="border-2 border-[#131620]">{{$categoria->codigo}}</td>
                             <td class="border-2 border-[#131620]">{{$categoria->nombre}}</td>
-                            <td class="border-2 border-[#131620]"><a href="{{route('categoria.edit', $categoria->id)}}" class="flex flex-row justify-center"><img src="icons/general/editar.png" alt="Editar Categoria" class="w-8 h-8 mt-2" title="Editar Categoria"></a></td>
+                            <td class="border-2 border-[#131620]"><a href="{{route('categorias.edit', $categoria->id)}}" class="flex flex-row justify-center"><img src="icons/general/editar.png" alt="Editar Categoria" class="w-8 h-8 mt-2" title="Editar Categoria"></a></td>
                         </tr>
                     @endforeach
                     </table>

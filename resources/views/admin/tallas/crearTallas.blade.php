@@ -6,7 +6,7 @@
     <title>Crear tallas</title>
 </head>
 <body>
-<form action="{{route('talla.store')}}" method="POST">
+<form action="{{route('tallas.store')}}" method="POST">
         @csrf
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" id="nombre">

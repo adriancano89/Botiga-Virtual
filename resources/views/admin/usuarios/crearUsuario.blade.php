@@ -6,7 +6,7 @@
     <title>Crear Usuario</title>
 </head>
 <body>
-    <form action="{{route('usuario.store')}}" method="POST">
+    <form action="{{route('usuarios.store')}}" method="POST">
         @csrf
         <div>
             <label for="nombre">Nombre:</label>

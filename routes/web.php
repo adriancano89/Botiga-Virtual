@@ -15,14 +15,14 @@ Route::get('/', function () {
 
 Route::get('/usuario/admin', [UsuarioController::class, 'admin'])->name('usuario.admin');
 
-Route::get('/tiposProductos', [TipoProductoController::class, 'obtenerProductos'])->name('tiposProductos');
+Route::get('/fetch-TiposProductos', [TipoProductoController::class, 'obtenerProductos'])->name('tiposProductos');
 
 Route::resources([
-    'producto' => ProductoController::class,
-    'categoria' => CategoriaController::class,
-    'color' => ColorController::class,
-    'talla' => TallaController::class,
-    'tipoProducto' => TipoProductoController::class,
-    'usuario' => UsuarioController::class,
-    'pedido' => PedidoController::class
+    'productos' => ProductoController::class,
+    'categorias' => CategoriaController::class,
+    'colores' => ColorController::class,
+    'tallas' => TallaController::class,
+    'tiposProductos' => TipoProductoController::class,
+    'usuarios' => UsuarioController::class,
+    'pedidos' => PedidoController::class
 ]);

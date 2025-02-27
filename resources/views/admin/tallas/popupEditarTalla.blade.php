@@ -2,7 +2,7 @@
     <div class="flex flex-row justify-between">
         <h1>Editar talla</h1>
     </div>
-    <form action="{{route('talla.update', $talla->id)}}" method="POST">
+    <form action="{{route('tallas.update', $talla->id)}}" method="POST">
         @csrf
         @method('PUT')
         <div class="flex flex-col">

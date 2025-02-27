@@ -43,7 +43,7 @@ function mostrarProductos(datos, div) {
         <div class="shadow-xl rounded-[15px] p-4 hover:bg-slate-300 hover:cursor-pointer">
             <div class="flex flex-row">
                 <img src="icons/general/con-capucha.png" alt="imagen producto" class="w-26 h-26">
-                <a href='tipoProducto/${id}/edit'><img src="icons/general/editar.png" alt="editar producto" class="w-8 h-8 mt-2" title="Editar producto"></a>
+                <a href='tiposProductos/${id}/edit'><img src="icons/general/editar.png" alt="editar producto" class="w-8 h-8 mt-2" title="Editar producto"></a>
                 <img src="icons/general/papelera.png" alt="eliminar producto" class="w-8 h-8 mt-2" title="Eliminar producto">
             </div>
             <h2 class="font-bold text-lg">${nombre}</h2>
@@ -108,7 +108,7 @@ function actualizarPaginacion(datos) {
 }
 
 async function cargarProductos() {
-    let datos = await obtenerProductos('/tiposProductos');
+    let datos = await obtenerProductos('/fetch-TiposProductos');
     mostrarProductos(datos, divProductos);
     mostrarPaginacion(datos, paginacion);
     actualizarPaginacion(datos, numPagina);

@@ -10,7 +10,7 @@
         <div class="flex flex-row justify-between">
             <h1>Editar cCtegoria</h1>
         </div>
-        <form action="{{route('categoria.update', $categoria->id)}}" method="POST" enctype="multipart/form-data">
+        <form action="{{route('categorias.update', $categoria->id)}}" method="POST" enctype="multipart/form-data">
             @csrf
             @method('PUT')
             <div class="flex flex-row flex-wrap">

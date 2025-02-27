@@ -13,7 +13,7 @@
         <section class="w-[85%] p-4">
             <div class="flex flex-row justify-between items-center">
                 <h1 class="text-xl font-bold">Tallas</h1>
-                <a href="{{route('categoria.create')}}"><button>+ Añadir nueva talla</button></a>
+                <a href="{{route('tallas.create')}}"><button>+ Añadir nueva talla</button></a>
             </div>
             <div>
                 <div>
@@ -34,7 +34,7 @@
                         <tr class="border-2 border-[#131620]">
                             <td class="border-2 border-[#131620] text-center">{{$talla->nombre}}</td>
                             <td class="border-2 border-[#131620]">
-                                <a href="{{route('talla.edit', $talla->id)}}" class="flex flex-row justify-center">
+                                <a href="{{route('tallas.edit', $talla->id)}}" class="flex flex-row justify-center">
                                     <img src="{{asset('icons/general/editar.png')}}" alt="editar talla" class="w-[25px] hover:cursor-pointer">
                                 </a>
                             </td>

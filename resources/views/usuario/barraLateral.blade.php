@@ -19,32 +19,32 @@
         </div>
         <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
             <img src="{{asset('icons/general/administracion.png')}}" alt="Administración" class="w-[25px] hover:cursor-pointer">
-            <a href="{{route('usuario.admin')}}"><span class="ml-4">Administración</span></a>
+            <a href="{{route('tiposProductos.index')}}"><span class="ml-4">Administración</span></a>
         </div>
         <div>
             <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
                 <img src="{{asset('icons/general/camiseta.png')}}" alt="Productos" class="w-[25px] hover:cursor-pointer ml-7">
-                <a href="{{route('producto.index')}}"><span class="ml-4">Productos</span></a>
+                <a href="{{route('tiposProductos.index')}}"><span class="ml-4">Productos</span></a>
             </div>
             <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
                 <img src="{{asset('icons/general/ventas.png')}}" alt="Ventas" class="w-[25px] hover:cursor-pointer  ml-7">
-                <a href="{{route('producto.index')}}"><span class="ml-4">Ventas</span></a>
+                <a href=""><span class="ml-4">Ventas</span></a>
             </div>
             <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
                 <img src="{{asset('icons/general/usuarios.png')}}" alt="Usuarios" class="w-[25px] hover:cursor-pointer  ml-7">
-                <a href="{{route('producto.index')}}"><span class="ml-4">Usuarios</span></a>
+                <a href="{{route('usuarios.index')}}"><span class="ml-4">Usuarios</span></a>
             </div>
             <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
                 <img src="{{asset('icons/general/categorias.png')}}" alt="Categorias" class="w-[25px] hover:cursor-pointer  ml-7">
-                <a href="{{route('producto.index')}}"><span class="ml-4">Categorias</span></a>
+                <a href="{{route('categorias.index')}}"><span class="ml-4">Categorias</span></a>
             </div>
             <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
                 <img src="{{asset('icons/general/tallas.png')}}" alt="Tallas" class="w-[25px] hover:cursor-pointer  ml-7">
-                <a href="{{route('pedido.index')}}"><span class="ml-4">Tallas</span></a>
+                <a href="{{route('tallas.index')}}"><span class="ml-4">Tallas</span></a>
             </div>
             <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
                 <img src="{{asset('icons/general/paleta-de-color.png')}}" alt="Paleta de Color" class="w-[25px] hover:cursor-pointer  ml-7">
-                <a href="{{route('usuario.index')}}"><span class="ml-4">Colores</span></a>
+                <a href="{{route('colores.index')}}"><span class="ml-4">Colores</span></a>
             </div>
         </div>
     <div class="bg-[#131620] pt-10 pl-10 pr-10 pb-10">

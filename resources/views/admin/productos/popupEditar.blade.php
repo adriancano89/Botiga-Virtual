@@ -2,7 +2,7 @@
     <div class="flex flex-row justify-between">
         <h1>Editar producto</h1>
     </div>
-    <form action="{{route('tipoProducto.update', $producto->id)}}" method="POST" enctype="multipart/form-data">
+    <form action="{{route('tiposProductos.update', $producto->id)}}" method="POST" enctype="multipart/form-data">
         @csrf
         @method('PUT')
         <div class="flex flex-row flex-wrap">
