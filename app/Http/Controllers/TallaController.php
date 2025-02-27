@@ -12,7 +12,8 @@ class TallaController extends Controller
      */
     public function index()
     {
-        echo "Mostrar tallas";
+        $tallas = Talla::all();
+        return view('admin.tallas.tallas', ["tallas" => $tallas]);
     }
 
     /**
@@ -58,7 +59,6 @@ class TallaController extends Controller
         $talla = Talla::findOrFail($id);
 
         $talla->update([
-            'codigo' => $request->codigo,
             'nombre' => $request->nombre,
         ]);
     }
