@@ -12,7 +12,8 @@ class ColorController extends Controller
      */
     public function index()
     {
-        echo "Mostrar colores";
+        $colores = Color::all();
+        return view('admin.colores.colores', ["colores" => $colores]);
     }
 
     /**
@@ -29,7 +30,7 @@ class ColorController extends Controller
     public function store(Request $request)
     {
         Color::create([
-            'nombre' => $request->nombre
+            'nombre' => $request->nombre, 'hexadecimal' => $request->hexadecimal
         ]);
     }
 
@@ -46,7 +47,8 @@ class ColorController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $color = Color::find($id);
+        return view('admin.colores.editarColores', ["color" => $color]);
     }
 
     /**
@@ -54,7 +56,12 @@ class ColorController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $color = Color::findOrFail($id);
+
+        $color->update([
+            'nombre' => $request->nombre, 
+            'hexadecimal' => $request->hexadecimal
+        ]);
     }
 
     /**

@@ -14,6 +14,7 @@ return new class extends Migration
         Schema::create('colores', function (Blueprint $table) {
             $table->id();
             $table->string('nombre', 255);
+            $table->string('hexadecimal', 255);
             $table->timestamps();
         });
     }

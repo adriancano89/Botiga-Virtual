@@ -15,31 +15,40 @@ class ColorSeeder extends Seeder
     {
         DB::table('colores')->insert([
             [
-                'nombre' => 'Negro'
+                'nombre' => 'Negro',
+                'hexadecimal' => '#000000'
             ],
             [
-                'nombre' => 'Blanco'
+                'nombre' => 'Blanco',
+                'hexadecimal' => '#FFFFFF'
             ],
             [
-                'nombre' => 'Azul marino'
+                'nombre' => 'Azul marino',
+                'hexadecimal' => '#000080'
             ],
             [
-                'nombre' => 'Azul cielo'
+                'nombre' => 'Azul cielo',
+                'hexadecimal' => '#00FFFF'
             ],
             [
-                'nombre' => 'Rojo'
+                'nombre' => 'Rojo',
+                'hexadecimal' => '#FF0000'
             ],
             [
-                'nombre' => 'Naranja'
+                'nombre' => 'Naranja',
+                'hexadecimal' => '#FFA500'
             ],
             [
-                'nombre' => 'Amarillo'
+                'nombre' => 'Amarillo',
+                'hexadecimal' => '#FFFF00'
             ],
             [
-                'nombre' => 'Rosa'
+                'nombre' => 'Rosa',
+                'hexadecimal' => '#FF00FF'
             ],
             [
-                'nombre' => 'Morado'
+                'nombre' => 'Morado',
+                'hexadecimal' => '#800080'
             ]
         ]);
     }

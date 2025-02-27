@@ -10,6 +10,10 @@
         @csrf
         <label for="nombre">Nombre:</label>
         <input type="text" name="nombre" id="nombre">
+
+        <label for="hexadecimal">Hexadecimal:</label>
+        <input type="color" name="hexadecimal" id="hexadecimal">
+
         <input type="submit" value="Crear">
     </form>
 </body>

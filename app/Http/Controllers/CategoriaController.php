@@ -47,7 +47,8 @@ class CategoriaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $categoria = Categoria::find($id);
+        return view('admin.categorias.editarCategoria', ["categoria" => $categoria]);
     }
 
     /**
@@ -55,7 +56,12 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $categoria = Categoria::findOrFail($id);
+
+        $categoria->update([
+            'codigo' => $request->codigo,
+            'nombre' => $request->nombre
+        ]);
     }
 
     /**
