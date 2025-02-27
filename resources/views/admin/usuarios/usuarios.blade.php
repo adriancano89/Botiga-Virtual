@@ -25,31 +25,29 @@
                     </div>
                 </div>
                 <div class="">
-                    @foreach($todosUsuarios as $usuario)
-                        <div>
-                            <table>
-                                <tr class="border-2 border-[#131620]">
-                                    <th class="border-2 border-[#131620]">Nombre</th>
-                                    <th class="border-2 border-[#131620]">Apellidos</th>
-                                    <th class="border-2 border-[#131620]">Email</th>
-                                    <th class="border-2 border-[#131620]">Teléfono</th>
-                                    <th class="border-2 border-[#131620]">Rol</th>
-                                </tr>
-                                <tr class="border-2 border-[#131620]">
-                                    <td class="border-2 border-[#131620]">{{$usuario->nombre}}</td>
-                                    <td class="border-2 border-[#131620]">{{$usuario->apellidos}}</td>
-                                    <td class="border-2 border-[#131620]">{{$usuario->email}}</td>
-                                    <td class="border-2 border-[#131620]">{{$usuario->telefono}}</td>
-                                    <td class="border-2 border-[#131620]">
-                                        <select name="rol" id="rol">
-                                            <option value="0" {{ !$usuario->rol ? 'selected' : '' }}>Cliente</option>
-                                            <option value="1" {{ $usuario->rol ? 'selected' : '' }}>Administrador</option>
-                                        </select>
-                                    </td>
-                                </tr>
-                            </table>
-                        </div>
-                    @endforeach
+                    <table>
+                        <tr class="border-2 border-[#131620]">
+                            <th class="border-2 border-[#131620]">Nombre</th>
+                            <th class="border-2 border-[#131620]">Apellidos</th>
+                            <th class="border-2 border-[#131620]">Email</th>
+                            <th class="border-2 border-[#131620]">Teléfono</th>
+                            <th class="border-2 border-[#131620]">Rol</th>
+                        </tr>
+                        @foreach($todosUsuarios as $usuario)
+                            <tr class="border-2 border-[#131620]">
+                                <td class="border-2 border-[#131620]">{{$usuario->nombre}}</td>
+                                <td class="border-2 border-[#131620]">{{$usuario->apellidos}}</td>
+                                <td class="border-2 border-[#131620]">{{$usuario->email}}</td>
+                                <td class="border-2 border-[#131620]">{{$usuario->telefono}}</td>
+                                <td class="border-2 border-[#131620]">
+                                    <select name="rol" id="rol">
+                                        <option value="0" {{ !$usuario->rol ? 'selected' : '' }}>Cliente</option>
+                                        <option value="1" {{ $usuario->rol ? 'selected' : '' }}>Administrador</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        @endforeach
+                    </table>
                 </div>
             </div>
         </div>

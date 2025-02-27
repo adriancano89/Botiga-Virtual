@@ -46,7 +46,8 @@ class TallaController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $talla = Talla::find($id);
+        return view("admin.tallas.popupEditarTalla", ["talla" => $talla]);
     }
 
     /**
@@ -54,7 +55,12 @@ class TallaController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $talla = Talla::findOrFail($id);
+
+        $talla->update([
+            'codigo' => $request->codigo,
+            'nombre' => $request->nombre,
+        ]);
     }
 
     /**

@@ -12,7 +12,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        echo "Bienbenido a Categorias";
+        $categorias = Categoria::all();
+        return view('admin.categorias.categorias', ["categorias" => $categorias]);
     }
 
     /**
