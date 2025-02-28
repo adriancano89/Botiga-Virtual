@@ -10,7 +10,7 @@ class Usuario extends Model
 
     protected $fillable = ['nombre', 'apellidos', 'contrasena', 'email', 'telefono', 'direcion', 'rol'];
 
-    public function pedidos():HasMany {
-        return $this->hasMany(Pedido::class);
+    public function pedidos() {
+        return $this->hasMany(Pedido::class, 'usuario_id');
     }
 }

@@ -28,7 +28,7 @@
             </div>
             <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
                 <img src="{{asset('icons/general/ventas.png')}}" alt="Ventas" class="w-[25px] hover:cursor-pointer  ml-7">
-                <a href=""><span class="ml-4">Ventas</span></a>
+                <a href="{{route('pedidos.index')}}"><span class="ml-4">Ventas</span></a>
             </div>
             <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
                 <img src="{{asset('icons/general/usuarios.png')}}" alt="Usuarios" class="w-[25px] hover:cursor-pointer  ml-7">

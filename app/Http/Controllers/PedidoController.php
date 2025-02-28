@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pedido;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
@@ -11,7 +12,8 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        //
+        $pedidos = Pedido::with('usuario')->get();
+        return view("admin.ventas.ventas", ["pedidos" => $pedidos]);
     }
 
     /**
