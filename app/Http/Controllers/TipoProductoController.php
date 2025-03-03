@@ -16,9 +16,17 @@ class TipoProductoController extends Controller
         return view('admin.productos.productos');
     }
 
-    public function obtenerProductos() {
-        $productos = TipoProducto::paginate(6);
-        return response()->json($productos);
+    public function obtenerProductos(Request $request) {
+        $productos = TipoProducto::where('nombre', 'like', '%' . $request->busqueda . "%")->paginate(6);
+
+        $productos->count();
+
+        $data = [
+            "resultados" => $productos->count() > 0,
+            "productos" => $productos
+        ];
+
+        return response()->json($data);
     }
 
     /**

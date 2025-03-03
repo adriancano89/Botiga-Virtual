@@ -37,8 +37,7 @@
                     
                 </div>
                 <div class="flex flex-row justify-end gap-2" id="paginacion">
-                    <a href="" id="paginaAnterior" class="enlaces p-2">&laquo Anterior</a>
-                    <a href="" id="paginaSiguiente" class="enlaces p-2">Siguiente &raquo</a>
+                    
                 </div>
             </div>
         </section>

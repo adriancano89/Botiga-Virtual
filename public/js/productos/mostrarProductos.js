@@ -1,13 +1,17 @@
 const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const divProductos = document.getElementById('productos');
-const paginacion = document.getElementById('paginacion');
-let numPagina = 1;
+const divPaginacion = document.getElementById('paginacion');
+const buscarProductos = document.getElementById('buscarProductos');
 
-async function obtenerProductos(pagina) {
+async function obtenerProductos(pagina, busqueda) {
     let data;
+    let dataBusqueda = {
+        "busqueda": busqueda.trim()
+    }
     try {
         const promesa = await fetch(pagina, {
-        method: 'GET',
+        method: 'POST',
+        body : JSON.stringify(dataBusqueda),
         headers: {
             'Content-Type': 'application/json',
             'X-CSRF-TOKEN': token
@@ -21,17 +25,12 @@ async function obtenerProductos(pagina) {
         data = await promesa.json();
     }
     catch (error) {
-            console.error(error);
+        console.error(error);
     }
     return data;
 }
 
-function mostrarProductos(datos, div) {
-    console.log(datos);
-    let dataProductos = datos.data;
-
-    div.innerHTML = '';
-
+function dibujarProductos(dataProductos) {
     for (let clave in dataProductos) {
         console.log(dataProductos[clave]);
         let datosProducto = dataProductos[clave];
@@ -39,7 +38,7 @@ function mostrarProductos(datos, div) {
         let codigo = datosProducto.codigo;
         let nombre = datosProducto.nombre;
         let precio = datosProducto.precio;
-        div.innerHTML += `
+        divProductos.innerHTML += `
         <div class="shadow-xl rounded-[15px] p-4 hover:bg-slate-300 hover:cursor-pointer">
             <div class="flex flex-row">
                 <img src="icons/general/con-capucha.png" alt="imagen producto" class="w-26 h-26">
@@ -59,27 +58,93 @@ function mostrarProductos(datos, div) {
     }
 }
 
-function mostrarPaginacion(datos, div) {
-    let links = datos.links;
-    for (let clave in links) {
-        if (clave != 0 && clave != links.length - 1) {
-            let link = links[clave];
-            let enlacePagina = document.createElement('a');
-            enlacePagina.href = link.url;
-            enlacePagina.innerHTML = link.label;
-            enlacePagina.classList.add('enlaces', 'p-2');
-            enlacePagina.addEventListener('click', function() {
-                numPagina = Number(enlacePagina.textContent);
-                enlacePagina.classList.remove('hover:bg-gray-200');
-                enlacePagina.classList.add('bg-[#0983AC]', 'text-white');
+function mostrarProductos(datos) {
+    console.log("Me viene desde PHP:");
+    console.log(datos);
+
+    divProductos.innerHTML = '';
+
+    if (datos.resultados) { //Verificamos que hayan productos a mostrar
+        let dataProductos = datos.productos.data;
+
+        if (dataProductos) { //dataProductos no será nulo si no se ha hecho ninguna búsqueda
+            dibujarProductos(dataProductos);
+        }
+        else {
+            dibujarProductos(dataProductos);
+        }
+    }
+    else {
+        divProductos.innerHTML = "No se han encontrado productos";
+    }
+    
+}
+
+function indicarPagina(enlace) {
+    enlace.classList.remove('text-black');
+    enlace.classList.add('bg-[#0983AC]', 'text-white');
+}
+
+function crearEnlace(url, texto) {
+    let enlace = document.createElement('a');
+
+    enlace.href = url;
+    enlace.innerHTML = texto;
+    enlace.classList.add('text-base', 'text-black', 'rounded-sm', 'border', 'border-gray-500', 'p-2', 'hover:bg-gray-200', 'hover:cursor-pointer');
+
+    if (!isNaN(texto)) { // Devuelve false si se puede convertir a número. Lo utilizamos para saber si el enlace es de un número de página
+        enlace.classList.add('pagina');
+
+        if (enlace.textContent == '1') { //Comprobamos si es 1 para marcar la primera página cuando se cargue la página
+            indicarPagina(enlace);
+        }
+    }
+
+    enlace.addEventListener('click', async function(event) {
+        event.preventDefault();
+        const enlacesPaginas = document.querySelectorAll('.pagina');
+        
+        if (!isNaN(enlace.textContent)) {
+            indicarPagina(enlace);
+
+            enlacesPaginas.forEach(enlacePagina => {
+                if (enlacePagina.textContent != enlace.textContent) { //Si no coincide, significa que no es la página actual
+                    enlacePagina.classList.remove('bg-[#0983AC]', 'text-white');
+                }
             });
-            div.insertBefore(enlacePagina, div.lastElementChild); //Lo añadimos antes del ultimo elemento, que es el enlace de Siguiente
+        }
+        else {
+            let pagina = enlace.href;
+            let paginaAMostrar = pagina.charAt(pagina.length - 1); //Obtenemos el último caracter de la url, que es el número de página
+            enlacesPaginas.forEach(enlacePagina => {
+                if (enlacePagina.textContent != paginaAMostrar) { //Si no coincide, significa que no es la página que queremos mostrar
+                    enlacePagina.classList.remove('bg-[#0983AC]', 'text-white');
+                }
+                else {
+                    indicarPagina(enlacePagina);
+                }
+            });
+        }
+
+        let datos = await obtenerProductos(enlace.href, '');
+        mostrarProductos(datos);
+        actualizarPaginacion(datos.productos);
+    });
+
+    return enlace;
+}
+
+function mostrarPaginacion(links) {
+    for (let clave in links) {
+        if (clave != 0 && clave != links.length - 1) { // Omitimos el link de la página anterior y de la siguiente
+            let link = links[clave];
+            let enlacePagina = crearEnlace(link.url, link.label);
+            divPaginacion.insertBefore(enlacePagina, divPaginacion.lastElementChild);
         }
     }
 }
 
 function actualizarPaginacion(datos) {
-
     const paginaAnterior = document.getElementById('paginaAnterior');
     const paginaSiguiente = document.getElementById('paginaSiguiente');
 
@@ -87,31 +152,38 @@ function actualizarPaginacion(datos) {
         paginaAnterior.href = datos.prev_page_url;
     }
     else {
-        paginaAnterior.href = '#'; //Si es nulo, para que no salte error de página no encontrada, el link será el de la misma página
-        paginaSiguiente.href = datos.next_page_url;
+        paginaAnterior.href = datos.last_page_url; //Si es nulo, para que no salte error de página no encontrada, el link será el de la última página
     }
 
-    const enlaces = document.querySelectorAll('.enlaces');
-
-    enlaces.forEach((enlace) => {
-        enlace.classList.add('text-base', 'text-black', 'rounded-sm', 'border', 'border-gray-500', 'hover:bg-gray-200', 'hover:cursor-pointer');
-        enlace.addEventListener('click', async (event) => {
-            event.preventDefault();
-            if (enlace.href != '#') {
-                divProductos.innerHTML = '';
-                let nuevosDatos = await obtenerProductos(enlace.href);
-                mostrarProductos(nuevosDatos, divProductos);
-                actualizarPaginacion(nuevosDatos, paginacion, numPagina);
-            }
-        });
-    });
+    if (datos.next_page_url) {
+        paginaSiguiente.href = datos.next_page_url;
+    }
+    else {
+        paginaSiguiente.href = datos.first_page_url; //Si es nulo, para que no salte error, el link será el de la primera página
+    }
 }
 
-async function cargarProductos() {
-    let datos = await obtenerProductos('/fetch-TiposProductos');
-    mostrarProductos(datos, divProductos);
-    mostrarPaginacion(datos, paginacion);
-    actualizarPaginacion(datos, numPagina);
+function restablecerPaginacion() {
+    let paginaAnterior = crearEnlace('', '&laquo Anterior');
+    paginaAnterior.id = 'paginaAnterior';
+    let paginaSiguiente = crearEnlace('', 'Siguiente &raquo');
+    paginaSiguiente.id = 'paginaSiguiente';
+    divPaginacion.innerHTML = '';
+    divPaginacion.appendChild(paginaAnterior);
+    divPaginacion.appendChild(paginaSiguiente);
 }
 
-cargarProductos();
+async function cargarProductos(url, busqueda) {
+    let datos = await obtenerProductos(url, busqueda);
+    mostrarProductos(datos);
+    restablecerPaginacion();
+    mostrarPaginacion(datos.productos.links);
+    actualizarPaginacion(datos.productos);
+}
+
+buscarProductos.addEventListener('input', function() {
+    const busqueda = buscarProductos.value;
+    cargarProductos('/fetch-TiposProductos', busqueda);
+});
+
+cargarProductos('/fetch-TiposProductos', '');

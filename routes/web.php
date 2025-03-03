@@ -15,7 +15,7 @@ Route::get('/', function () {
 
 Route::get('/usuario/admin', [UsuarioController::class, 'admin'])->name('usuario.admin');
 
-Route::get('/fetch-TiposProductos', [TipoProductoController::class, 'obtenerProductos'])->name('tiposProductos');
+Route::post('/fetch-TiposProductos', [TipoProductoController::class, 'obtenerProductos'])->name('tiposProductos.obtenerProductos');
 
 Route::resources([
     'productos' => ProductoController::class,
