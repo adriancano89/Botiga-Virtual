@@ -8,15 +8,17 @@ class Producto extends Model
 {
     protected $table = "productos";
 
-    public function tiposProducto():BelongsToMany {
-        return $this->belongsToMany(TipoProducto::class);
-    }
-    
-    public function colores():BelongsToMany {
-        return $this->belongsToMany(Color::class);
+    protected $fillable = ['tipos_producto_id', 'talla_id', 'color_id', 'stock']; 
+
+    public function tipoProducto() {
+        return $this->belongsTo(TipoProducto::class, 'tipos_producto_id');
     }
 
-    public function tallas():BelongsToMany {
-        return $this->belongsToMany(Talla::class);
+    public function talla() {
+        return $this->belongsTo(Talla::class, 'talla_id');
+    }
+
+    public function color() {
+        return $this->belongsTo(Color::class, 'color_id');
     }
 }

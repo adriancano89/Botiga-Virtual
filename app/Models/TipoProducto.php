@@ -17,4 +17,8 @@ class TipoProducto extends Model
     public function categoria() {
         return $this->hasOne(Categoria::class);
     }
+
+    public function productos() {
+        return $this->hasMany(Producto::class, 'tipos_producto_id');
+    }
 }

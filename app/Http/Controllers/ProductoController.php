@@ -4,7 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\TipoProducto;
-use App\Models\Categoria;
+use App\Models\Talla;
+use App\Models\Color;
 use App\Models\Producto;
 
 class ProductoController extends Controller
@@ -14,7 +15,8 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        //
+        $productos = Producto::with('tipoProducto', 'talla', 'color')->get();
+        return view("admin.ventas.ventas", ["productos" => $productos]);
     }
 
     /**
@@ -46,7 +48,10 @@ class ProductoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $tipoProducto = TipoProducto::find($id);
+        $tallas = Talla::all();
+        $colores = Color::all();
+        return view('admin.productos.editarStock', ["tipoProducto" => $tipoProducto, "tallas" => $tallas, "colores" => $colores]);
     }
 
     /**
@@ -63,5 +68,40 @@ class ProductoController extends Controller
     public function destroy(string $id)
     {
         //
+    }
+
+    public function updateOrCreate(Request $request)
+    {
+        // Validar los datos del formulario
+        /*
+        $request->validate([
+            'codigo' => 'required|string|max:255',
+            'nombre' => 'required|string|max:255',
+            'stockAnadir' => 'required|integer|min:1',
+            'color_id' => 'required|exists:colores,id',
+            'talla_id' => 'required|exists:tallas,id',
+        ]);*/
+
+        // Buscar el producto existente
+        //dd($request->all());
+        
+        $productoExistente = Producto::where('tipos_producto_id', intval($request->tipoProducto))
+            ->where('color_id', $request->color_id)
+            ->where('talla_id', $request->talla_id)
+            ->first();
+
+        if ($productoExistente) {
+            // Si existe, actualizar el stock
+            $productoExistente->stock += $request->stockAnadir;
+            $productoExistente->save();
+        } else {
+            // Si no existe, crear un nuevo producto
+            Producto::create([
+                'tipos_producto_id' => intval($request->tipoProducto),
+                'talla_id' => $request->talla_id,
+                'color_id' => $request->color_id,
+                'stock' => $request->stockAnadir
+            ]);
+        }
     }
 }

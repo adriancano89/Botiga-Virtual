@@ -50,7 +50,9 @@ function dibujarProductos(dataProductos) {
             <div class="flex flex-row justify-between">
                 <span class="text-[#0983AC] font-bold">${precio} €</span>
                 <div class="flex flex-row">
+                    <a href='productos/${id}/edit'> 
                     <img src="icons/general/mas.png" alt="añadir stock" class="w-[25px] hover:cursor-pointer" title="Añadir stock">
+                    </a>
                     <span></span>
                 </div>
             </div>
