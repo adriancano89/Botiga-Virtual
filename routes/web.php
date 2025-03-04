@@ -9,9 +9,7 @@ use App\Http\Controllers\TallaController;
 use App\Http\Controllers\TipoProductoController;
 use App\Http\Controllers\UsuarioController;
 
-Route::get('/', function () {
-    return view('welcome');
-});
+Route::get('/', [TipoProductoController::class, 'mostrarDestacados'])->name('tiposProductos.destacados');
 
 Route::get('/usuario/admin', [UsuarioController::class, 'admin'])->name('usuario.admin');
 
