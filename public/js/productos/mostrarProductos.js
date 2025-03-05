@@ -39,24 +39,26 @@ function dibujarProductos(dataProductos) {
         let nombre = datosProducto.nombre;
         let precio = datosProducto.precio;
         divProductos.innerHTML += `
-        <div class="shadow-xl rounded-[15px] p-4 hover:bg-slate-300 hover:cursor-pointer">
-            <div class="flex flex-row">
-                <img src="icons/general/con-capucha.png" alt="imagen producto" class="w-26 h-26">
-                <a href='tiposProductos/${id}/edit'><img src="icons/general/editar.png" alt="editar producto" class="w-8 h-8 mt-2" title="Editar producto"></a>
-                <img src="icons/general/papelera.png" alt="eliminar producto" class="w-8 h-8 mt-2" title="Eliminar producto">
-            </div>
-            <h2 class="font-bold text-lg">${nombre}</h2>
-            <span class="text-gray-500">${codigo}</span>
-            <div class="flex flex-row justify-between">
-                <span class="text-[#0983AC] font-bold">${precio} €</span>
+        <a href="productos/${id}">
+            <div class="shadow-xl rounded-[15px] p-4 hover:bg-slate-300 hover:cursor-pointer">
                 <div class="flex flex-row">
-                    <a href='productos/${id}/edit'> 
-                    <img src="icons/general/mas.png" alt="añadir stock" class="w-[25px] hover:cursor-pointer" title="Añadir stock">
-                    </a>
-                    <span></span>
+                    <img src="icons/general/con-capucha.png" alt="imagen producto" class="w-26 h-26">
+                    <a href='tiposProductos/${id}/edit'><img src="icons/general/editar.png" alt="editar producto" class="w-8 h-8 mt-2" title="Editar producto"></a>
+                    <img src="icons/general/papelera.png" alt="eliminar producto" class="w-8 h-8 mt-2" title="Eliminar producto">
+                </div>
+                <h2 class="font-bold text-lg">${nombre}</h2>
+                <span class="text-gray-500">${codigo}</span>
+                <div class="flex flex-row justify-between">
+                    <span class="text-[#0983AC] font-bold">${precio} €</span>
+                    <div class="flex flex-row">
+                        <a href='productos/${id}/edit'> 
+                        <img src="icons/general/mas.png" alt="añadir stock" class="w-[25px] hover:cursor-pointer" title="Añadir stock">
+                        </a>
+                        <span></span>
+                    </div>
                 </div>
             </div>
-        </div>`;
+        </a>`;
     }
 }
 

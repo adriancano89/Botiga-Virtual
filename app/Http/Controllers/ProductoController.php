@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\TipoProducto;
 use App\Models\Talla;
 use App\Models\Color;
+use App\Models\Foto;
 use App\Models\Producto;
 
 class ProductoController extends Controller
@@ -40,7 +41,17 @@ class ProductoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $tipoProducto = TipoProducto::with('categoria')->find($id);
+        $producto = Producto::with(['talla', 'color'])->where('tipos_producto_id', $id)->get();
+        $tallas = Talla::all();
+        $colores = Color::all();
+        $imagenes = Foto::where('tipos_producto_id', $id)->get();
+        return view("general.producto", 
+        ["tipoProducto" => $tipoProducto, 
+        "filasStock" => $producto, 
+        "tallas" => $tallas, 
+        "colores" => $colores, 
+        "imagenes" => $imagenes]);
     }
 
     /**
