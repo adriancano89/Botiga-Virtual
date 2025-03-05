@@ -41,6 +41,15 @@
                 </div>
             </div>
             <div>
+                @foreach ($categorias as $categoria)
+                <a href="{{route('categoria.show', $categoria->id)}}">
+                    <div class="w-1/4 shadow-xl rounded-[15px] p-4 hover:bg-slate-300 hover:cursor-pointer">
+                        <span class="text-gray-500">{{$categoria->nombre}}</span>
+                    </div>
+                </a>
+                @endforeach
+            </div>
+            <div>
                 <div class="flex flex-row flex-wrap">
                     @foreach ($productos as $producto)
                     <a href="{{route('productos.show', $producto->id)}}" class="w-1/4 shadow-xl rounded-[15px] p-4 hover:bg-slate-300 hover:cursor-pointer">

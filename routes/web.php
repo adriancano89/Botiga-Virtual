@@ -17,6 +17,8 @@ Route::post('/fetch-TiposProductos', [TipoProductoController::class, 'obtenerPro
 
 Route::put('/tiposProductos', [ProductoController::class, 'updateOrCreate'])->name('productos.updateOrCreate');
 
+Route::get('/categoria/{categoria}', [CategoriaController::class, 'show'])->name('categoria.show');
+
 Route::resources([
     'productos' => ProductoController::class,
     'categorias' => CategoriaController::class,

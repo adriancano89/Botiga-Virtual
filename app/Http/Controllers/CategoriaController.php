@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Categoria;
+use App\Models\TipoProducto;
 
 class CategoriaController extends Controller
 {
@@ -39,9 +40,10 @@ class CategoriaController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $categoria = Categoria::find($id);
+        $productosCategoria = TipoProducto::where('categoria_id', $id)->paginate(16);
+        return view('general.mostrarPorCategorias', ["categoria" => $categoria, "productosCategoria" => $productosCategoria]);
     }
-
     /**
      * Show the form for editing the specified resource.
      */

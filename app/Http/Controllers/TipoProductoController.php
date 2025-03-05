@@ -19,7 +19,8 @@ class TipoProductoController extends Controller
     public function mostrarDestacados()
     {
         $productos = TipoProducto::where('destacado', 1)->with('categoria')->paginate(8);
-        return view('principal', ["productos" => $productos]);
+        $categorias = Categoria::all();
+        return view('principal', ["productos" => $productos, "categorias" => $categorias]);
     }
 
     public function obtenerProductos(Request $request) {
