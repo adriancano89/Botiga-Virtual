@@ -19,7 +19,7 @@ return new class extends Migration
             $table->date('fecha_envio');
             $table->date('fecha_entrega');
             $table->boolean('estado');
-            $table->foreign('usuario_id')->references('id')->on('usuarios')->onDelete('cascade');
+            $table->foreign('usuario_id')->references('id')->on('users')->onDelete('cascade');
             $table->timestamps();
         });
     }

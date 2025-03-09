@@ -2,18 +2,18 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use Illuminate\Http\Request;
-use App\Models\Usuario;
 use Illuminate\Support\Facades\Hash;
 
-class UsuarioController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        $todosUsuarios = Usuario::all();
+        $todosUsuarios = User::all();
         return view('admin.usuarios.usuarios', ["todosUsuarios" => $todosUsuarios]);
     }
 
@@ -31,10 +31,10 @@ class UsuarioController extends Controller
     public function store(Request $request)
     {
 
-        Usuario::create([
-            'nombre' => $request->nombre, 
+        User::create([
+            'name' => $request->nombre, 
             'apellidos' => $request->apellidos, 
-            'contrasena' => Hash::make($request->contrasena),
+            'password' => Hash::make($request->contrasena),
             'email' => $request->email, 
             'telefono' => $request->telefono, 
             'direcion' => $request->direcion, 

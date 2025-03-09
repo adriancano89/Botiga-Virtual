@@ -1,7 +1,7 @@
 <nav class="flex flex-col items-start justify-start gap-4 text-[20px] bg-[#131620] text-white p-0  w-[15%]">
     <div class="flex flex-col items-center mx-auto w-[100px]">
         <img src="{{asset('icons/general/perfil_usuario.png')}}" alt="Perfil Usuario" class="w-[100px] mb-1">
-        <span>X</span>
+        <span>{{ session('name') }}</span>
     </div>
 
     <div>
@@ -13,10 +13,12 @@
             <img src="{{asset('icons/general/historial_compras.png')}}" alt="Historial de Compras" class="w-[25px] hover:cursor-pointer">
             <span class="ml-4">Historial de Compras</span>
         </div>
-        <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
-            <img src="{{asset('icons/general/informacion-personal.png')}}" alt="Datos Personales" class="w-[25px] hover:cursor-pointer">
-            <span class="ml-4">Datos Personales</span>
-        </div>
+        <a href="/profile">
+            <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
+                <img src="{{asset('icons/general/informacion-personal.png')}}" alt="Datos Personales" class="w-[25px] hover:cursor-pointer">
+                <span class="ml-4">Datos Personales</span>
+            </div>
+        </a>
         <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
             <img src="{{asset('icons/general/administracion.png')}}" alt="Administración" class="w-[25px] hover:cursor-pointer">
             <a href="{{route('tiposProductos.index')}}"><span class="ml-4">Administración</span></a>
@@ -48,9 +50,12 @@
             </div>
         </div>
     <div class="bg-[#131620] pt-10 pl-10 pr-10 pb-10">
-        <div class="hover:cursor-pointer bg-[#0983AC] border-2 border-[#131620] rounded-[8px] flex items-center pt-4 pl-8 pr-8 pb-4 hover:bg-[#131620] hover:border-2 hover:border-[#0983AC]">
-            <img src="{{asset('icons/general/cerrar_sesion.png')}}" alt="Cerrar Sesión" class="w-[25px]">
-            <button class="ml-4">Cerrar Sesión</button>
-        </div>
+        <form action="{{route('logout')}}" method="post">
+            @csrf
+            <div class="hover:cursor-pointer bg-[#0983AC] border-2 border-[#131620] rounded-[8px] flex items-center pt-4 pl-8 pr-8 pb-4 hover:bg-[#131620] hover:border-2 hover:border-[#0983AC]">
+                <img src="{{asset('icons/general/cerrar_sesion.png')}}" alt="Cerrar Sesión" class="w-[25px]">
+                <button class="ml-4" type="submit">Cerrar Sesión</button>
+            </div>
+        </form>
     </div>
 </nav>

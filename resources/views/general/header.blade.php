@@ -24,6 +24,6 @@
     <div class="flex flex-row gap-5 mr-[10px]">
         <img src="{{asset('icons/general/lupa.png')}}" alt="buscar" class="w-[25px] hover:cursor-pointer">
         <img src="{{asset('icons/general/carrito-de-compras.png')}}" alt="carrito" class="w-[25px] hover:cursor-pointer">
-        <img src="{{asset('icons/general/usuario.png')}}" alt="perfil" class="w-[25px] hover:cursor-pointer">
+        <a href="/profile"><img src="{{asset('icons/general/usuario.png')}}" alt="perfil" class="w-[25px] hover:cursor-pointer"></a>
     </div>
 </header>

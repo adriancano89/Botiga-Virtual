@@ -35,7 +35,7 @@
                         </tr>
                         @foreach($todosUsuarios as $usuario)
                             <tr class="border-2 border-[#131620]">
-                                <td class="border-2 border-[#131620]">{{$usuario->nombre}}</td>
+                                <td class="border-2 border-[#131620]">{{$usuario->name}}</td>
                                 <td class="border-2 border-[#131620]">{{$usuario->apellidos}}</td>
                                 <td class="border-2 border-[#131620]">{{$usuario->email}}</td>
                                 <td class="border-2 border-[#131620]">{{$usuario->telefono}}</td>
