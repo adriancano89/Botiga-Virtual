@@ -9,6 +9,7 @@ use App\Http\Controllers\PedidoController;
 use App\Http\Controllers\TallaController;
 use App\Http\Controllers\TipoProductoController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CarritoController;
 
 Route::get('/', [TipoProductoController::class, 'mostrarDestacados'])->name('tiposProductos.destacados');
 Route::get('/categoria/{categoria}', [CategoriaController::class, 'show'])->name('categoria.show');
@@ -16,6 +17,8 @@ Route::get('/productos/{id}', [ProductoController::class, 'show'])->name('produc
 
 Route::post('/fetch-TiposProductos', [TipoProductoController::class, 'obtenerProductos'])->name('tiposProductos.obtenerProductos');
 Route::post('/fetch-GuardarPersonalizado', [ProductoController::class, 'guardarProductoPersonalizado'])->name('productos.guardarPersonalizado');
+Route::get('/carrito', [CarritoController::class, 'index'])->name('carrito.index');
+Route::delete('/carrito/{id}', [CarritoController::class, 'destroy'])->name('destroy');
 
 
 Route::get('/dashboard', function () {

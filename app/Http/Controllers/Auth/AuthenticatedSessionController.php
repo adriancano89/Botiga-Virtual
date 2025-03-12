@@ -8,6 +8,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Session;
 
 class AuthenticatedSessionController extends Controller
 {
@@ -28,8 +29,9 @@ class AuthenticatedSessionController extends Controller
 
         $request->session()->regenerate();
 
-        $request->session()->put('name', Auth::user()->name);
-
+        Session::put('id', Auth::user()->id);
+        Session::put('name', Auth::user()->name);
+        
         return redirect()->intended(route('dashboard', absolute: false));
     }
 

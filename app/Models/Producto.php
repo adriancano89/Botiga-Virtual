@@ -21,4 +21,8 @@ class Producto extends Model
     public function color() {
         return $this->belongsTo(Color::class, 'color_id');
     }
+
+    public function carrito() {
+        return $this->hasMany(Carrito::class, 'productos_id');
+    }
 }
