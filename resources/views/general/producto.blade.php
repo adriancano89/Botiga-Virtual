@@ -3,7 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css'])
+    <script src="{{ asset('js/productos/canvas.js') }}" defer></script>
     <title>{{$tipoProducto->nombre}} - Sundero Sweatshirt</title>
 </head>
 <body>
@@ -12,7 +14,7 @@
         <div class="flex flex-row">
             <div>
                 @if($tipoProducto->foto)
-                    <img src="{{ asset('storage/' . $tipoProducto->foto) }}" alt="Imagen del producto">
+                    <img src="{{ asset('storage/' . $tipoProducto->foto) }}" alt="Imagen del producto" id="imagenSudadera">
                 @else
                     <span>No hay imagen disponible</span>
                 @endif
@@ -87,6 +89,32 @@
                 {{$tipoProducto->descripcion}}
             </p>
         </div>
+
+        @if($tipoProducto->foto)
+        <div>
+            <h1>Personalizar producto</h1>
+            <div class="w-fit">
+                <div>
+                    <canvas id="canvas"></canvas>
+                </div>
+                <div>
+                    <div>
+                        <label for="color">Color:</label>
+                        <input type="color" name="color" id="color">
+                    </div>
+                    <div>
+                        <label for="grosor">Grosor:</label>
+                        <input type="range" name="grosor" id="grosor" min="1" max="20">
+                        <span id="valorGrosor"></span>
+                    </div>
+                    <div class="flex flex-row justify-between">
+                        <button class="border border-black p-2" id="limpiar">Borrar</button>
+                        <button id="guardar">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @endif
 
         <nav class="absolute top-1/2 right-[5%] flex flex-col">
             <button>Añadir al carrito</button>

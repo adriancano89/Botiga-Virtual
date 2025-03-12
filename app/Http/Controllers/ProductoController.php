@@ -8,6 +8,7 @@ use App\Models\Talla;
 use App\Models\Color;
 use App\Models\Foto;
 use App\Models\Producto;
+use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
 {
@@ -16,8 +17,7 @@ class ProductoController extends Controller
      */
     public function index()
     {
-        $productos = Producto::with('tipoProducto', 'talla', 'color')->get();
-        return view("admin.ventas.ventas", ["productos" => $productos]);
+        //
     }
 
     /**
@@ -114,5 +114,21 @@ class ProductoController extends Controller
                 'stock' => $request->stockAnadir
             ]);
         }
+    }
+
+    public function guardarProductoPersonalizado(Request $request) {
+        $dataImagen = $request->input('imagen');
+        $idProducto = $request->input('idProducto');
+        $imagen = str_replace('data:image/png;base64,', '', $dataImagen); //Quitamos la parte de la información del formato de la imagen
+        $imagen = str_replace(' ', '+', $imagen);
+        $nombreImagen = time() . '.png'; //Como nombre le ponemos el tiempo actual
+
+        Storage::disk('public')->put('fotos/' . $idProducto . '/personalizadas/' . $nombreImagen, base64_decode($imagen)); //Guardamos la imagen decodificandola antes.
+        
+        $data = [
+            "path" => $nombreImagen
+        ];
+
+        return response()->json($data);
     }
 }

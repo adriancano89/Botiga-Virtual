@@ -11,8 +11,11 @@ use App\Http\Controllers\TipoProductoController;
 use App\Http\Controllers\UserController;
 
 Route::get('/', [TipoProductoController::class, 'mostrarDestacados'])->name('tiposProductos.destacados');
-Route::post('/fetch-TiposProductos', [TipoProductoController::class, 'obtenerProductos'])->name('tiposProductos.obtenerProductos');
 Route::get('/categoria/{categoria}', [CategoriaController::class, 'show'])->name('categoria.show');
+Route::get('/productos/{id}', [ProductoController::class, 'show'])->name('productos.show');
+
+Route::post('/fetch-TiposProductos', [TipoProductoController::class, 'obtenerProductos'])->name('tiposProductos.obtenerProductos');
+Route::post('/fetch-GuardarPersonalizado', [ProductoController::class, 'guardarProductoPersonalizado'])->name('productos.guardarPersonalizado');
 
 
 Route::get('/dashboard', function () {
@@ -26,7 +29,7 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/usuario/admin', [UserController::class, 'admin'])->name('usuario.admin');
 
-    Route::put('/tiposProductos', [ProductoController::class, 'updateOrCreate'])->name('productos.updateOrCreate');
+    Route::put('/productos/anadirStock', [ProductoController::class, 'updateOrCreate'])->name('productos.updateOrCreate');
 
     Route::resources([
         'productos' => ProductoController::class,
