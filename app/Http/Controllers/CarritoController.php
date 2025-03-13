@@ -48,7 +48,23 @@ class CarritoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $usuario_id = session('id');
+        if(isset($usuario_id)) {
+            $producto = Producto::where('tipos_producto_id', intval($request->tipos_producto_id))
+            ->where('color_id', $request->color_id)
+            ->where('talla_id', $request->talla_id)
+            ->first();
+
+            if ($producto) {
+                Carrito::create([
+                    'usuario_id' => $usuario_id,
+                    'productos_id' => $producto->id,
+                    'cantidad' => $request->cantidad
+                ]);
+            }
+        } else {
+            // Carrito sin session
+        }
     }
 
     /**

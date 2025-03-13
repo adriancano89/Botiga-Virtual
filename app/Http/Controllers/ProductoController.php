@@ -131,4 +131,16 @@ class ProductoController extends Controller
 
         return response()->json($data);
     }
+
+    public function obtenerStock(Request $request) {
+        $tallaId = $request->input('talla_id');
+        $colorId = $request->input('color_id');
+    
+        // Aquí debes buscar en tu base de datos el stock del producto
+        $producto = Producto::where('talla_id', $tallaId)->where('color_id', $colorId)->first();
+        
+        return response()->json([
+            'stock' => $producto ? $producto->stock : 0,
+        ]);
+    }
 }
