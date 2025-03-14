@@ -7,6 +7,7 @@
     @vite(['resources/css/app.css'])
     <script src="{{ asset('js/productos/cantidadProductos.js') }}" defer></script>
     <script src="{{ asset('js/productos/canvas.js') }}" defer></script>
+    <script src="{{ asset('js/carrito/carrito.js') }}" defer></script>
     <script src="{{ asset('js/chatbot.js') }}" defer></script>
     <title>{{$tipoProducto->nombre}} - Sundero Sweatshirt</title>
 </head>
@@ -31,11 +32,11 @@
                     <span>{{$tipoProducto->precio}} €</span>
                 </div>
                 <div class="mt-8">
-                    <form action="{{route('carrito.store')}}" method="POST" enctype="multipart/form-data">
+                    <form action="{{route('carrito.store')}}" method="POST" enctype="multipart/form-data" id="formularioAnadirCarrito">
                         @csrf
                         <div>
                             <label for="talla">Talla</label>
-                            <select name="talla_id" id="talla_id">
+                            <select name="talla_id" id="talla_id" required>
                                 <option value="" disabled selected>-- Seleccionar --</option>
                                 @foreach ($tallas as $talla)
                                     @php
@@ -54,7 +55,7 @@
                         </div>
                         <div>
                             <label for="color">Color</label>
-                            <select name="color_id" id="color_id">
+                            <select name="color_id" id="color_id" required>
                                 <option value="" disabled selected>-- Seleccionar --</option>
                                 @foreach ($colores as $color)
                                     @php
@@ -73,7 +74,7 @@
                         </div>
                         <div>
                             <label for="cantidad">Cantidad:</label>
-                            <select name="cantidad" id="cantidad">
+                            <select name="cantidad" id="cantidad" required>
                                 <option value="" disabled selected>-- Selecciona Talla y Color --</option>
                             </select>
                         </div>
@@ -82,8 +83,7 @@
                             <input type="checkbox" name="fotoPersonalizada">
                         </div>
                         <!-- Enviar ID oculto -->
-                        <input type="hidden" name="tipos_producto_id" value="{{$tipoProducto->id}}">
-
+                        <input type="hidden" name="tipos_producto_id" id="tipos_producto_id" value="{{$tipoProducto->id}}">
                         <button type="submit" class="bg-[#0983AC]">Añadir al carrito</button>
                     </form>
                 </div>

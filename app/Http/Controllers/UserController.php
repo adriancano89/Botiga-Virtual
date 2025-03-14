@@ -77,4 +77,12 @@ class UserController extends Controller
     public function admin() {
         return view('Usuarios.admin');
     }
+
+    public function usuarioValidado(Request $request) {
+        $validado = (session('id') != null);
+        $data = [
+            "validado" => $validado
+        ];
+        return response()->json($data);
+    }
 }

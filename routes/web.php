@@ -18,6 +18,9 @@ Route::get('/productos/{id}', [ProductoController::class, 'show'])->name('produc
 Route::post('/fetch-TiposProductos', [TipoProductoController::class, 'obtenerProductos'])->name('tiposProductos.obtenerProductos');
 Route::post('/fetch-GuardarPersonalizado', [ProductoController::class, 'guardarProductoPersonalizado'])->name('productos.guardarPersonalizado');
 Route::post('/fetch-ObtenerStock', [ProductoController::class, 'obtenerStock'])->name('productos.obtenerStock');
+Route::post('/fetch-DatosProducto', [ProductoController::class, 'obtenerDatosProducto'])->name('productos.obtenerDatosProducto');
+Route::post('/fetch-UsuarioValidado', [UserController::class, 'usuarioValidado'])->name('usuarios.usuarioValidado');
+
 Route::get('/carrito', [CarritoController::class, 'index'])->name('carrito.index');
 Route::post('/carrito', [CarritoController::class, 'store'])->name('carrito.store');
 Route::delete('/carrito/{id}', [CarritoController::class, 'destroy'])->name('destroy');

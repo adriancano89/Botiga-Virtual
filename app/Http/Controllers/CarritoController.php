@@ -22,16 +22,14 @@ class CarritoController extends Controller
         if(isset($id)) {
             // Obtenemos todos los productos en el carrito del usuario
             $productosEnCarrito = Carrito::with('producto')->where('usuario_id', intval($id))->get();
+
         } else {
-            
+            $productosEnCarrito = [];
         }
         // Si no se encuentra, asigna false
         if ($productosEnCarrito == []) {
             $productosEnCarrito = false;
         }
-
-
-
         return view("usuario.carrito", ["productosEnCarrito" => $productosEnCarrito]);
     }
 
@@ -49,22 +47,20 @@ class CarritoController extends Controller
     public function store(Request $request)
     {
         $usuario_id = session('id');
-        if(isset($usuario_id)) {
-            $producto = Producto::where('tipos_producto_id', intval($request->tipos_producto_id))
-            ->where('color_id', $request->color_id)
-            ->where('talla_id', $request->talla_id)
-            ->first();
 
-            if ($producto) {
-                Carrito::create([
-                    'usuario_id' => $usuario_id,
-                    'productos_id' => $producto->id,
-                    'cantidad' => $request->cantidad
-                ]);
-            }
-        } else {
-            // Carrito sin session
+        $producto = Producto::where('tipos_producto_id', intval($request->tipos_producto_id))
+        ->where('color_id', $request->color_id)
+        ->where('talla_id', $request->talla_id)
+        ->first();
+
+        if(isset($usuario_id)) {
+            Carrito::create([
+                'usuario_id' => $usuario_id,
+                'productos_id' => $producto->id,
+                'cantidad' => $request->cantidad
+            ]);
         }
+        return redirect()->route('productos.show', $producto->id);
     }
 
     /**
@@ -103,7 +99,7 @@ class CarritoController extends Controller
         if ($producto) {
             $producto->delete();
         }
-
+        
         return redirect()->route('carrito.index');
     }
 }

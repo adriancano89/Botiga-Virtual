@@ -41,6 +41,7 @@ class ProductoController extends Controller
      */
     public function show(string $id)
     {
+        $idUsuario = session('id');
         $tipoProducto = TipoProducto::with('categoria')->find($id);
         $producto = Producto::with(['talla', 'color'])->where('tipos_producto_id', $id)->get();
         $tallas = Talla::all();
@@ -51,7 +52,8 @@ class ProductoController extends Controller
         "filasStock" => $producto, 
         "tallas" => $tallas, 
         "colores" => $colores, 
-        "imagenes" => $imagenes]);
+        "imagenes" => $imagenes,
+        "idUsuario" => $idUsuario]);
     }
 
     /**
@@ -142,5 +144,23 @@ class ProductoController extends Controller
         return response()->json([
             'stock' => $producto ? $producto->stock : 0,
         ]);
+    }
+
+    public function obtenerDatosProducto(Request $request) {
+        $idTipoProducto = $request->input('idTipoProducto');
+        $idTalla = $request->input('idTalla');
+        $idColor = $request->input('idColor');
+        
+        $producto = Producto::with(['tipoProducto', 'talla', 'color'])->where([
+            'tipos_producto_id' => intval($idTipoProducto),
+            'talla_id' => intval($idTalla),
+            'color_id' => intval($idColor)
+        ])->get();
+
+        $data = [
+            "producto" => $producto
+        ];
+
+        return response()->json($data);
     }
 }
