@@ -45,6 +45,10 @@
             <label for="estado">Estado:</label>
             <input type="checkbox" name="estado" id="estado" value="1">
         </div>
+        <div>
+            <label for="imagenes_adicionales">Imágenes adicionales:</label>
+            <input type="file" name="imagenes_adicionales[]" id="imagenes_adicionales" multiple accept="image/*">
+        </div>
         <input type="submit" value="Crear">
     </form>
 </body>

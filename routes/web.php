@@ -10,6 +10,7 @@ use App\Http\Controllers\TallaController;
 use App\Http\Controllers\TipoProductoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\FotoController;
 
 Route::get('/', [TipoProductoController::class, 'mostrarDestacados'])->name('tiposProductos.destacados');
 Route::get('/categoria/{categoria}', [CategoriaController::class, 'show'])->name('categoria.show');
@@ -20,6 +21,7 @@ Route::post('/fetch-GuardarPersonalizado', [ProductoController::class, 'guardarP
 Route::post('/fetch-ObtenerStock', [ProductoController::class, 'obtenerStock'])->name('productos.obtenerStock');
 Route::post('/fetch-DatosProducto', [ProductoController::class, 'obtenerDatosProducto'])->name('productos.obtenerDatosProducto');
 Route::post('/fetch-UsuarioValidado', [UserController::class, 'usuarioValidado'])->name('usuarios.usuarioValidado');
+Route::delete('/fetch-EliminarImagen/{imagen}', [FotoController::class, 'destroy'])->name('fotos.destroy');
 
 Route::get('/carrito', [CarritoController::class, 'index'])->name('carrito.index');
 Route::post('/carrito', [CarritoController::class, 'store'])->name('carrito.store');

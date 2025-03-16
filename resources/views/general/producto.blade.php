@@ -89,9 +89,9 @@
                 </div>
                 <div>
                     <span>Imágenes:</span>
-                    <div>
+                    <div class="flex flex-row">
                     @foreach ($imagenes as $imagen)
-                        <img src="{{$imagen->url}}" alt="imagen sudadera">
+                        <img src="{{ asset('storage/' . $imagen->url) }}" alt="Imagen del producto" class="w-24 hover:cursor-pointer">
                     @endforeach
                     </div>
                 </div>

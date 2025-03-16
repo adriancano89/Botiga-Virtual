@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Foto;
 
 class FotoController extends Controller
 {
@@ -59,6 +60,26 @@ class FotoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $foto = Foto::find($id);
+        $mensaje = 'Imagen eliminada con éxito';
+        $resultado = true;
+        if ($foto) {
+            $path = public_path('storage/' . $foto->url);
+            if (file_exists($path)) {
+                unlink($path);
+                Foto::destroy($id);
+            }
+        }
+        else {
+            $mensaje = 'Imagen no encontrada';
+            $resultado = false;
+        }
+
+        $data = [
+            "resultado" => $resultado,
+            "mensaje" => $mensaje            
+        ];
+
+        return response()->json($data);
     }
 }

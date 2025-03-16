@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\TipoProducto;
 use App\Models\Categoria;
+use App\Models\Foto;
 
 class TipoProductoController extends Controller
 {
@@ -51,9 +52,17 @@ class TipoProductoController extends Controller
     public function store(Request $request)
     {
         // Para que nos se pongan ficheros que no sean imagenes
-        $request->validate([
-            'foto' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
-        ]);
+        if ($request->file('foto')) {
+            $request->validate([
+                'foto' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            ]);
+        }
+
+        if ($request->imagenes_adicionales) {
+            $request->validate([
+                'imagenes_adicionales.*' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            ]);
+        }
 
         // Crear el registro en la base de datos primero
         $tipoProducto = TipoProducto::create([
@@ -67,10 +76,22 @@ class TipoProductoController extends Controller
             'estado' => $request->has('estado')
         ]);
 
-        // Guardamos la imagen en: storage/app/public/fotos/id (producto creado)
-        $path = $request->file('foto')->store('fotos/' . $tipoProducto->id, 'public');
+        if ($request->file('foto')) {
+            // Guardamos la imagen en: storage/app/public/fotos/id (producto creado)
+            $path = $request->file('foto')->store('fotos/' . $tipoProducto->id, 'public');
 
-        $tipoProducto->update(['foto' => $path]); // path porque es la ruta de la imagen
+            $tipoProducto->update(['foto' => $path]); // path porque es la ruta de la imagen
+        }
+
+        if ($request->imagenes_adicionales) {
+            foreach ($request->imagenes_adicionales as $imagen) {
+                $ruta = $imagen->store('fotos/' . $tipoProducto->id . '/adicionales', 'public');
+                Foto::create([
+                    'tipos_producto_id' => $tipoProducto->id,
+                    'url' => $ruta
+                ]);
+            }
+        }
     }
 
     /**
@@ -88,7 +109,8 @@ class TipoProductoController extends Controller
     {
         $producto = TipoProducto::find($id);
         $categorias = Categoria::all();
-        return view('admin.productos.popupEditar', ["producto" => $producto, "categorias" => $categorias]);
+        $imagenes = Foto::where('tipos_producto_id', $id)->get();
+        return view('admin.productos.popupEditar', ["producto" => $producto, "categorias" => $categorias, "imagenes" => $imagenes]);
     }
 
     /**
@@ -98,15 +120,20 @@ class TipoProductoController extends Controller
     {
         $producto = TipoProducto::findOrFail($id);
 
-        $imagenAntiguaPath = public_path('storage/' . $producto->foto); // Optengo la ruta de la imagen antigua
-
         if ($request->file('foto')) {
-
             // Para que nos se pongan ficheros que no sean imagenes
             $request->validate([
                 'foto' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
             ]);
-    
+        }
+
+        if ($request->imagenes_adicionales) {
+            $request->validate([
+                'imagenes_adicionales.*' => 'required|image|mimes:jpeg,png,jpg,gif,webp|max:2048',
+            ]);
+        }
+
+        if ($request->file('foto')) {
             if ($producto->foto) {
                 $imagenAntiguaPath = public_path('storage/' . $producto->foto); // Optengo la ruta de la imagen antigua
                 if (file_exists($imagenAntiguaPath)) {
@@ -122,7 +149,6 @@ class TipoProductoController extends Controller
         } else {
             $path = $producto->foto;
         }
-
         
         $producto->update([
             'categoria_id' => $request->categoria_id, 
@@ -134,6 +160,16 @@ class TipoProductoController extends Controller
             'descripcion' => $request->descripcion,
             'estado' => $request->has('estado')
         ]);
+
+        if ($request->imagenes_adicionales) {
+            foreach ($request->imagenes_adicionales as $imagen) {
+                $ruta = $imagen->store('fotos/' . $producto->id . '/adicionales', 'public');
+                Foto::create([
+                    'tipos_producto_id' => $producto->id,
+                    'url' => $ruta
+                ]);
+            }
+        }
     }
 
     /**
