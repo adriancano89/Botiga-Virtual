@@ -26,6 +26,7 @@
                                     <th class="border-2 border-[#131620] text-center">Talla</th>
                                     <th class="border-2 border-[#131620] text-center">Color</th>
                                     <th class="border-2 border-[#131620] text-center">Cantidad</th>
+                                    <th class="border-2 border-[#131620] text-center">Precio</th>
                                     <th class="border-2 border-[#131620] text-center">Eliminar</th>
                                 </tr>
                                 @foreach($productosEnCarrito as $productoEnCarrito)
@@ -34,6 +35,7 @@
                                         <td class="border-2 border-[#131620] text-center">{{$productoEnCarrito->producto->talla->nombre}}</td>
                                         <td class="border-2 border-[#131620] text-center">{{$productoEnCarrito->producto->color->nombre}}</td>
                                         <td class="border-2 border-[#131620] text-center">{{$productoEnCarrito->cantidad}}</td>
+                                        <td class="border-2 border-[#131620] text-center">{{$productoEnCarrito->producto->tipoProducto->precio * $productoEnCarrito->cantidad}}</td>
                                         <td class="border-2 border-[#131620]">
                                             <form action="{{ route('destroy', $productoEnCarrito->id) }}" method="POST" class="flex flex-row justify-center">
                                                 @csrf
@@ -55,6 +57,7 @@
                                     <th class="border-2 border-[#131620] text-center">Talla</th>
                                     <th class="border-2 border-[#131620] text-center">Color</th>
                                     <th class="border-2 border-[#131620] text-center">Cantidad</th>
+                                    <th class="border-2 border-[#131620] text-center">Precio total</th>
                                     <th class="border-2 border-[#131620] text-center">Eliminar</th>
                                 </tr>
                             </table>
