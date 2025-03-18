@@ -102,4 +102,25 @@ class CarritoController extends Controller
         
         return redirect()->route('carrito.index');
     }
+
+    public function insertarCarritoenBD(Request $request) {
+        $usuario_id = session('id');
+
+        $producto = Producto::where('tipos_producto_id', intval($request->tipos_producto_id))
+        ->where('color_id', $request->color_id)
+        ->where('talla_id', $request->talla_id)
+        ->first();
+
+        Carrito::create([
+            'usuario_id' => $usuario_id,
+            'productos_id' => $producto->id,
+            'cantidad' => $request->cantidad
+        ]);
+
+        $data = [
+            "exitoso" => true
+        ];
+
+        return response()->json($data);
+    }
 }

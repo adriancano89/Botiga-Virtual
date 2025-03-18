@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css'])
     <script src="{{ asset('js/carrito/mostrarCarrito.js') }}" defer></script>
     <script src="{{ asset('js/chatbot.js') }}" defer></script>
@@ -20,7 +21,7 @@
                 <div>
                     @if ($productosEnCarrito)
                         <div class="">
-                            <table>
+                            <table id="tablaCarrito">
                                 <tr class="border-2 border-[#131620]">
                                     <th class="border-2 border-[#131620] text-center">Nombre</th>
                                     <th class="border-2 border-[#131620] text-center">Talla</th>

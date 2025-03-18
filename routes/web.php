@@ -41,6 +41,8 @@ Route::middleware('auth')->group(function () {
 
     Route::put('/productos/anadirStock', [ProductoController::class, 'updateOrCreate'])->name('productos.updateOrCreate');
 
+    Route::post('/fetch-InsertarCarritoenBD', [CarritoController::class, 'insertarCarritoenBD'])->name('carrito.insertarCarritoenBD');
+
     Route::resources([
         'productos' => ProductoController::class,
         'categorias' => CategoriaController::class,
