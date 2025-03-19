@@ -30,7 +30,11 @@ class CarritoController extends Controller
         if ($productosEnCarrito == []) {
             $productosEnCarrito = false;
         }
-        return view("usuario.carrito", ["productosEnCarrito" => $productosEnCarrito]);
+        $precioTotal = 0;
+        foreach ($productosEnCarrito as $productoCarrito) {
+            $precioTotal += $productoCarrito->producto->tipoProducto->precio * $productoCarrito->cantidad;
+        }
+        return view("usuario.carrito", ["productosEnCarrito" => $productosEnCarrito, "precioTotal" => $precioTotal]);
     }
 
     /**

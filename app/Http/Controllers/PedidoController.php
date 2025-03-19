@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Carrito;
 use App\Models\Pedido;
+use App\Models\ProductoPedido;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
@@ -21,7 +23,13 @@ class PedidoController extends Controller
      */
     public function create()
     {
-        //
+        $idUsuario = session('id');
+        $carrito = Carrito::with('producto')->where('usuario_id', $idUsuario)->get();
+        $precioTotal = 0;
+        foreach ($carrito as $productoCarrito) {
+            $precioTotal += $productoCarrito->producto->tipoProducto->precio * $productoCarrito->cantidad;
+        }
+        return view("pedidos.pedido", ["productosCarrito" => $carrito, "precioTotal" => $precioTotal]);
     }
 
     /**
@@ -29,7 +37,28 @@ class PedidoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $idUsuario = session('id');
+        $carrito = Carrito::with('producto')->where('usuario_id', $idUsuario)->get();
+
+        $fecha_venta = date('Y-m-d');
+        $fecha_envio = date('Y-m-d', strtotime($fecha_venta . ' +1 day'));
+        
+        $pedido = Pedido::create([
+            "usuario_id" => $idUsuario,
+            "precio_total" => $request->precio_total,
+            "fecha_venta" => $fecha_venta,
+            "fecha_envio" => $fecha_envio,
+            "fecha_entrega" => null,
+            "estado" => false,
+        ]);
+
+        foreach ($carrito as $productoCarrito) {
+            ProductoPedido::create([
+                "pedidos_id" => $pedido->id,
+                "productos_id" => $productoCarrito->producto->id,
+                "cantidad" => $productoCarrito->cantidad
+            ]);
+        }
     }
 
     /**

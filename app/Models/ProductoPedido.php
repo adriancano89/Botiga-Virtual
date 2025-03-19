@@ -8,11 +8,13 @@ class ProductoPedido extends Model
 {
     protected $table = "productos_pedido";
 
-    public function pedidos():BelongsToMany {
+    protected $fillable = ['pedidos_id', 'productos_id', 'cantidad']; 
+
+    public function pedidos() {
         return $this->belongsToMany(Pedido::class);
     }
     
-    public function productos():BelongsToMany {
+    public function productos() {
         return $this->belongsToMany(Producto::class);
     }
 }
