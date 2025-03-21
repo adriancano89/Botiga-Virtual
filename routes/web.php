@@ -21,9 +21,11 @@ Route::post('/fetch-GuardarPersonalizado', [ProductoController::class, 'guardarP
 Route::post('/fetch-ObtenerStock', [ProductoController::class, 'obtenerStock'])->name('productos.obtenerStock');
 Route::post('/fetch-DatosProducto', [ProductoController::class, 'obtenerDatosProducto'])->name('productos.obtenerDatosProducto');
 Route::post('/fetch-UsuarioValidado', [UserController::class, 'usuarioValidado'])->name('usuarios.usuarioValidado');
+Route::post('/fetch-ObtenerCantidadMaxima', [CarritoController::class, 'cantidadMaxima'])->name('carrito.cantidadMaxima');
 Route::delete('/fetch-EliminarImagen/{imagen}', [FotoController::class, 'destroy'])->name('fotos.destroy');
 
 Route::get('/carrito', [CarritoController::class, 'index'])->name('carrito.index');
+Route::post('/carrito/{id}', [CarritoController::class, 'update'])->name('carrito.update');
 Route::post('/carrito', [CarritoController::class, 'store'])->name('carrito.store');
 Route::delete('/carrito/{id}', [CarritoController::class, 'destroy'])->name('destroy');
 

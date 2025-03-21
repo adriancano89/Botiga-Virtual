@@ -53,13 +53,32 @@ class CarritoController extends Controller
         ->where('talla_id', $request->talla_id)
         ->first();
 
-        if(isset($usuario_id)) {
-            Carrito::create([
-                'usuario_id' => $usuario_id,
-                'productos_id' => $producto->id,
-                'cantidad' => $request->cantidad
-            ]);
+        $idProductos = $producto->id;
+        $stockProducto = $producto->stock;
+        $cantidad = $request->cantidad;
+        
+        if (isset($usuario_id)) {
+            $carrito = Carrito::where([
+                'usuario_id' => intval($usuario_id),
+                'productos_id' => intval($idProductos),
+            ])->first();
+        
+            if ($carrito) {
+                $nuevaCantidad = $carrito->cantidad + $cantidad;
+                if ($stockProducto >= $nuevaCantidad) {
+                    $carrito->update(['cantidad' => $nuevaCantidad]);
+                } else {
+                    $carrito->update(['cantidad' => $stockProducto]);
+                }
+            } else {
+                Carrito::create([
+                    'usuario_id' => $usuario_id,
+                    'productos_id' => $producto->id,
+                    'cantidad' => $request->cantidad
+                ]);
+            }
         }
+        
         return redirect()->route('productos.show', $producto->id);
     }
 
@@ -84,7 +103,10 @@ class CarritoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $carrito = Carrito::findOrFail($id);
+        $carrito->update([
+            'cantidad' => $request->cantidad,
+        ]);
     }
 
     /**
@@ -111,16 +133,44 @@ class CarritoController extends Controller
         ->where('talla_id', $request->talla_id)
         ->first();
 
-        Carrito::create([
-            'usuario_id' => $usuario_id,
-            'productos_id' => $producto->id,
-            'cantidad' => $request->cantidad
-        ]);
+        $idProductos = $producto->id;
+        $stockProducto = $producto->stock;
+        $cantidad = $request->cantidad;
+        
+        $carrito = Carrito::where([
+            'usuario_id' => intval($usuario_id),
+            'productos_id' => intval($idProductos),
+        ])->first();
+    
+        if ($carrito) {
+            $nuevaCantidad = $carrito->cantidad + $cantidad;
+            if ($stockProducto >= $nuevaCantidad) {
+                $carrito->update(['cantidad' => $nuevaCantidad]);
+            } else {
+                $carrito->update(['cantidad' => $stockProducto]);
+            }
+        } else {
+            Carrito::create([
+                'usuario_id' => $usuario_id,
+                'productos_id' => $producto->id,
+                'cantidad' => $request->cantidad
+            ]);
+        }
 
         $data = [
             "exitoso" => true
         ];
 
         return response()->json($data);
+    }
+
+    public function cantidadMaxima(Request $request) {
+        $idProducto = $request->input('id'); // Obtén el id del producto del request
+        $producto = Producto::find($idProducto); // Busca el producto por id
+
+        return response()->json([
+            'id' => $producto->id,
+            'stock' => $producto->stock
+        ]);
     }
 }

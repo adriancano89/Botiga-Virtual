@@ -67,11 +67,22 @@ function guardarCarritoLS(clave, jsonProducto) {
 
 formularioAnadirCarrito.addEventListener('submit', async function(event) {
     if (!validado) {
-        event.preventDefault();
         const jsonProducto = await obtenerDatosProducto(tipoProducto.value, talla.value, color.value);
         const idProducto = jsonProducto.producto[0].id; // Obtenemos el id del producto
         jsonProducto.producto[0].cantidad = cantidad.value;
-        jsonProducto.producto[0].precio = jsonProducto.producto[0].tipo_producto.precio * cantidad.value;
+        event.preventDefault();
+        jsonProducto.producto[0].precio = jsonProducto.producto[0].tipo_producto.precio;
+
+        if (localStorage.getItem('carrito-' + idProducto) != null) {
+            let cantidadActual = parseInt(jsonProducto.producto[0].cantidad);
+            let cantidadNueva = parseInt(cantidad.value);
+
+            if (jsonProducto.producto[0].stock >= (cantidadActual + cantidadNueva)) {
+                jsonProducto.producto[0].cantidad = cantidadActual + cantidadNueva;
+            } else {
+                jsonProducto.producto[0].cantidad = jsonProducto.producto[0].stock;
+            }
+        }
         guardarCarritoLS('carrito-' + idProducto, jsonProducto);
     }
 });
