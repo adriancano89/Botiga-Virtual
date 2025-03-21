@@ -11,6 +11,7 @@ use App\Http\Controllers\TipoProductoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarritoController;
 use App\Http\Controllers\FotoController;
+use App\Http\Controllers\PDFController;
 
 Route::get('/', [TipoProductoController::class, 'mostrarDestacados'])->name('tiposProductos.destacados');
 Route::get('/categoria/{categoria}', [CategoriaController::class, 'show'])->name('categoria.show');
@@ -41,9 +42,13 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/usuario/admin', [UserController::class, 'admin'])->name('usuario.admin');
 
+    Route::get('/usuario/misPedidos', [UserController::class, 'misPedidos'])->name('usuario.misPedidos');
+
     Route::put('/productos/anadirStock', [ProductoController::class, 'updateOrCreate'])->name('productos.updateOrCreate');
 
     Route::post('/fetch-InsertarCarritoenBD', [CarritoController::class, 'insertarCarritoenBD'])->name('carrito.insertarCarritoenBD');
+
+    Route::get('/imprimirFactura/{id}', [PDFController::class, 'imprimirFactura'])->name('imprimirFactura');
 
     Route::resources([
         'productos' => ProductoController::class,

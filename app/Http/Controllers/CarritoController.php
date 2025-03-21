@@ -26,11 +26,12 @@ class CarritoController extends Controller
         } else {
             $productosEnCarrito = [];
         }
-        // Si no se encuentra, asigna false
-        if ($productosEnCarrito == []) {
-            $productosEnCarrito = false;
+        
+        $precioTotal = 0;
+        foreach ($productosEnCarrito as $productoCarrito) {
+            $precioTotal += $productoCarrito->producto->tipoProducto->precio * $productoCarrito->cantidad;
         }
-        return view("usuario.carrito", ["productosEnCarrito" => $productosEnCarrito]);
+        return view("usuario.carrito", ["productosEnCarrito" => $productosEnCarrito, "precioTotal" => $precioTotal]);
     }
 
     /**

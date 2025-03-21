@@ -5,10 +5,12 @@
     </div>
 
     <div>
-        <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
-            <img src="{{asset('icons/general/mis_pedidos.png')}}" alt="Mis Pedidos" class="w-[25px] hover:cursor-pointer">
-            <span class="ml-4">Mis Pedidos</span>
-        </div>
+        <a href="{{ route('usuario.misPedidos') }}">
+            <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
+                <img src="{{asset('icons/general/mis_pedidos.png')}}" alt="Mis Pedidos" class="w-[25px] hover:cursor-pointer">
+                <span class="ml-4">Mis Pedidos</span>
+            </div>
+        </a>
         <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
             <img src="{{asset('icons/general/historial_compras.png')}}" alt="Historial de Compras" class="w-[25px] hover:cursor-pointer">
             <span class="ml-4">Historial de Compras</span>

@@ -18,11 +18,12 @@
                     <h1 class="text-xl font-bold">Carrito</h1>
                 </div>
                 
-                <div>
+                <div class="flex flex-row justify-between">
                     @if ($productosEnCarrito)
                         <div class="">
                             <table id="tablaCarrito">
                                 <tr class="border-2 border-[#131620]">
+                                    <th class="border-2 border-[#131620] text-center">Imagen</th>
                                     <th class="border-2 border-[#131620] text-center">Nombre</th>
                                     <th class="border-2 border-[#131620] text-center">Talla</th>
                                     <th class="border-2 border-[#131620] text-center">Color</th>
@@ -32,6 +33,9 @@
                                 </tr>
                                 @foreach($productosEnCarrito as $productoEnCarrito)
                                     <tr class="border-2 border-[#131620]">
+                                        <td class="border-2 border-[#131620] text-center">
+                                            <img src="{{ asset('storage/' . $productoEnCarrito->producto->tipoProducto->foto) }}" alt="imagen sudadera {{$productoEnCarrito->producto->tipoProducto->nombre}}" class="w-24">
+                                        </td>
                                         <td class="border-2 border-[#131620] text-center">{{$productoEnCarrito->producto->tipoProducto->nombre}}</td>
                                         <td class="border-2 border-[#131620] text-center">{{$productoEnCarrito->producto->talla->nombre}}</td>
                                         <td class="border-2 border-[#131620] text-center">{{$productoEnCarrito->producto->color->nombre}}</td>
@@ -70,6 +74,17 @@
                             </table>
                         </div>
                     @endif
+                    <div class="flex flex-col">
+                        <div class="flex flex-row justify-between">
+                            <span>Total</span>
+                            <span>{{ $precioTotal }} €</span>
+                        </div>
+                        <a href="{{route('pedidos.create')}}"><button>Realizar pedido</button></a>
+                        <div class="flex flex-row">
+                            <img src="{{ asset('icons/general/visa.svg') }}" alt="Pago con VISA" class="w-10">
+                            <img src="{{ asset('icons/general/paypal.svg') }}" alt="Pago con paypal" class="w-10">
+                        </div>
+                    </div>
                 </div>
             </section>
         </div>

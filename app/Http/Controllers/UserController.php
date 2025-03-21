@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Pedido;
+use App\Models\ProductoPedido;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
@@ -84,5 +86,13 @@ class UserController extends Controller
             "validado" => $validado
         ];
         return response()->json($data);
+    }
+
+    public function misPedidos() {
+        $idUsuario = session('id');
+        $usuario = User::find($idUsuario);
+        $pedidos = $usuario->pedidos()->get();
+        
+        return view("usuario.misPedidos", ["pedidos" => $pedidos]);
     }
 }
