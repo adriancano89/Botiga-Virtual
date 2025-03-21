@@ -10,11 +10,11 @@ class ProductoPedido extends Model
 
     protected $fillable = ['pedidos_id', 'productos_id', 'cantidad']; 
 
-    public function pedidos() {
-        return $this->belongsToMany(Pedido::class);
+    public function pedido() {
+        return $this->belongsTo(Pedido::class, 'pedidos_id');
     }
     
-    public function productos() {
-        return $this->belongsToMany(Producto::class);
+    public function producto() {
+        return $this->belongsTo(Producto::class, 'productos_id');
     }
 }

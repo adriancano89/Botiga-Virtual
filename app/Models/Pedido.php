@@ -14,4 +14,7 @@ class Pedido extends Model
     {
         return $this->belongsTo(User::class, 'usuario_id'); // 'usuario_id' es la clave foránea que vincula al usuario
     }
+    public function productosPedido(){
+        return $this->hasMany(ProductoPedido::class, 'pedidos_id');
+    }
 }

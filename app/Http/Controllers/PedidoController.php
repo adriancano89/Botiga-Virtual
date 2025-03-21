@@ -59,6 +59,8 @@ class PedidoController extends Controller
                 "cantidad" => $productoCarrito->cantidad
             ]);
         }
+
+        return view("pedidos.pedidoRealizado", ["idPedido" => $pedido->id]);
     }
 
     /**
@@ -66,7 +68,10 @@ class PedidoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $pedido = Pedido::with('productosPedido.producto.tipoProducto')->find($id);
+
+        return view("pedidos.mostrarPedido", ["pedido" => $pedido]);
+        //return response()->json($pedido);
     }
 
     /**
