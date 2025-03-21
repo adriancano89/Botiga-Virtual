@@ -8,7 +8,7 @@
     <title>Productos del pedido</title>
 </head>
 <body>
-    @include('General.header')
+    @include('general.header')
     <div class="flex flex-row">
         @include('usuario.barraLateral')
         <section class="w-[85%] p-4">
@@ -78,6 +78,6 @@
             </div>
         </section>
     </div>
-    @include('General.footer')
+    @include('general.footer')
 </body>
 </html>
