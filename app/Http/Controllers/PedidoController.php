@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Carrito;
 use App\Models\Pedido;
 use App\Models\ProductoPedido;
+use App\Models\Producto;
 use Illuminate\Http\Request;
 
 class PedidoController extends Controller
@@ -53,11 +54,37 @@ class PedidoController extends Controller
         ]);
 
         foreach ($carrito as $productoCarrito) {
-            ProductoPedido::create([
-                "pedidos_id" => $pedido->id,
-                "productos_id" => $productoCarrito->producto->id,
-                "cantidad" => $productoCarrito->cantidad
-            ]);
+            if ($productoCarrito->producto->stock >= $productoCarrito->cantidad) {
+                ProductoPedido::create([
+                    "pedidos_id" => $pedido->id,
+                    "productos_id" => $productoCarrito->producto->id,
+                    "cantidad" => $productoCarrito->cantidad
+                ]);
+
+                $producto = Producto::findOrFail($productoCarrito->producto->id);
+
+                $producto->update([
+                    'stock' => $productoCarrito->producto->stock - $productoCarrito->cantidad,
+                ]);
+            } else {
+                ProductoPedido::create([
+                    "pedidos_id" => $pedido->id,
+                    "productos_id" => $productoCarrito->producto->id,
+                    "cantidad" => $productoCarrito->producto->stock
+                ]);
+
+                $producto = Productos::findOrFail($productoCarrito->producto->id);
+
+                $producto->update([
+                    'stock' => $productoCarrito->producto->stock - $productoCarrito->producto->stock,
+                ]);
+            }
+        }
+
+        $carritoUsuario = Carrito::where('usuario_id', $idUsuario);
+
+        if ($carritoUsuario) {
+            $carritoUsuario->delete();
         }
 
         return view("pedidos.pedidoRealizado", ["idPedido" => $pedido->id]);
