@@ -110,51 +110,19 @@ async function insertarCarritoenBD() {
             let colorid = datosProducto.color.id;
             let cantidad = datosProducto.cantidad;
 
-            fetch('/fetch-InsertarCarritoenBD', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': token
-                },
-                body: JSON.stringify({
-                    "tipos_producto_id": tipoidCarrito,
-                    "color_id": colorid,
-                    "talla_id": tallaid,
-                    "cantidad": cantidad
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
+            const dataEnvio = {
+                "tipos_producto_id": tipoidCarrito,
+                "color_id": colorid,
+                "talla_id": tallaid,
+                "cantidad": cantidad
+            };
+
+            let data = await enviarDatos('/fetch-InsertarCarritoenBD', dataEnvio, 'POST', 'Error al insertar el carrito en la base de datos');
+            if (data) {
                 localStorage.removeItem('carrito-' + datosProducto.id);
-            })
-            .catch((error) => {
-                console.error('Error:', error);
-            });
+            }
         }
     }
-}
-
-async function consultarUsuarioValidado() {
-    let data;
-    try {
-        const promesa = await fetch('/fetch-UsuarioValidado', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': token
-        }
-        });
-
-        if (!promesa.ok) {
-            throw new Error('Error al comprobar si el usuario está validado');
-        }
-
-        data = await promesa.json();
-    }
-    catch (error) {
-        console.error(error);
-    }
-    return data.validado;
 }
 
 function selecionarSelect() {
@@ -174,24 +142,10 @@ function selecionarSelect() {
 
 async function actualizarCantidadCarrito(idCarrito, nuevaCantidad) {
     if (validado) {
-        try {
-            const promesa = await fetch(`/carrito/${idCarrito}`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'X-CSRF-TOKEN': token
-                },
-                body: JSON.stringify({
-                    cantidad: nuevaCantidad,
-                }),
-            });
-            if (!promesa.ok) {
-                throw new Error('Error al cambiar la cantidad del carrito');
-            }
-
-        } catch (error) {
-            console.error(error);
-        }
+        const dataEnvio = {
+            cantidad: nuevaCantidad
+        };
+        let data = await enviarDatos(`/carrito/${idCarrito}`, dataEnvio, 'POST', 'Error al cambiar la cantidad del carrito');
     } else {
         // Recuperar el objeto del Local Storage usando el nombre correcto
         let productoGuardado = localStorage.getItem('carrito-' + idCarrito);
@@ -212,29 +166,15 @@ async function actualizarCantidadCarrito(idCarrito, nuevaCantidad) {
 
 async function obtenerCantidadMaxima(idProducto) {
     let retornarStock = null;
-
-    try {
-        const response = await fetch('/fetch-ObtenerCantidadMaxima', {
-            method: 'POST', 
-            headers: {
-                'Content-Type': 'application/json',
-                'X-CSRF-TOKEN': token
-            },
-            body: JSON.stringify({ id: idProducto })
-        });
-
-        const data = await response.json();
-
-        if (data && data.stock != undefined) {
-            retornarStock = data.stock;
-        } else {
-            console.log('Producto no encontrado o no tiene stock');
-        }
-
-    } catch (error) {
-        console.error('Error al obtener la cantidad máxima:', error);
+    const dataEnvio = {
+        id: idProducto
+    };
+    let data = await enviarDatos('/fetch-ObtenerCantidadMaxima', dataEnvio, 'POST', 'Error al obtener la cantidad máxima del producto');
+    if (data && data.stock != undefined) {
+        retornarStock = data.stock;
+    } else {
+        console.log('Producto no encontrado o no tiene stock');
     }
-    
     return retornarStock;
 }
 

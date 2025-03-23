@@ -5,7 +5,6 @@ const spanGrosor = document.getElementById('valorGrosor');
 const btnLimpiar = document.getElementById('limpiar');
 const btnGuardar = document.getElementById('guardar');
 const imagenSudadera = document.getElementById('imagenSudadera');
-const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 
 let dibujando = false;
 let inicioX, inicioY, finX, finY;
@@ -55,32 +54,12 @@ async function guardarImagenServidor() {
     const idProducto = Number(arrayURL[arrayURL.length - 1]);
     console.log("Id producto: " + idProducto);
 
-
-    let data;
     let dataEnvio = {
         "imagen" : dataImagen,
         "idProducto" : idProducto
-    }
-    try {
-        const promesa = await fetch('/fetch-GuardarPersonalizado', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': token
-        },
-        body : JSON.stringify(dataEnvio)
-        });
-
-        if (!promesa.ok) {
-            throw new Error('Error al guardar el producto personalizado');
-        }
-
-        data = await promesa.json();
-        console.log(data);
-    }
-    catch (error) {
-        console.error(error);
-    }
+    };
+    let data = await enviarDatos('/fetch-GuardarPersonalizado', dataEnvio, 'POST', 'Error al guardar el producto personalizado');
+    console.log(data);
 }
 
 if (canvas) { //Comprobamos que haya la etiqueta canvas en el DOM

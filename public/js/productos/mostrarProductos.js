@@ -1,32 +1,12 @@
-const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 const divProductos = document.getElementById('productos');
 const divPaginacion = document.getElementById('paginacion');
 const buscarProductos = document.getElementById('buscarProductos');
 
 async function obtenerProductos(pagina, busqueda) {
-    let data;
     let dataBusqueda = {
         "busqueda": busqueda.trim()
     }
-    try {
-        const promesa = await fetch(pagina, {
-        method: 'POST',
-        body : JSON.stringify(dataBusqueda),
-        headers: {
-            'Content-Type': 'application/json',
-            'X-CSRF-TOKEN': token
-        }
-        });
-
-        if (!promesa.ok) {
-            throw new Error('Error al obtener los productos');
-        }
-
-        data = await promesa.json();
-    }
-    catch (error) {
-        console.error(error);
-    }
+    let data = enviarDatos(pagina, dataBusqueda, 'POST', 'Error al obtener los productos');
     return data;
 }
 
