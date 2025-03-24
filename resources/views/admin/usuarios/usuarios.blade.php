@@ -1,9 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css'])
+    <script src="{{ asset('js/fetch.js') }}" defer></script>
+    <script src="{{ asset('js/usuarios/Usuario.js') }}" defer></script>
+    <script src="{{ asset('js/usuarios/editarUsuario.js') }}" defer></script>
     <title>Administrar | Usuarios</title>
 </head>
 <body>
@@ -40,7 +44,7 @@
                                 <td class="border-2 border-[#131620]">{{$usuario->email}}</td>
                                 <td class="border-2 border-[#131620]">{{$usuario->telefono}}</td>
                                 <td class="border-2 border-[#131620]">
-                                    <select name="rol" id="rol">
+                                    <select name="rol" id="{{ $usuario->id }}" class="rol">
                                         <option value="0" {{ !$usuario->rol ? 'selected' : '' }}>Cliente</option>
                                         <option value="1" {{ $usuario->rol ? 'selected' : '' }}>Administrador</option>
                                     </select>

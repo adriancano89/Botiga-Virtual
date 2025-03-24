@@ -65,7 +65,15 @@ class UserController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $nuevoRol = $request->rol;
+        $usuario = User::find($id);
+        $actualizado = $usuario->update([
+            "rol" => $nuevoRol
+        ]);
+        $data = [
+            "exitoso" => $actualizado
+        ];
+        return response()->json($data);
     }
 
     /**
