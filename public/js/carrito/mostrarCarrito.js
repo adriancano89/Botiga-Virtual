@@ -1,5 +1,4 @@
 const tablaCarritoLS = document.getElementById('tablaCarritoLS');
-const token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
 let validado;
 
 // recogerDatosLS()

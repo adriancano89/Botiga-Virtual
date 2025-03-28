@@ -50,6 +50,12 @@
                 <img src="{{asset('icons/general/paleta-de-color.png')}}" alt="Paleta de Color" class="w-[25px] hover:cursor-pointer  ml-7">
                 <a href="{{route('colores.index')}}"><span class="ml-4">Colores</span></a>
             </div>
+            <a href="{{route('productos.mostrarGraficos')}}">
+                <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
+                    <img src="{{asset('icons/general/grafico-circular.png')}}" alt="Paleta de Color" class="w-[25px] hover:cursor-pointer  ml-7">
+                    <span class="ml-4">Gráficos</span>
+                </div>
+            </a>
         </div>
     <div class="bg-[#131620] pt-10 pl-10 pr-10 pb-10">
         <form action="{{route('logout')}}" method="post">

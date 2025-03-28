@@ -8,6 +8,10 @@ use App\Models\Talla;
 use App\Models\Color;
 use App\Models\Foto;
 use App\Models\Producto;
+use App\Models\Pedido;
+use App\Models\ProductoPedido;
+use Carbon\Carbon;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 
 class ProductoController extends Controller
@@ -161,6 +165,113 @@ class ProductoController extends Controller
             "producto" => $producto
         ];
 
+        return response()->json($data);
+    }
+
+    public function mostrarGraficos() {
+        return view("admin.estadisticas.graficos");
+    }
+
+    public function obtenerDatosGraficosVentasMensuales () {
+        $fechaInicio = Carbon::now()->subMonth(); // Fecha de hace un mes
+
+        // Obtener las cantidades vendidas por producto en el último mes
+        $ventas = ProductoPedido::select('productos_id', DB::raw('SUM(cantidad) as total_vendido'))
+            ->join('pedidos', 'productos_pedido.pedidos_id', '=', 'pedidos.id')
+            ->where('pedidos.fecha_venta', '>=', $fechaInicio)
+            ->groupBy('productos_id')
+            ->get();
+
+        // Crear un array para los datos del gráfico
+        $productosLabels = [];
+        $ventasDatos = [];
+
+        foreach ($ventas as $venta) {
+            $producto = Producto::find($venta->productos_id);
+            $tipoProducto = TipoProducto::find($producto->tipos_producto_id);
+            $talla = Talla::find($producto->talla_id);
+            $color = Color::find($producto->color_id);
+            if ($producto) {
+                $productosLabels[] = $tipoProducto->nombre . ' ' . $talla->nombre . ' ' . $color->nombre; // Tipo Producto + Talla + Color
+                $ventasDatos[] = $venta->total_vendido;
+                $backgroundColors[] = $color->hexadecimal; // Guardamos el color hexadecimal
+            }
+        }
+
+        $data = [
+            "nombresProductos" => $productosLabels,
+            "ventasProductos" => $ventasDatos,
+            "coloresProductos" => $backgroundColors
+        ];
+
+        return response()->json($data);
+    }
+
+    public function obtenerDatosGraficos10ProductosMasVendidos() {
+        // Obtener las cantidades vendidas por producto
+        $ventas = ProductoPedido::select('productos_id', DB::raw('SUM(cantidad) as total_vendido'))
+            ->join('pedidos', 'productos_pedido.pedidos_id', '=', 'pedidos.id')
+            ->groupBy('productos_id')
+            ->orderBy('total_vendido', 'desc') // Ordenar por total vendido
+            ->take(10) // Tomar solo los 10 más vendidos
+            ->get();
+    
+        // Crear un array para los datos del gráfico
+        $productosLabels = [];
+        $ventasDatos = [];
+        $backgroundColors = [];
+    
+        foreach ($ventas as $venta) {
+            $producto = Producto::find($venta->productos_id);
+            if ($producto) {
+                $tipoProducto = TipoProducto::find($producto->tipos_producto_id);
+                $talla = Talla::find($producto->talla_id);
+                $color = Color::find($producto->color_id);
+                $productosLabels[] = $tipoProducto->nombre . ' ' . $talla->nombre . ' ' . $color->nombre; // Tipo Producto + Talla + Color
+                $ventasDatos[] = $venta->total_vendido;
+                $backgroundColors[] = $color->hexadecimal; // Guardamos el color hexadecimal
+            }
+        }
+    
+        $data = [
+            "nombresProductos" => $productosLabels,
+            "ventasProductos" => $ventasDatos,
+            "coloresProductos" => $backgroundColors
+        ];
+    
+        return response()->json($data);
+    }
+
+
+
+    public function obtenerDatosGraficosProductosStockBajo() {
+        // Obtener productos con stock bajo
+        $productosBajosStock = Producto::where('stock', '<', 6)->get();
+    
+        // Crear un array para los datos del gráfico
+        $productosLabels = [];
+        $stockDatos = [];
+        $backgroundColors = [];
+    
+        foreach ($productosBajosStock as $producto) {
+            $tipoProducto = TipoProducto::find($producto->tipos_producto_id);
+            $talla = Talla::find($producto->talla_id);
+            $color = Color::find($producto->color_id);
+            
+            // Solo añade datos si el producto existe
+            if ($tipoProducto && $talla && $color) {
+                $productosLabels[] = $tipoProducto->nombre . ' ' . $talla->nombre . ' ' . $color->nombre; // Tipo Producto + Talla + Color
+                $stockDatos[] = $producto->stock;
+                $backgroundColors[] = $color->hexadecimal; // Guardamos el color hexadecimal
+            }
+        }
+    
+        $data = [
+            "nombresProductos" => $productosLabels,
+            "stockProductos" => $stockDatos,
+            "coloresProductos" => $backgroundColors
+        ];
+    
         return response()->json($data);
     }
 }

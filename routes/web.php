@@ -50,6 +50,11 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/imprimirFactura/{id}', [PDFController::class, 'imprimirFactura'])->name('imprimirFactura');
 
+    Route::get('/graficos', [ProductoController::class, 'mostrarGraficos'])->name('productos.mostrarGraficos');
+    Route::post('/fetch-graficosVentasMensuales', [ProductoController::class, 'obtenerDatosGraficosVentasMensuales'])->name('productos.obtenerDatosGraficosVentasMensuales');
+    Route::post('/fetch-graficos10ProductosMasVendidos', [ProductoController::class, 'obtenerDatosGraficos10ProductosMasVendidos'])->name('productos.obtenerDatosGraficos10ProductosMasVendidos');
+    Route::post('/fetch-graficosProductosStockBajo', [ProductoController::class, 'obtenerDatosGraficosProductosStockBajo'])->name('productos.obtenerDatosGraficosProductosStockBajo');
+
     Route::resources([
         'productos' => ProductoController::class,
         'categorias' => CategoriaController::class,
