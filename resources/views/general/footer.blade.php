@@ -1,4 +1,4 @@
-<footer class="flex flex-col bg-[#131620] text-white text-center">
+<footer class="flex flex-col fondo-primario text-white text-center">
     <div class="flex flex-row justify-between">
         <div class="flex-1 p-4">
             <div>
@@ -9,9 +9,9 @@
                 <p>Sudaderas de diseño premium para un estilo de vida moderno.</p>
             </div>
             <div class="flex flex-row justify-center gap-4 mt-4">
-                <img src="{{asset('icons/general/instagram.png')}}" alt="icono Instagram" class="w-[25px]">
-                <img src="{{asset('icons/general/twitter.png')}}" alt="icono X" class="w-[25px]">
-                <img src="{{asset('icons/general/facebook.png')}}" alt="icono Facebook" class="w-[25px]">
+                <img src="{{asset('icons/general/instagram.png')}}" alt="icono Instagram">
+                <img src="{{asset('icons/general/twitter.png')}}" alt="icono X">
+                <img src="{{asset('icons/general/facebook.png')}}" alt="icono Facebook">
             </div>
         </div>
         <div class="flex-1 p-4">
@@ -26,9 +26,9 @@
         <div class="flex-1 p-4">
             <h2 class="font-bold text-xl">Soporte</h2>
             <ul class="flex flex-col items-center">
-                <li class="flex flex-row p-2 gap-2"><img src="{{asset('icons/general/correo.png')}}" alt="icono correo" class="w-[25px]">soporte@gmail.com</li>
-                <li class="flex flex-row p-2 gap-2"><img src="{{asset('icons/general/telefono.png')}}" alt="icono teléfono" class="w-[25px]">+34 63472342</li>
-                <li class="flex flex-row p-2 gap-2"><img src="{{asset('icons/general/ubicacion.png')}}" alt="icono Dirección" class="w-[25px]">Dirección</li>
+                <li class="canal-soporte"><img src="{{asset('icons/general/correo.png')}}" alt="icono correo">soporte@gmail.com</li>
+                <li class="canal-soporte"><img src="{{asset('icons/general/telefono.png')}}" alt="icono teléfono">+34 63472342</li>
+                <li class="canal-soporte"><img src="{{asset('icons/general/ubicacion.png')}}" alt="icono Dirección">Dirección</li>
             </ul>
         </div>
     </div>

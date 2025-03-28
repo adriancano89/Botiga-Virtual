@@ -1,62 +1,71 @@
-<nav class="flex flex-col items-start justify-start gap-4 text-[20px] bg-[#131620] text-white p-0  w-[15%]">
+<nav class="barra-lateral fondo-primario">
     <div class="flex flex-col items-center mx-auto w-[100px]">
         <img src="{{asset('icons/general/perfil_usuario.png')}}" alt="Perfil Usuario" class="w-[100px] mb-1">
         <span>{{ session('name') }}</span>
     </div>
 
-    <div>
+    <ul>
         <a href="{{ route('usuario.misPedidos') }}">
-            <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
-                <img src="{{asset('icons/general/mis_pedidos.png')}}" alt="Mis Pedidos" class="w-[25px] hover:cursor-pointer">
-                <span class="ml-4">Mis Pedidos</span>
-            </div>
+            <li class="apartado">
+                <img src="{{asset('icons/general/mis_pedidos.png')}}" alt="Mis Pedidos" class="icono">
+                <span>Mis Pedidos</span>
+            </li>
         </a>
-        <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
-            <img src="{{asset('icons/general/historial_compras.png')}}" alt="Historial de Compras" class="w-[25px] hover:cursor-pointer">
-            <span class="ml-4">Historial de Compras</span>
-        </div>
         <a href="/profile">
-            <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
-                <img src="{{asset('icons/general/informacion-personal.png')}}" alt="Datos Personales" class="w-[25px] hover:cursor-pointer">
-                <span class="ml-4">Datos Personales</span>
-            </div>
+            <li class="apartado">
+                <img src="{{asset('icons/general/informacion-personal.png')}}" alt="Datos Personales" class="icono">
+                <span>Datos Personales</span>
+            </li>
         </a>
-        <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
-            <img src="{{asset('icons/general/administracion.png')}}" alt="Administración" class="w-[25px] hover:cursor-pointer">
-            <a href="{{route('tiposProductos.index')}}"><span class="ml-4">Administración</span></a>
-        </div>
-        <div>
-            <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
-                <img src="{{asset('icons/general/camiseta.png')}}" alt="Productos" class="w-[25px] hover:cursor-pointer ml-7">
-                <a href="{{route('tiposProductos.index')}}"><span class="ml-4">Productos</span></a>
-            </div>
-            <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
-                <img src="{{asset('icons/general/ventas.png')}}" alt="Ventas" class="w-[25px] hover:cursor-pointer  ml-7">
-                <a href="{{route('pedidos.index')}}"><span class="ml-4">Ventas</span></a>
-            </div>
-            <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
-                <img src="{{asset('icons/general/usuarios.png')}}" alt="Usuarios" class="w-[25px] hover:cursor-pointer  ml-7">
-                <a href="{{route('usuarios.index')}}"><span class="ml-4">Usuarios</span></a>
-            </div>
-            <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
-                <img src="{{asset('icons/general/categorias.png')}}" alt="Categorias" class="w-[25px] hover:cursor-pointer  ml-7">
-                <a href="{{route('categorias.index')}}"><span class="ml-4">Categorias</span></a>
-            </div>
-            <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
-                <img src="{{asset('icons/general/tallas.png')}}" alt="Tallas" class="w-[25px] hover:cursor-pointer  ml-7">
-                <a href="{{route('tallas.index')}}"><span class="ml-4">Tallas</span></a>
-            </div>
-            <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
-                <img src="{{asset('icons/general/paleta-de-color.png')}}" alt="Paleta de Color" class="w-[25px] hover:cursor-pointer  ml-7">
-                <a href="{{route('colores.index')}}"><span class="ml-4">Colores</span></a>
-            </div>
-        </div>
-    <div class="bg-[#131620] pt-10 pl-10 pr-10 pb-10">
+        <li class="apartado">
+            <img src="{{asset('icons/general/administracion.png')}}" alt="Administración" class="icono">
+            <a href="{{route('tiposProductos.index')}}"><span>Administración</span></a>
+        </li>
+        <ul>
+            <a href="{{route('tiposProductos.index')}}">
+                <li class="apartado">
+                    <img src="{{asset('icons/general/camiseta.png')}}" alt="Productos" class="icono ml-7">
+                    <span>Productos</span>
+                </li>
+            </a>
+            <a href="{{route('pedidos.index')}}">
+                <li class="apartado">
+                    <img src="{{asset('icons/general/ventas.png')}}" alt="Ventas" class="icono  ml-7">
+                    <span>Ventas</span>
+                </li>
+            </a>
+            <a href="{{route('usuarios.index')}}">
+                <li class="apartado">
+                    <img src="{{asset('icons/general/usuarios.png')}}" alt="Usuarios" class="icono  ml-7">
+                    <span>Usuarios</span>
+                </li>
+            </a>
+            <a href="{{route('categorias.index')}}">
+                <li class="apartado">
+                    <img src="{{asset('icons/general/categorias.png')}}" alt="Categorias" class="icono  ml-7">
+                    <span>Categorias</span>
+                </li>
+            </a>
+            <a href="{{route('tallas.index')}}">
+                <li class="apartado">
+                    <img src="{{asset('icons/general/tallas.png')}}" alt="Tallas" class="icono  ml-7">
+                    <span>Tallas</span>
+                </li>
+            </a>
+            <a href="{{route('colores.index')}}">
+                <li class="apartado">
+                    <img src="{{asset('icons/general/paleta-de-color.png')}}" alt="Paleta de Color" class="icono  ml-7">
+                    <span>Colores</span>
+                </li>
+            </a>
+        </ul>
+    </ul>
+    <div class="p-4">
         <form action="{{route('logout')}}" method="post">
             @csrf
-            <div class="hover:cursor-pointer bg-[#0983AC] border-2 border-[#131620] rounded-[8px] flex items-center pt-4 pl-8 pr-8 pb-4 hover:bg-[#131620] hover:border-2 hover:border-[#0983AC]">
-                <img src="{{asset('icons/general/cerrar_sesion.png')}}" alt="Cerrar Sesión" class="w-[25px]">
-                <button class="ml-4" type="submit">Cerrar Sesión</button>
+            <div class="hover:cursor-pointer fondo-secundario border-2 borde-primario rounded-[8px] flex items-center p-4 fondo-primario-hover hover:border-2 borde-secundario-hover">
+                <img src="{{asset('icons/general/cerrar_sesion.png')}}" alt="Cerrar Sesión" class="icono">
+                <button type="submit">Cerrar Sesión</button>
             </div>
         </form>
     </div>

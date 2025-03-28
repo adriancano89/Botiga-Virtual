@@ -1,3 +1,63 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+button:hover {
+    cursor: pointer;
+}
+
+select:hover {
+    cursor: pointer;
+}
+
+.fondo-primario, .fondo-primario-hover:hover {
+    background-color: #131620;
+}
+
+.fondo-secundario, .fondo-secundario-hover:hover {
+    background-color: #0983AC;
+}
+
+.fondo-terciario, .fondo-terciario-hover:hover {
+    background-color: #F2E984;
+}
+
+.borde-primario, .borde-primario-hover:hover {
+    @apply border-[#131620];
+}
+
+.borde-secundario, .borde-secundario-hover:hover {
+    @apply border-[#0983AC];
+}
+
+.borde-terciario, .borde-terciario-hover:hover {
+    @apply border-[#F2E984];
+}
+
+.color-letra-secundaria {
+    @apply text-[#0983AC];
+}
+
+header img, footer img {
+    @apply w-[25px] hover:cursor-pointer;
+}
+
+.canal-soporte {
+    @apply flex flex-row p-2 gap-2;
+}
+
+.barra-lateral {
+    @apply flex flex-col items-start justify-start gap-4 text-[20px] text-white p-0  w-[15%];
+}
+
+.barra-lateral span, .barra-lateral button {
+    @apply ml-4;
+}
+
+.apartado {
+    @apply hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full;
+}
+
+.icono {
+    @apply w-[25px] hover:cursor-pointer;
+}

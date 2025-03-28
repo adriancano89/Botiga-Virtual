@@ -1,6 +1,7 @@
 const divProductos = document.getElementById('productos');
 const divPaginacion = document.getElementById('paginacion');
 const buscarProductos = document.getElementById('buscarProductos');
+const animacionCarga = document.getElementById('animacionCarga');
 
 async function obtenerProductos(pagina, busqueda) {
     let dataBusqueda = {
@@ -20,19 +21,19 @@ function dibujarProductos(dataProductos) {
         let precio = datosProducto.precio;
         divProductos.innerHTML += `
         <a href="productos/${id}">
-            <div class="shadow-xl rounded-[15px] p-4 hover:bg-slate-300 hover:cursor-pointer">
+            <div class="producto">
                 <div class="flex flex-row">
-                    <img src="icons/general/con-capucha.png" alt="imagen producto" class="w-26 h-26">
-                    <a href='tiposProductos/${id}/edit'><img src="icons/general/editar.png" alt="editar producto" class="w-8 h-8 mt-2" title="Editar producto"></a>
-                    <img src="icons/general/papelera.png" alt="eliminar producto" class="w-8 h-8 mt-2" title="Eliminar producto">
+                    <img src="icons/general/con-capucha.png" alt="imagen producto" class="imagen-producto">
+                    <a href='tiposProductos/${id}/edit'><img src="icons/general/editar.png" alt="editar producto" class="icono-accion" title="Editar producto"></a>
+                    <img src="icons/general/papelera.png" alt="eliminar producto" class="icono-accion" title="Eliminar producto">
                 </div>
-                <h2 class="font-bold text-lg">${nombre}</h2>
-                <span class="text-gray-500">${codigo}</span>
-                <div class="flex flex-row justify-between">
-                    <span class="text-[#0983AC] font-bold">${precio} €</span>
+                <h2 class="nombre-producto">${nombre}</h2>
+                <span class="codigo-producto">${codigo}</span>
+                <div class="apartado-precio-stock">
+                    <span class="color-letra-secundaria precio">${precio} €</span>
                     <div class="flex flex-row">
                         <a href='productos/${id}/edit'> 
-                        <img src="icons/general/mas.png" alt="añadir stock" class="w-[25px] hover:cursor-pointer" title="Añadir stock">
+                            <img src="icons/general/mas.png" alt="añadir stock" class="icono-anadir-stock" title="Añadir stock">
                         </a>
                         <span></span>
                     </div>
@@ -59,7 +60,7 @@ function mostrarProductos(datos) {
         }
     }
     else {
-        divProductos.innerHTML = "No se han encontrado productos";
+        divProductos.innerHTML = "<span class='centrado'>No se han encontrado productos</span>";
     }
     
 }
@@ -67,6 +68,14 @@ function mostrarProductos(datos) {
 function indicarPagina(enlace) {
     enlace.classList.remove('text-black');
     enlace.classList.add('bg-[#0983AC]', 'text-white');
+}
+
+function mostrarAnimacionCarga() {
+    animacionCarga.classList.remove('hidden');
+}
+
+function ocultarAnimacionCarga() {
+    animacionCarga.classList.add('hidden');
 }
 
 function crearEnlace(url, texto) {
@@ -109,8 +118,9 @@ function crearEnlace(url, texto) {
                 }
             });
         }
-
+        mostrarAnimacionCarga();
         let datos = await obtenerProductos(enlace.href, '');
+        ocultarAnimacionCarga();
         mostrarProductos(datos);
         actualizarPaginacion(datos.productos);
     });
@@ -158,7 +168,9 @@ function restablecerPaginacion() {
 }
 
 async function cargarProductos(url, busqueda) {
+    mostrarAnimacionCarga();
     let datos = await obtenerProductos(url, busqueda);
+    ocultarAnimacionCarga();
     mostrarProductos(datos);
     restablecerPaginacion();
     mostrarPaginacion(datos.productos.links);

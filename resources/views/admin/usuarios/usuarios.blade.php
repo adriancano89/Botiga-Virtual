@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/css/estilosAdmin.css'])
     <script src="{{ asset('js/fetch.js') }}" defer></script>
     <script src="{{ asset('js/usuarios/Usuario.js') }}" defer></script>
     <script src="{{ asset('js/usuarios/editarUsuario.js') }}" defer></script>
@@ -14,36 +14,52 @@
     @include('general.header')
     <div class="flex flex-row">
         @include('usuario.barraLateral')
-        <section class="w-[85%] p-4">
-            <div class="flex flex-row justify-between items-center">
-                <h1 class="text-xl font-bold">Usuarios</h1>
-                <a href="{{route('usuarios.create')}}"><button>+ Añadir nuevo usuario</button></a>
-            </div>
-            <div>
-                <div>
-                    <div>
-                        <input type="search" name="buscarProductos" id="buscarProductos" placeholder="Buscar productos..." class="border-2 border-gray p-2">
+        <section class="seccion-principal">
+            <section class="cabecera-contenido">
+                <h1>Usuarios</h1>
+                <a href="{{route('usuarios.create')}}"><button class="btn-crear fondo-secundario">Crear nuevo usuario</button></a>
+            </section>
+            <section class="contenido">
+                <div class="busqueda-filtros">
+                    <div class="buscador">
+                        <input type="search" name="buscarProductos" id="buscarProductos" placeholder="Buscar productos...">
                     </div>
-                    <div>
-                        <!-- Filtros -->
+                    <div class="filtros">
+                        <div class="filtro">
+                            <img src="{{asset('icons/general/filtrar.svg')}}" alt="Filtrar por">
+                            <select name="filtrar" id="filtrar">
+                                <option value="" disabled selected>Filtrar por</option>
+                                <option value="todos">Todos</option>
+                                <option value="rol">Rol</option>
+                            </select>
+                        </div>
+                        <div class="filtro">
+                            <img src="{{asset('icons/general/ordenar.svg')}}" alt="Ordenar por">
+                            <select name="ordenar" id="ordenar">
+                                <option value="" disabled selected>Ordenar por</option>
+                                <option value="precio">Nombre</option>
+                                <option value="">Apellidos</option>
+                                <option value="inactivo">Email</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
-                <div class="">
+                <div class="seccion-tabla">
                     <table>
-                        <tr class="border-2 border-[#131620]">
-                            <th class="border-2 border-[#131620]">Nombre</th>
-                            <th class="border-2 border-[#131620]">Apellidos</th>
-                            <th class="border-2 border-[#131620]">Email</th>
-                            <th class="border-2 border-[#131620]">Teléfono</th>
-                            <th class="border-2 border-[#131620]">Rol</th>
+                        <tr class="fondo-primario">
+                            <th>Nombre</th>
+                            <th>Apellidos</th>
+                            <th>Email</th>
+                            <th>Teléfono</th>
+                            <th>Rol</th>
                         </tr>
                         @foreach($todosUsuarios as $usuario)
-                            <tr class="border-2 border-[#131620]">
-                                <td class="border-2 border-[#131620]">{{$usuario->name}}</td>
-                                <td class="border-2 border-[#131620]">{{$usuario->apellidos}}</td>
-                                <td class="border-2 border-[#131620]">{{$usuario->email}}</td>
-                                <td class="border-2 border-[#131620]">{{$usuario->telefono}}</td>
-                                <td class="border-2 border-[#131620]">
+                            <tr>
+                                <td>{{$usuario->name}}</td>
+                                <td>{{$usuario->apellidos}}</td>
+                                <td>{{$usuario->email}}</td>
+                                <td>{{$usuario->telefono}}</td>
+                                <td>
                                     <select name="rol" id="{{ $usuario->id }}" class="rol">
                                         <option value="0" {{ !$usuario->rol ? 'selected' : '' }}>Cliente</option>
                                         <option value="1" {{ $usuario->rol ? 'selected' : '' }}>Administrador</option>
@@ -53,9 +69,9 @@
                         @endforeach
                     </table>
                 </div>
-            </div>
-        </div>
-    </section>
+            </section>
+        </section>
+    </div>
     @include('general.footer')
 </body>
 </html>
