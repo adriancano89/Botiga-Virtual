@@ -58,6 +58,12 @@
                     <span>Colores</span>
                 </li>
             </a>
+            <a href="{{route('productos.mostrarGraficos')}}">
+                <div class="hover:cursor-pointer hover:bg-[#4B5563] flex items-center pt-2 pl-7 pr-7 pb-2 w-full">
+                    <img src="{{asset('icons/general/grafico-circular.png')}}" alt="Paleta de Color" class="w-[25px] hover:cursor-pointer  ml-7">
+                    <span class="ml-4">Gráficos</span>
+                </div>
+            </a>
         </ul>
     </ul>
     <div class="p-4">
