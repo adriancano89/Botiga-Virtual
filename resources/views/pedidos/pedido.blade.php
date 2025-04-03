@@ -6,12 +6,14 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css'])
     <script src="{{ asset('js/chatbot.js') }}" defer></script>
+    <script src="{{ asset('js/carrito/pedido.js') }}" defer></script>
+    <script src="https://js.stripe.com/v3/"></script>
     <title>Sundero Sweatshirt</title>
 </head>
 <body>
     @include('general.header')
     <section class="relative flex flex-row">
-        <div class="w-1/2 pt-4 pl-4 pr-4">
+        <div class="w-2/3 pt-4 pl-4 pr-4">
             <h1>Realización del pedido</h1>
         @if ($productosCarrito->count() == 0)
             <span>No hay productos en el carrito.</span>
@@ -31,13 +33,13 @@
                     <span>Precio unidad: {{ $productoCarrito->producto->tipoProducto->precio }} €</span>
                 </div>
                 <div>
-                    <a href="{{route('productos.show', $productoCarrito->producto->id)}}"><button>Ver más</button></a>
+                    <a href="{{route('productos.show', $productoCarrito->producto->id)}}"><button>Ver Producto</button></a>
                 </div>
             </div>
         @endforeach
         </div>
-        <div class="w-1/2 p-8">
-            <form action="{{route('pedidos.store')}}" method="post">
+        <div class="w-1/3 p-8">
+            <form action="{{ route('pedidos.store') }}" method="post" id="payment-form">
                 @csrf
                 <h2>Pedido</h2>
                 <div>
@@ -48,7 +50,7 @@
                     <input type="hidden" name="precio_total" value="{{ $precioTotal }}">
                     <div class="flex flex-row justify-between">
                         <span>Subtotal</span>
-                        <span>{{$precioTotal}} €</span>
+                        <span>{{ $precioTotal }} €</span>
                     </div>
                     <div class="flex flex-row justify-between">
                         <span>Envío</span>
@@ -56,40 +58,23 @@
                     </div>
                     <div class="flex flex-row justify-between">
                         <span>IVA</span>
-                        <span>{{number_format($iva, 2)}} €</span>
+                        <span>{{ number_format($iva, 2) }} €</span>
                     </div>
                     <div class="flex flex-row justify-between">
                         <span>Total</span>
-                        <span>{{number_format($total, 2)}} €</span>
+                        <span>{{ number_format($total, 2) }} €</span>
                     </div>
                 </div>
                 <div>
-                    <span>Selecciona un método de pago:</span>
-                    <div class="flex flex-row justify-center gap-2">
-                        <img src="{{ asset('icons/general/visa.svg') }}" alt="Pago con VISA" class="w-10">
-                        <img src="{{ asset('icons/general/paypal.svg') }}" alt="Pago con paypal" class="w-10">
+                    <label for="card-element">Detalles de la tarjeta</label>
+                    <input type="hidden" name="total" value="{{ number_format($total, 2, '.', '') }}">
+                    <div id="card-element" class="mt-2">
+                        <!-- Elemento de Stripe donde se monta el campo de la tarjeta -->
                     </div>
+                    <div id="card-errors" role="alert"></div>
                 </div>
                 <div>
-                    <div>
-                        <label for="titular">Titular de la tarjeta:</label>
-                        <input type="text" name="titular" id="titular" required>
-                    </div>
-                    <div>
-                        <label for="numeroTarjeta">Número de tarjeta:</label>
-                        <input type="text" name="numeroTarjeta" id="numeroTarjeta" required>
-                    </div>
-                    <div>
-                        <label for="fechaCaducidad">Fecha de vencimiento:</label>
-                        <input type="date" name="fechaCaducidad" id="fechaCaducidad" required>
-                    </div>
-                    <div>
-                        <label for="codigoSeguridad">Código de seguridad (CVV):</label>
-                        <input type="number" name="codigoSeguridad" id="codigoSeguridad" required>
-                    </div>
-                </div>
-                <div>
-                    <input type="submit" value="Realizar pedido">
+                    <button type="submit" class="py-2 w-full text-white fondo-secundario rounded-md font-medium fondo-primario-hover mt-5">Pagar</button>
                 </div>
             </form>
         </div>
