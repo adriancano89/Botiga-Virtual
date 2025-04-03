@@ -6,6 +6,7 @@ use App\Models\Carrito;
 use App\Models\Pedido;
 use App\Models\ProductoPedido;
 use App\Models\Producto;
+use App\Models\Cupon;
 use Illuminate\Http\Request;
 use Stripe\Stripe;
 use Stripe\Charge;
@@ -42,35 +43,57 @@ class PedidoController extends Controller
     {
         $request->validate([
             'stripeToken' => 'required',
-            'total' => 'required|numeric' // Asegúrate de que el total esté validado correctamente
         ]);
 
         // Configurar Stripe
         Stripe::setApiKey(config('services.stripe.secret'));
 
+        $idUsuario = session('id');
+
+        $carrito = Carrito::with('producto')->where('usuario_id', $idUsuario)->get();
+
+        $precioTotal = 0.0;
+
+        foreach ($carrito as $productoCarrito) {
+            $precioTotal += $productoCarrito->producto->tipoProducto->precio * $productoCarrito->cantidad;
+        }
+
+        if ($request->cupon) {
+            $cupon = Cupon::where('codigo', $request->cupon)->first();
+            $descuento = $cupon->descuento;
+            $precioTotal -= ($precioTotal * ($descuento / 100)); //Calculamos el precio con el descuento
+        }
+
+        $precioTotal += ($precioTotal * 0.21) + 4.99;
+
+        $precioTotal = round($precioTotal, 2);
+        
         // Intentamos realizar el cargo a través de Stripe
         $charge = Charge::create([
-            'amount' => $request->total * 100, // Convertir a centavos
+            'amount' => $precioTotal * 100, // Convertir a centavos
             'currency' => 'eur',
             'description' => 'Pago en tu tienda online',
             'source' => $request->stripeToken, // Token de Stripe recibido
         ]);
         
         if ($charge) {
-            $idUsuario = session('id');
-            $carrito = Carrito::with('producto')->where('usuario_id', $idUsuario)->get();
-    
+
             $fecha_venta = date('Y-m-d');
             $fecha_envio = date('Y-m-d', strtotime($fecha_venta . ' +1 day'));
             
             $pedido = Pedido::create([
                 "usuario_id" => $idUsuario,
-                "precio_total" => $request->precio_total,
+                "precio_total" => $precioTotal,
                 "fecha_venta" => $fecha_venta,
                 "fecha_envio" => $fecha_envio,
                 "fecha_entrega" => null,
                 "estado" => false,
             ]);
+
+            if ($request->cupon) {
+                $cupon = Cupon::where('codigo', $request->cupon)->first();
+                Cupon::destroy($cupon->id);
+            }
     
             foreach ($carrito as $productoCarrito) {
                 if ($productoCarrito->producto->stock >= $productoCarrito->cantidad) {

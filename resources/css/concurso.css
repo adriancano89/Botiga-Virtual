@@ -1,0 +1,55 @@
+#concurso {
+    @apply flex flex-col items-center h-1/2 w-1/2 border-2 border-white;
+    position: absolute;
+    top: 25%;
+    right: 25%;
+}
+
+#infoJuego {
+    @apply flex flex-col justify-between items-center gap-4;
+}
+
+#infoJuego li {
+    @apply list-disc;
+}
+
+.btn-juego {
+    @apply border-2 border-white px-4 py-2 hover:bg-slate-800;
+}
+
+.puntuacion {
+    @apply text-white text-2xl;
+}
+
+#juego {
+    @apply flex flex-col justify-between items-center;
+}
+
+#juego > :first-child, #juego > :last-child {
+    @apply w-11 h-11;
+}
+
+#juego > :first-child {
+    position: absolute;
+    top: 25%;
+    left: 0;
+    animation-name: moviendo;
+    animation-iteration-count: infinite;
+    animation-direction: alternate;
+    animation-timing-function: linear;
+}
+
+#juego > :last-child {
+    @apply bg-red-500;
+    position: absolute;
+    bottom: 0;
+}
+
+@keyframes moviendo {
+    from {
+        left: 0;
+    }
+    to {
+        left: 100%;
+    }
+}

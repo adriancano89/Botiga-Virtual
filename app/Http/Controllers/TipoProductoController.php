@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Models\TipoProducto;
 use App\Models\Categoria;
 use App\Models\Foto;
+use App\Models\User;
 
 class TipoProductoController extends Controller
 {
@@ -21,7 +22,14 @@ class TipoProductoController extends Controller
     {
         $productos = TipoProducto::where('destacado', 1)->with('categoria')->paginate(8);
         $categorias = Categoria::all();
-        return view('principal', ["productos" => $productos, "categorias" => $categorias]);
+
+        $usuario = User::find(session('id'));
+        $mostrarJuego = false;
+        if ($usuario) {
+            $mostrarJuego = !$usuario->jugado;
+        }
+
+        return view('principal', ["productos" => $productos, "categorias" => $categorias, "mostrarJuego" => $mostrarJuego]);
     }
 
     public function obtenerProductos(Request $request) {

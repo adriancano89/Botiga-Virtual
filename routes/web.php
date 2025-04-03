@@ -10,6 +10,7 @@ use App\Http\Controllers\TallaController;
 use App\Http\Controllers\TipoProductoController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CarritoController;
+use App\Http\Controllers\CuponController;
 use App\Http\Controllers\FotoController;
 use App\Http\Controllers\PDFController;
 
@@ -24,6 +25,7 @@ Route::post('/fetch-DatosProducto', [ProductoController::class, 'obtenerDatosPro
 Route::post('/fetch-UsuarioValidado', [UserController::class, 'usuarioValidado'])->name('usuarios.usuarioValidado');
 Route::post('/fetch-ObtenerCantidadMaxima', [CarritoController::class, 'cantidadMaxima'])->name('carrito.cantidadMaxima');
 Route::delete('/fetch-EliminarImagen/{imagen}', [FotoController::class, 'destroy'])->name('fotos.destroy');
+Route::post('/fetch-guardarCupon', [CuponController::class, 'store'])->name('cupones.store');
 
 Route::get('/carrito', [CarritoController::class, 'index'])->name('carrito.index');
 Route::post('/carrito/{id}', [CarritoController::class, 'update'])->name('carrito.update');
@@ -41,6 +43,12 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     Route::get('/usuario/admin', [UserController::class, 'admin'])->name('usuario.admin');
+
+    Route::post('/fetch-cambiarJugado', [UserController::class, 'cambiarJugado'])->name('usuarios.cambiarJugado');
+
+    Route::post('/fetch-comprobarCupon', [CuponController::class, 'comprobarCupon'])->name('cupones.comprobarCupon');
+
+    Route::post('/fetch-obtenerDescuento', [CuponController::class, 'obtenerDescuento'])->name('cupones.obtenerDescuento');
 
     Route::get('/usuario/misPedidos', [UserController::class, 'misPedidos'])->name('usuario.misPedidos');
 

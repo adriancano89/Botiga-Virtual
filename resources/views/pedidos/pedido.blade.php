@@ -4,10 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    @vite(['resources/css/app.css'])
-    <script src="{{ asset('js/chatbot.js') }}" defer></script>
+    @vite(['resources/css/app.css', 'resources/css/pedidos.css'])
+    <script src="{{ asset('js/fetch.js') }}" defer></script>
+    <script src="{{ asset('js/pedidos/cupon.js') }}" defer></script>
+    <script src="https://js.stripe.com/v3/" defer></script>
     <script src="{{ asset('js/carrito/pedido.js') }}" defer></script>
-    <script src="https://js.stripe.com/v3/"></script>
+    <script src="{{ asset('js/chatbot.js') }}" defer></script>
     <title>Sundero Sweatshirt</title>
 </head>
 <body>
@@ -39,18 +41,17 @@
         @endforeach
         </div>
         <div class="w-1/3 p-8">
-            <form action="{{ route('pedidos.store') }}" method="post" id="payment-form">
+            <form action="{{ route('pedidos.store') }}" method="post" id="formPedido">
                 @csrf
                 <h2>Pedido</h2>
-                <div>
+                <div id="detallesPedido">
                     @php
                     $iva = $precioTotal * 21/100;
-                    $total = $precioTotal + $iva;
+                    $total = $precioTotal + $iva + 4.99;
                     @endphp
-                    <input type="hidden" name="precio_total" value="{{ $precioTotal }}">
                     <div class="flex flex-row justify-between">
                         <span>Subtotal</span>
-                        <span>{{ $precioTotal }} €</span>
+                        <span id="subtotal">{{ $precioTotal }} €</span>
                     </div>
                     <div class="flex flex-row justify-between">
                         <span>Envío</span>
@@ -58,27 +59,31 @@
                     </div>
                     <div class="flex flex-row justify-between">
                         <span>IVA</span>
-                        <span>{{ number_format($iva, 2) }} €</span>
+                        <span id="iva">{{ number_format($iva, 2) }} €</span>
                     </div>
                     <div class="flex flex-row justify-between">
                         <span>Total</span>
-                        <span>{{ number_format($total, 2) }} €</span>
+                        <span id="total">{{ number_format($total, 2) }} €</span>
                     </div>
                 </div>
                 <div>
                     <label for="card-element">Detalles de la tarjeta</label>
-                    <input type="hidden" name="total" value="{{ number_format($total, 2, '.', '') }}">
                     <div id="card-element" class="mt-2">
                         <!-- Elemento de Stripe donde se monta el campo de la tarjeta -->
                     </div>
                     <div id="card-errors" role="alert"></div>
                 </div>
                 <div>
+                    <div id="divCupon">
+                        <label for="cupon">Cupón de descuento:</label>
+                        <input type="text" name="cupon" id="cupon">
+                    </div>
                     <button type="submit" class="py-2 w-full text-white fondo-secundario rounded-md font-medium fondo-primario-hover mt-5">Pagar</button>
                 </div>
             </form>
         </div>
     </section>
+    @include('popups.popupError')
     @include('general.footer')
 </body>
 </html>

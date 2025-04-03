@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite(['resources/css/app.css'])
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    @vite(['resources/css/app.css', 'resources/css/concurso.css'])
+    <script src="{{ asset('js/fetch.js') }}" defer></script>
+    <script src="{{ asset('js/concurso.js') }}" defer></script>
     <script src="{{ asset('js/chatbot.js') }}" defer></script>
     <title>Sundero Sweatshirt</title>
 </head>
@@ -77,6 +80,21 @@
             </div>
         </div>
     </section>
+@if ($mostrarJuego)
+    <div id="concurso" class="fondo-primario justify-center">
+        <div id="infoJuego" class="text-white text-xl text-center">
+            <h2 class='text-3xl'>¡Bienvenido/a a SUNDERO SWEATSHIRT!</h2>
+            <h3>¡¡Juega para ganar un premio!!</h3>
+            <h4>Instrucciones:</h4>
+            <ul>
+                <li>Arrastra el cubo hacia la zona blanca</li>
+                <li>Debes superar el nivel 3 para ganar</li>
+                <li>Si haces 3 fallos, quedarás eliminado</li>
+            </ul>
+            <button id="jugar" class="btn-juego">¡Empezar!</button>
+        </div>
+    </div>
+@endif
     @include('general.footer')
 </body>
 </html>

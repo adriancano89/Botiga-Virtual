@@ -96,6 +96,24 @@ class UserController extends Controller
         return response()->json($data);
     }
 
+    public function cambiarJugado(Request $request) {
+        $usuario = User::find(session('id'));
+
+        $exitoso = false;
+        
+        if ($usuario) {
+            $usuario->update([
+                "jugado" => true
+            ]);
+            $exitoso = true;
+        }
+
+        $data = [
+            "exitoso" => $exitoso
+        ];
+        return response()->json($data);
+    }
+
     public function misPedidos() {
         $idUsuario = session('id');
         $usuario = User::find($idUsuario);

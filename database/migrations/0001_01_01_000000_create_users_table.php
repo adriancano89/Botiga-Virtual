@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('telefono', 255)->nullable();
             $table->string('direcion', 255)->nullable();
             $table->boolean('rol')->default(false);
+            $table->boolean('jugado')->default(false);
             $table->rememberToken();
             $table->timestamps();
         });

@@ -1,0 +1,7 @@
+.borde-rojo {
+    @apply border-2 border-red-500;
+}
+
+.borde-verde {
+    @apply border-2 border-green-500;
+}
