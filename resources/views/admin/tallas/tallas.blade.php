@@ -55,6 +55,9 @@
                     @endforeach
                     </table>
                 </div>
+                <div>
+                    {{ $tallas->links() }}
+                </div>
             </section>
         </section>
     </div>

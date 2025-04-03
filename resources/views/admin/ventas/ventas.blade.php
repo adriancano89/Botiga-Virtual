@@ -75,6 +75,9 @@
                         @endforeach
                     </table>
                 </div>
+                <div>
+                    {{ $pedidos->links() }}
+                </div>
             </section>
         </section>
     </div>

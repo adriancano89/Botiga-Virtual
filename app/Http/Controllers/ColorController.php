@@ -12,7 +12,7 @@ class ColorController extends Controller
      */
     public function index()
     {
-        $colores = Color::all();
+        $colores = Color::paginate(8);
         return view('admin.colores.colores', ["colores" => $colores]);
     }
 

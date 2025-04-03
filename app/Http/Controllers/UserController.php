@@ -15,7 +15,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        $todosUsuarios = User::all();
+        $todosUsuarios = User::paginate(8);
         return view('admin.usuarios.usuarios', ["todosUsuarios" => $todosUsuarios]);
     }
 
@@ -117,7 +117,7 @@ class UserController extends Controller
     public function misPedidos() {
         $idUsuario = session('id');
         $usuario = User::find($idUsuario);
-        $pedidos = $usuario->pedidos()->get();
+        $pedidos = $usuario->pedidos()->paginate(8);
         
         return view("usuario.misPedidos", ["pedidos" => $pedidos]);
     }

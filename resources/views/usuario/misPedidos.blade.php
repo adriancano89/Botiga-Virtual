@@ -66,7 +66,7 @@
                     </table>
                 </div>
                 <div class="flex flex-row justify-end gap-2" id="paginacion">
-                    
+                    {{ $pedidos->links() }}
                 </div>
             </div>
         </section>

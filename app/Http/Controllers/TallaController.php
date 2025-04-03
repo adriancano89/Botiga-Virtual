@@ -12,7 +12,7 @@ class TallaController extends Controller
      */
     public function index()
     {
-        $tallas = Talla::all();
+        $tallas = Talla::paginate(8);
         return view('admin.tallas.tallas', ["tallas" => $tallas]);
     }
 

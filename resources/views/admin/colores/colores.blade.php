@@ -61,6 +61,9 @@
                     @endforeach
                     </table>
                 </div>
+                <div>
+                    {{ $colores->links() }}
+                </div>
             </section>
         </section>
     </div>

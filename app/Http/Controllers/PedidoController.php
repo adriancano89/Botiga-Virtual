@@ -18,7 +18,7 @@ class PedidoController extends Controller
      */
     public function index()
     {
-        $pedidos = Pedido::with('usuario')->get();
+        $pedidos = Pedido::with('usuario')->paginate(8);
         return view("admin.ventas.ventas", ["pedidos" => $pedidos]);
     }
 

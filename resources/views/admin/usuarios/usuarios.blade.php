@@ -69,6 +69,9 @@
                         @endforeach
                     </table>
                 </div>
+                <div>
+                    {{ $todosUsuarios->links() }}
+                </div>
             </section>
         </section>
     </div>

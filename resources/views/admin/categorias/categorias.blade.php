@@ -59,6 +59,9 @@
                     @endforeach
                     </table>
                 </div>
+                <div>
+                    {{ $categorias->links() }}
+                </div>
             </section>
         </div>
     </section>
