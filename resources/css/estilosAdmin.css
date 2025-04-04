@@ -1,7 +1,3 @@
-.seccion-principal {
-    @apply w-[85%] p-4;
-}
-
 .cabecera-contenido {
     @apply flex flex-row justify-between items-center p-2;
 }

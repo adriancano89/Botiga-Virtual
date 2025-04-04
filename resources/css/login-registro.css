@@ -1,0 +1,10 @@
+.imagen-fondo {
+    background-image: url('../../public/icons/general/fondo-login-registro.png'),
+    linear-gradient(rgba(0, 0, 0, 1), rgba(0, 0, 0, 1));
+    background-size: cover;
+    background-position: center;
+}
+
+h1, h2 {
+    @apply text-white;
+}

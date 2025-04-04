@@ -1,5 +1,5 @@
 .producto {
-    @apply shadow-lg shadow-neutral-500 rounded-[15px] p-4 hover:bg-slate-300 hover:cursor-pointer;
+    @apply w-72 shadow-lg text-wrap shadow-neutral-500 rounded-[15px] p-4 hover:bg-slate-300 hover:cursor-pointer;
 }
 
 .imagen-producto {

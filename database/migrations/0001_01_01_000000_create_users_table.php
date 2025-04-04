@@ -19,7 +19,7 @@ return new class extends Migration
             $table->timestamp('email_verified_at')->nullable();
             $table->string('password');
             $table->string('telefono', 255)->nullable();
-            $table->string('direcion', 255)->nullable();
+            $table->string('direccion', 255)->nullable();
             $table->boolean('rol')->default(false);
             $table->boolean('jugado')->default(false);
             $table->rememberToken();
