@@ -47,7 +47,7 @@
             <div>
                 @foreach ($categorias as $categoria)
                 <a href="{{route('categoria.show', $categoria->id)}}">
-                    <div class="w-1/4 shadow-xl rounded-[15px] p-4 hover:bg-slate-300 hover:cursor-pointer">
+                    <div class="w-full shadow-xl rounded-[15px] p-4 hover:bg-slate-300 hover:cursor-pointer">
                         <span class="text-gray-500">{{$categoria->nombre}}</span>
                     </div>
                 </a>

@@ -14,56 +14,83 @@
 </head>
 <body>
     @include('general.header')
-    <section class="relative flex flex-row">
+    <section class="relative flex flex-row bg-[#E7F0F0]">
         <div class="w-2/3 pt-4 pl-4 pr-4">
-            <h1>Realización del pedido</h1>
+            <h1 class="text-2xl">Realización del pedido</h1>
         @if ($productosCarrito->count() == 0)
             <span>No hay productos en el carrito.</span>
         @endif
         @foreach ($productosCarrito as $productoCarrito)
-            <div class="flex flex-row items-center border border-black mb-4">
-                <div class="p-2">
-                    <img src="{{ asset('storage/' . $productoCarrito->producto->tipoProducto->foto) }}" alt="Foto sudadera" class="w-44">
+
+
+            <div class="shadow-xl rounded-[15px] p-4 bg-white text-center flex space-x-4 mt-5">
+                <div class="w-[25%] p-1 flex justify-center items-center">
+                    <img src="{{ asset('storage/' . $productoCarrito->producto->tipoProducto->foto) }}" alt="imagen sudadera {{$productoCarrito->producto->tipoProducto->nombre}}">
                 </div>
-                <div class="flex flex-col p-4">
-                    <h3>Nombre: {{ $productoCarrito->producto->tipoProducto->nombre }}</h3>
-                    <span>Código: {{ $productoCarrito->producto->tipoProducto->codigo }}</span>
-                    <span>Categoria: {{ $productoCarrito->producto->tipoProducto->categoria->nombre }}</span>
-                    <span>Talla: {{ $productoCarrito->producto->talla->nombre }}</span>
-                    <span>Color: {{ $productoCarrito->producto->color->nombre }}</span>
-                    <span>Cantidad: {{ $productoCarrito->cantidad }}</span>
-                    <span>Precio unidad: {{ $productoCarrito->producto->tipoProducto->precio }} €</span>
-                </div>
-                <div>
-                    <a href="{{route('productos.show', $productoCarrito->producto->id)}}"><button>Ver Producto</button></a>
+                <div class="w-[75%] p-1">
+                    <!-- Fila 1: Nombre del producto y botón de eliminar -->
+                    <div class="flex justify-between items-center">
+                        <div class="w-[80%] p-1 text-left text-2xl">{{$productoCarrito->producto->tipoProducto->nombre}}</div>
+                    </div>
+
+                    <!-- Fila 2: Categoría y Ver Producto -->
+                    <div class="flex justify-between items-center">
+                        <div class="w-[50%] p-1 text-left text-lm text-[#4B5563]">
+                            {{$productoCarrito->producto->tipoProducto->categoria->nombre}}
+                        </div>
+                        <div class="w-[50%] p-1 text-right color-letra-secundaria flex justify-end">
+                            <a href="{{route('productos.show', $productoCarrito->producto->id)}}" target="_blank">
+                                <button class="flex items-center">
+                                <img src="icons/general/ojo.png" alt="Ver Producto" class="w-6 h-6 mr-2">
+                                    Ver Producto
+                                </button>
+                            </a>
+                        </div>
+                    </div>
+
+                    <!-- Fila 3: Color, Talla, Cantidad, Precio -->
+                    <div class="flex justify-between mt-5">
+                        <div class="w-[20%] p-1">Color</div>
+                        <div class="w-[20%] p-1">Talla</div>
+                        <div class="w-[20%] p-1">Cantidad</div>
+                        <div class="w-[20%] p-1">Precio</div>
+                    </div>
+                    <div class="flex justify-between">
+                        <div class="w-[20%] p-1">
+                            <div class="rounded-[100px]" style="background-color: {{$productoCarrito->producto->color->hexadecimal}}; height: 20px;"></div>
+                        </div>
+                        <div class="w-[20%] p-1">{{$productoCarrito->producto->talla->nombre}}</div>
+                        <div class="w-[20%] p-1">{{$productoCarrito->cantidad}}</div>
+                        <div class="w-[20%] p-1">{{$productoCarrito->producto->tipoProducto->precio}} €</div>
+                    </div>
                 </div>
             </div>
         @endforeach
         </div>
-        <div class="w-1/3 p-8">
+        <div class="flex flex-col w-1/3 p-8 shadow-xl rounded-[15px] bg-white text-center space-y-4 m-9">
             <form action="{{ route('pedidos.store') }}" method="post" id="formPedido">
                 @csrf
-                <h2>Pedido</h2>
+                <b class="text-left text-2xl">Pedido</b>
                 <div id="detallesPedido">
                     @php
                     $iva = $precioTotal * 21/100;
                     $total = $precioTotal + $iva + 4.99;
                     @endphp
-                    <div class="flex flex-row justify-between">
+                    <div class="flex flex-row justify-between mt-2">
                         <span>Subtotal</span>
                         <span id="subtotal">{{ $precioTotal }} €</span>
                     </div>
-                    <div class="flex flex-row justify-between">
+                    <div class="flex flex-row justify-between mt-2">
                         <span>Envío</span>
                         <span>4.99 €</span>
                     </div>
-                    <div class="flex flex-row justify-between">
+                    <div class="flex flex-row justify-between mt-2">
                         <span>IVA</span>
                         <span id="iva">{{ number_format($iva, 2) }} €</span>
                     </div>
-                    <div class="flex flex-row justify-between">
-                        <span>Total</span>
-                        <span id="total">{{ number_format($total, 2) }} €</span>
+                    <div class="flex flex-row justify-between mt-2">
+                        <b class="text-left text-xl">Total</b>
+                        <b id="total" class="text-left text-xl">{{ number_format($total, 2) }} €</b>
                     </div>
                 </div>
                 <div>
@@ -71,10 +98,10 @@
                     <div id="card-element" class="mt-2">
                         <!-- Elemento de Stripe donde se monta el campo de la tarjeta -->
                     </div>
-                    <div id="card-errors" role="alert"></div>
+                    <div id="card-errors" role="alert" class="mt-2"></div>
                 </div>
                 <div>
-                    <div id="divCupon">
+                    <div id="divCupon" class="mt-2">
                         <label for="cupon">Cupón de descuento:</label>
                         <input type="text" name="cupon" id="cupon">
                     </div>
