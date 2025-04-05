@@ -7,17 +7,14 @@
     </div>
     <nav>
         <ul class="flex flex-row items-center justify-between gap-4 text-[20px]">
-            <a href="">
+            <a href="/categorias/hombre">
                 <li>Hombre</li>
             </a>
-            <a href="">
+            <a href="/categorias/mujer">
                 <li>Mujer</li>
             </a>
-            <a href="">
+            <a href="/categorias/niño">
                 <li>Niños</li>
-            </a>
-            <a href="">
-                <li class="pl-7 pr-7 pt-1 pb-1 fondo-terciario text-black rounded-[15px] border-2 borde-primario hover:text-[#F2E984] hover:border-2 borde-terciario-hover fondo-primario-hover">Rebajas</li>
             </a>
         </ul>
     </nav>

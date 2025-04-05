@@ -73,4 +73,11 @@ class CategoriaController extends Controller
     {
         //
     }
+
+    public function mostrarPorGenero(string $genero)
+    {
+        $genero = ucfirst($genero);
+        $productosCategoria = Categoria::with('tiposProductos')->where('nombre', 'like', "%$genero%")->paginate(16);
+        return view('general.mostrarPorGenero', ["productosCategoria" => $productosCategoria, "genero" => $genero]);
+    }
 }

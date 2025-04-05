@@ -16,6 +16,7 @@ use App\Http\Controllers\PDFController;
 
 Route::get('/', [TipoProductoController::class, 'mostrarDestacados'])->name('tiposProductos.destacados');
 Route::get('/categoria/{categoria}', [CategoriaController::class, 'show'])->name('categoria.show');
+Route::get('/categorias/{genero}', [CategoriaController::class, 'mostrarPorGenero'])->name('categorias.mostrarPorGenero');
 Route::get('/productos/{id}', [ProductoController::class, 'show'])->name('productos.show');
 
 Route::post('/fetch-TiposProductos', [TipoProductoController::class, 'obtenerProductos'])->name('tiposProductos.obtenerProductos');
