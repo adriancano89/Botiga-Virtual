@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite(['resources/css/app.css'])
     <script src="{{ asset('js/chatbot.js') }}" defer></script>
-    <title>Mostrar por Categorias</title>
+    <title>{{ $categoria->nombre }} - SUNDERO Sweatshirt</title>
 </head>
 <body>
     @include('general.header')

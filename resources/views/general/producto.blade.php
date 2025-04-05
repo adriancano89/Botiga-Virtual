@@ -10,7 +10,7 @@
     <script src="{{ asset('js/productos/canvas.js') }}" defer></script>
     <script src="{{ asset('js/carrito/carrito.js') }}" defer></script>
     <script src="{{ asset('js/chatbot.js') }}" defer></script>
-    <title>{{$tipoProducto->nombre}} - Sundero Sweatshirt</title>
+    <title>{{$tipoProducto->nombre}} - SUNDERO Sweatshirt</title>
 </head>
 <body>
     @include('general.header')

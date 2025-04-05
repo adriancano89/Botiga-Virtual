@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/css/estilosAdmin.css'])
     <script src="{{ asset('js/chatbot.js') }}" defer></script>
     <title>Mis Pedidos</title>
 </head>
@@ -11,29 +11,39 @@
     @include('general.header')
     <div class="flex flex-row">
         @include('usuario.barraLateral')
-        <section class="w-[85%] p-4">
-            <div class="flex flex-row justify-between items-center p-2">
+        <section class="seccion-principal">
+            <section class="cabecera-contenido">
                 <h1 class="text-xl font-bold">Mis pedidos</h1>
-            </div>
-            <div>
-                <div class="flex flex-row justify-between p-2">
-                    <div>
+            </section>
+            <section class="contenido">
+                <div class="busqueda-filtros">
+                    <div class="buscador">
                         <input type="search" name="buscarPedidos" id="buscarPedidos" placeholder="Buscar pedidos..." class="border-2 border-gray p-2">
                     </div>
-                    <div class="flex flex-row gap-2">
-                        <div>
-                            <img src="" alt="">
-                            <span>Filtrar</span>
+                    <div class="filtros">
+                        <div class="filtro">
+                            <img src="{{asset('icons/general/filtrar.svg')}}" alt="Filtrar por">
+                            <select name="filtrar" id="filtrar">
+                                <option value="" disabled selected>Filtrar por</option>
+                                <option value="pendiente">Pendiente</option>
+                                <option value="finalizado">Finalizado</option>
+                                <option value="fecha">Fecha compra</option>
+                            </select>
                         </div>
-                        <div>
-                            <img src="" alt="">
-                            <span>Ordenar por</span>
+                        <div class="filtro">
+                            <img src="{{asset('icons/general/ordenar.svg')}}" alt="Ordenar por">
+                            <select name="ordenar" id="ordenar">
+                                <option value="" disabled selected>Ordenar por</option>
+                                <option value="importe">Importe</option>
+                                <option value="fecha">Fecha compra</option>
+                                <option value="estado">Estado</option>
+                            </select>
                         </div>
                     </div>
                 </div>
-                <div class="flex flex-col gap-6" id="pedidos">
+                <div class="seccion-tabla" id="pedidos">
                     <table>
-                        <tr>
+                        <tr class="fondo-primario">
                             <th>Precio final</th>
                             <th>Fecha de compra</th>
                             <th>Fecha de envío</th>
@@ -68,7 +78,7 @@
                 <div class="flex flex-row justify-end gap-2" id="paginacion">
                     {{ $pedidos->links() }}
                 </div>
-            </div>
+            </section>
         </section>
     </div>
     @include('general.footer')
