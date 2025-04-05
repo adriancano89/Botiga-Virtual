@@ -42,7 +42,7 @@
         <h1>Factura del pedido</h1>
         <div>
             <span><span class="negrita">Fecha de la compra:</span> {{ $pedido->fecha_venta }}</span><br>
-            <span><span class="negrita">Fecha de envío:</span> {{ $pedido->fecha_envio }}</span><br>
+            <span><span class="negrita">Fecha de envío:</span> {{ $pedido->fecha_envio ? $pedido->fecha_envio : 'Por determinar'}}</span><br>
             <span><span class="negrita">Fecha de entrega:</span> {{ $pedido->fecha_entrega ? $pedido->fecha_entrega : 'Por determinar' }}</span>
         </div>
     </div>

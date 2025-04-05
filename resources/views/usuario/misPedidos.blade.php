@@ -45,7 +45,7 @@
                             <tr class="bg-{{ $pedido->estado == 0 ? '[#DCFCE7]' : '[#C9C9C9]' }}">
                                 <td class="text-center">{{$pedido->precio_total}} €</td>
                                 <td class="text-center">{{$pedido->fecha_venta}}</td>
-                                <td class="text-center">{{$pedido->fecha_envio}}</td>
+                                <td class="text-center">{{$pedido->fecha_envio ? $pedido->fecha_envio : 'Por determinar'}}</td>
                                 <td class="text-center">{{$pedido->fecha_entrega ? $pedido->fecha_entrega : 'Por determinar'}}</td>
                                 <td>
                                     <div class="flex flex-row justify-center">

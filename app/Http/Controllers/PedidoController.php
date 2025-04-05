@@ -79,13 +79,12 @@ class PedidoController extends Controller
         if ($charge) {
 
             $fecha_venta = date('Y-m-d');
-            $fecha_envio = date('Y-m-d', strtotime($fecha_venta . ' +1 day'));
             
             $pedido = Pedido::create([
                 "usuario_id" => $idUsuario,
                 "precio_total" => $precioTotal,
                 "fecha_venta" => $fecha_venta,
-                "fecha_envio" => $fecha_envio,
+                "fecha_envio" => null,
                 "fecha_entrega" => null,
                 "estado" => false,
             ]);
@@ -148,7 +147,9 @@ class PedidoController extends Controller
      */
     public function edit(string $id)
     {
-        //
+        $pedido = Pedido::find($id);
+
+        return view("admin.ventas.editarPedido", ["pedido" => $pedido]);
     }
 
     /**
@@ -156,7 +157,31 @@ class PedidoController extends Controller
      */
     public function update(Request $request, string $id)
     {
-        //
+        $pedido = Pedido::find($id);
+
+        if ($request->fecha_envio) {
+            $pedido->fecha_envio = $request->fecha_envio;
+        }
+
+        $fechaHoy = date('Y-m-d');
+        $fechaEntrega = $request->fecha_entrega ? date('Y-m-d', strtotime($request->fecha_entrega)) : null;
+        $estadoSeleccionado = $request->estado;
+
+        if ($estadoSeleccionado != $pedido->estado && $estadoSeleccionado == '1') { //Si estaba en pendiente, pero ha seleccionado finalizado
+            $pedido->fecha_entrega = $fechaHoy;
+            $pedido->estado = true;
+        } 
+        elseif ($request->fecha_entrega && $fechaEntrega <= $fechaHoy) { //Si se ha seleccionado una fecha de entrega y es el dia de hoy, o un dia pasado.
+            $pedido->fecha_entrega = $request->fecha_entrega;
+            $pedido->estado = true;
+        }
+        else {
+            $pedido->fecha_entrega = $request->fecha_entrega; //Si se ha seleccionado una fecha de entrega, pero es un dia futuro.
+            $pedido->estado = false;
+        }
+        $pedido->save();
+
+        return redirect()->route('pedidos.index')->with('success', 'Pedido actualizado con éxito');
     }
 
     /**

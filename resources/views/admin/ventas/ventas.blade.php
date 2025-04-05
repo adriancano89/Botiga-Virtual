@@ -65,7 +65,7 @@
                                 @endif
                                 <td class="flex flex-row justify-center items-center gap-2">
                                     <a href="{{route('pedidos.show', $pedido->id)}}">
-                                        <img src="icons/general/ojo.png" alt="editar pedido" title="Ver pedido">
+                                        <img src="icons/general/ojo.png" alt="ver pedido" title="Ver pedido">
                                     </a>
                                     <a href="{{route('pedidos.edit', $pedido->id)}}">
                                         <img src="icons/general/editar.png" alt="editar pedido" title="Editar pedido">

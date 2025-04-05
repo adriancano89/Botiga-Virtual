@@ -33,7 +33,7 @@ select:hover {
 }
 
 .fondo-cuaternario, .fondo-cuaternario-hover:hover {
-    background-color: #E7F0F0;
+    @apply bg-gray-600;
 }
 
 .borde-primario, .borde-primario-hover:hover {

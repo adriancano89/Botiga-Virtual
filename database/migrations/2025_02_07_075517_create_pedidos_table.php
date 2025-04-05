@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('usuario_id');
             $table->decimal('precio_total', 8, 2);
             $table->date('fecha_venta');
-            $table->date('fecha_envio');
+            $table->date('fecha_envio')->nullable();
             $table->date('fecha_entrega')->nullable();
             $table->boolean('estado');
             $table->foreign('usuario_id')->references('id')->on('users')->onDelete('cascade');
