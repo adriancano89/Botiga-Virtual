@@ -27,7 +27,6 @@
                                         <img src="{{ asset('storage/' . $productoEnCarrito->producto->tipoProducto->foto) }}" alt="imagen sudadera {{$productoEnCarrito->producto->tipoProducto->nombre}}">
                                     </div>
                                     <div class="w-[75%] p-1">
-                                        <!-- Fila 1: Nombre del producto y botón de eliminar -->
                                         <div class="flex justify-between items-center">
                                             <div class="w-[80%] p-1 text-left text-2xl">{{$productoEnCarrito->producto->tipoProducto->nombre}}</div>
                                             <div class="w-[20%] p-1 text-right">
@@ -41,7 +40,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Fila 2: Categoría y Ver Producto -->
                                         <div class="flex justify-between items-center">
                                             <div class="w-[50%] p-1 text-left text-lm text-[#4B5563]">
                                                 {{$productoEnCarrito->producto->tipoProducto->categoria->nombre}}
@@ -56,7 +54,6 @@
                                             </div>
                                         </div>
 
-                                        <!-- Fila 3: Color, Talla, Cantidad, Precio -->
                                         <div class="flex justify-between mt-5">
                                             <div class="w-[20%] p-1">Color</div>
                                             <div class="w-[20%] p-1">Talla</div>

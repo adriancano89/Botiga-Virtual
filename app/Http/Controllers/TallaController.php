@@ -32,6 +32,8 @@ class TallaController extends Controller
         Talla::create([
             'nombre' => $request->nombre
         ]);
+
+        return redirect()->route('tallas.index')->with('success', 'Talla creada con éxito');
     }
 
     /**
@@ -48,7 +50,7 @@ class TallaController extends Controller
     public function edit(string $id)
     {
         $talla = Talla::find($id);
-        return view("admin.tallas.popupEditarTalla", ["talla" => $talla]);
+        return view("admin.tallas.editarTalla", ["talla" => $talla]);
     }
 
     /**
@@ -61,6 +63,8 @@ class TallaController extends Controller
         $talla->update([
             'nombre' => $request->nombre,
         ]);
+
+        return redirect()->route('tallas.index')->with('success', 'Talla editada con éxito');
     }
 
     /**

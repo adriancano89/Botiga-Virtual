@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite(['resources/css/app.css', 'resources/css/estilosAdmin.css'])
-    <title>Administrar - Editar Color</title>
+    <title>Administrar - Editar Talla</title>
 </head>
 <body>
     @include('general.header')
@@ -12,22 +12,17 @@
         @include('usuario.barraLateral')
         <section class="seccion-principal">
             <section class="cabecera-contenido">
-                <h1>Editar color</h1>
+                <h1>Editar talla</h1>
             </section>
             <section class="contenido">
-                <form action="{{ route('colores.update', $color->id) }}" method="POST" enctype="multipart/form-data" class="formulario">
+                <form action="{{ route('tallas.update', $talla->id) }}" method="POST" class="formulario">
                     @csrf
                     @method('PUT')
 
-                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-6">
-                        <div class="flex flex-col w-full">
+                    <div class="flex justify-center mb-6">
+                        <div class="flex flex-col w-full max-w-md">
                             <label for="nombre" class="label">Nombre</label>
-                            <input type="text" name="nombre" id="nombre" value="{{ $color->nombre }}" class="input borde-cuaternario">
-                        </div>
-
-                        <div class="flex flex-col w-full">
-                            <label for="hexadecimal" class="label">Hexadecimal</label>
-                            <input type="color" name="hexadecimal" id="hexadecimal" value="{{ $color->hexadecimal }}" class="input borde-cuaternario p-1 h-12">
+                            <input type="text" name="nombre" id="nombre" value="{{ $talla->nombre }}" class="input borde-cuaternario">
                         </div>
                     </div>
 

@@ -48,6 +48,10 @@ select:hover {
     @apply border-[#F2E984];
 }
 
+.borde-cuaternario, .borde-cuaternario-hover:hover {
+    @apply border-[#4B5563];
+}
+
 .color-letra-secundaria {
     @apply text-[#0983AC];
 }

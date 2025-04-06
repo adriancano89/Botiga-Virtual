@@ -120,6 +120,8 @@ class ProductoController extends Controller
                 'stock' => $request->stockAnadir
             ]);
         }
+
+        return redirect()->route('tiposProductos.index')->with('success', 'Stock añadido con éxito');
     }
 
     public function guardarProductoPersonalizado(Request $request) {

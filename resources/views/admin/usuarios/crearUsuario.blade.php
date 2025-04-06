@@ -1,46 +1,70 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Crear Usuario</title>
+    @vite(['resources/css/app.css', 'resources/css/estilosAdmin.css'])
+    <title>Administrar - Crear Usuario</title>
 </head>
 <body>
-    <form action="{{route('usuarios.store')}}" method="POST">
-        @csrf
-        <div>
-            <label for="nombre">Nombre:</label>
-            <input type="text" name="nombre" id="nombre">
-        </div>
-        <div>
-            <label for="apellidos">Apellidos:</label>
-            <input type="text" name="apellidos" id="apellidos">
-        </div>
-        <div>
-            <label for="contrasena">Coñtrasena:</label>
-            <input type="text" name="contrasena" id="contrasena">
-        </div>
-        <div>
-            <label for="email">Email:</label>
-            <input type="text" name="email" id="email">
-        </div>
-        <div>
-            <label for="telefono">Teléfono:</label>
-            <input type="text" name="telefono" id="telefono">
-        </div>
-        <div>
-            <label for="direcion">Direción:</label>
-            <input type="text" name="direcion" id="direcion">
-        </div>
-        <div>
-            <label for="rol">Rol:</label>
-            <select name="rol" id="rol">
-                <option value="" disabled selected>--Selecionar--</option>
-                <option value="0">Cliente</option>
-                <option value="1">Administrador</option>
-            </select>
-        </div>
-        <input type="submit" value="Crear">
-    </form>
+    @include('general.header')
+    <div class="flex flex-row">
+        @include('usuario.barraLateral')
+        <section class="seccion-principal">
+            <section class="cabecera-contenido">
+                <h1>Crear usuario</h1>
+            </section>
+            <section class="contenido">
+                <form action="{{route('usuarios.store')}}" method="POST" class="formulario">
+                    @csrf
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
+                        <div class="flex flex-col">
+                            <label for="nombre" class="label">Nombre</label>
+                            <input type="text" name="nombre" id="nombre" class="input borde-cuaternario">
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="apellidos" class="label">Apellidos</label>
+                            <input type="text" name="apellidos" id="apellidos" class="input borde-cuaternario">
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="contrasena" class="label">Contraseña</label>
+                            <input type="password" name="contrasena" id="contrasena" class="input borde-cuaternario">
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="email" class="label">Email</label>
+                            <input type="text" name="email" id="email" class="input borde-cuaternario">
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="telefono" class="label">Teléfono</label>
+                            <input type="text" name="telefono" id="telefono" class="input borde-cuaternario">
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="direcion" class="label">Dirección</label>
+                            <input type="text" name="direcion" id="direcion" class="input borde-cuaternario">
+                        </div>
+
+                        <div class="flex flex-col">
+                            <label for="rol" class="label">Rol</label>
+                            <select name="rol" id="rol" class="input borde-cuaternario">
+                                <option value="" disabled selected>--Seleccionar--</option>
+                                <option value="0">Cliente</option>
+                                <option value="1">Administrador</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="flex flex-row justify-center mt-6">
+                        <button type="submit" class="btn-enviar fondo-secundario">Crear</button>
+                    </div>
+                </form>
+            </section>
+        </section>
+    </div>
+    @include('general.footer')
 </body>
 </html>

@@ -100,6 +100,8 @@ class TipoProductoController extends Controller
                 ]);
             }
         }
+
+        return redirect()->route('tiposProductos.index')->with('success', 'Producto creado con éxito');
     }
 
     /**
@@ -118,7 +120,7 @@ class TipoProductoController extends Controller
         $producto = TipoProducto::find($id);
         $categorias = Categoria::all();
         $imagenes = Foto::where('tipos_producto_id', $id)->get();
-        return view('admin.productos.popupEditar', ["producto" => $producto, "categorias" => $categorias, "imagenes" => $imagenes]);
+        return view('admin.productos.editarProducto', ["producto" => $producto, "categorias" => $categorias, "imagenes" => $imagenes]);
     }
 
     /**
@@ -178,6 +180,8 @@ class TipoProductoController extends Controller
                 ]);
             }
         }
+
+        return redirect()->route('tiposProductos.index')->with('success', 'Producto editado con éxito');
     }
 
     /**

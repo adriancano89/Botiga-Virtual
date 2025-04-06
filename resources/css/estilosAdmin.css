@@ -10,7 +10,7 @@
     @apply p-3 text-white rounded-md;
 }
 
-.btn-crear:hover {
+.btn-crear:hover, .btn-enviar:hover {
     @apply bg-blue-500;
 }
 
@@ -80,4 +80,25 @@ td > select {
 
 .paginacion {
     @apply flex flex-row justify-end gap-2;
+}
+
+.formulario {
+    @apply w-full max-w-4xl mx-auto p-6 bg-white rounded-lg shadow-xl shadow-slate-300;
+}
+
+.label {
+    @apply text-lg font-medium mb-2;
+}
+
+.input {
+    @apply border-2 rounded-md p-2;
+}
+
+.checkbox {
+    @apply rounded;
+    transform: scale(1.2);
+}
+
+.btn-enviar {
+    @apply px-8 py-2 text-white rounded-md;
 }

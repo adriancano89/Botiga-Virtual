@@ -7,13 +7,13 @@
     </div>
     <nav>
         <ul class="flex flex-row items-center justify-between gap-4 text-[20px]">
-            <a href="/categorias/hombre">
+            <a href="/categorias/genero/hombre">
                 <li>Hombre</li>
             </a>
-            <a href="/categorias/mujer">
+            <a href="/categorias/genero/mujer">
                 <li>Mujer</li>
             </a>
-            <a href="/categorias/niño">
+            <a href="/categorias/genero/niño">
                 <li>Niños</li>
             </a>
         </ul>

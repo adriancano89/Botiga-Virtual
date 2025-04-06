@@ -32,6 +32,8 @@ class ColorController extends Controller
         Color::create([
             'nombre' => $request->nombre, 'hexadecimal' => $request->hexadecimal
         ]);
+
+        return redirect()->route('colores.index')->with('success', 'Color creado con éxito');
     }
 
     /**
@@ -62,6 +64,8 @@ class ColorController extends Controller
             'nombre' => $request->nombre, 
             'hexadecimal' => $request->hexadecimal
         ]);
+
+        return redirect()->route('colores.index')->with('success', 'Color editado con éxito');
     }
 
     /**

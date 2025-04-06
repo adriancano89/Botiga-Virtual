@@ -33,6 +33,8 @@ class CategoriaController extends Controller
         Categoria::create([
             'codigo' => $request->codigo, 'nombre' => $request->nombre
         ]);
+
+        return redirect()->route('categorias.index')->with('success', 'Categoria creada con éxito');
     }
 
     /**
@@ -64,6 +66,8 @@ class CategoriaController extends Controller
             'codigo' => $request->codigo,
             'nombre' => $request->nombre
         ]);
+
+        return redirect()->route('categorias.index')->with('success', 'Categoria editada con éxito');
     }
 
     /**
