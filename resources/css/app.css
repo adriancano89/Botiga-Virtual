@@ -52,6 +52,10 @@ select:hover {
     @apply border-[#4B5563];
 }
 
+.color-letra-primario {
+    @apply text-[#131620];
+}
+
 .color-letra-secundaria {
     @apply text-[#0983AC];
 }

@@ -80,7 +80,7 @@ class CarritoController extends Controller
             }
         }
         
-        return redirect()->route('productos.show', $producto->id);
+        return redirect()->route('productos.show', $request->tipos_producto_id);
     }
 
     /**
