@@ -3,37 +3,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    @vite(['resources/css/app.css'])
+    @vite(['resources/css/app.css', 'resources/css/productos.css'])
     <script src="{{ asset('js/chatbot.js') }}" defer></script>
     <title>{{ $categoria->nombre }} - SUNDERO Sweatshirt</title>
 </head>
 <body>
     @include('general.header')
-    <section>
-        <h1>Mostrar Productos por categoria: {{ $categoria->nombre }}</h1>
+    <section class="px-4 py-6">
+        <h1 class="text-xl md:text-xl font-semibold color-letra-primario mb-6">Categoría: {{ $categoria->nombre }}</h1>
+        <div class="flex flex-col space-y-8">
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
+            @foreach ($productosCategoria as $productoCategoria)
+                <a href="{{ route('productos.show', $productoCategoria->id) }}">
+                    <div class="producto">
+                        @if ($productoCategoria->foto)
+                            <img src="{{ asset('storage/' . $productoCategoria->foto) }}" alt="imagen producto" class="imagen-producto rounded-lg object-cover mx-auto">
+                        @else
+                            <img src="{{ asset('icons/general/con-capucha.png') }}" alt="imagen producto" class="imagen-producto rounded-lg object-cover mx-auto">
+                        @endif
+                        <h2 class="nombre-producto color-letra-primario mt-4">{{ $productoCategoria->nombre }}</h2>
 
-        <div>
-            <div class="flex flex-row flex-wrap">
-                @foreach ($productosCategoria as $productoCategoria)
-                <a href="{{route('productos.show', $productoCategoria->id)}}">
-                    <div class="w-1/4 shadow-xl rounded-[15px] p-4 hover:bg-slate-300 hover:cursor-pointer">
-                        <div class="flex flex-row">
-                            <img src="../icons/general/con-capucha.png" alt="imagen producto" class="w-26 h-26">
-                        </div>
-                        <h2 class="font-bold text-lg">{{$productoCategoria->nombre}}</h2>
-                        <span class="text-gray-500">{{$productoCategoria->categoria->nombre}}</span>
-                        <div class="flex flex-row justify-between">
-                            <span class="text-[#0983AC] font-bold">{{$productoCategoria->precio}} €</span>
-                            <div class="flex flex-row">
-                                <img src="../icons/general/mas.png" alt="" class="w-[25px] hover:cursor-pointer">
-                                <span></span>
-                            </div>
+                        <div class="flex justify-between items-center mt-1">
+                            <span class="codigo-producto">{{ $productoCategoria->codigo }}</span>
+                            <span class="precio color-letra-secundaria text-lg font-bold  whitespace-nowrap">{{ $productoCategoria->precio }} €</span>
                         </div>
                     </div>
                 </a>
-                @endforeach
+            @endforeach
             </div>
-            <div>
+            <div class="flex justify-center mt-6">
                 {{ $productosCategoria->links() }}
             </div>
         </div>
