@@ -39,7 +39,7 @@
                         <div class="w-[50%] p-1 text-right color-letra-secundaria flex justify-end">
                             <a href="{{route('productos.show', $productoCarrito->producto->id)}}" target="_blank">
                                 <button class="flex items-center">
-                                <img src="icons/general/ojo.png" alt="Ver Producto" class="w-6 h-6 mr-2">
+                                <img src="{{asset('icons/general/ojo.png')}}" alt="Ver Producto" class="w-6 h-6 mr-2">
                                     Ver Producto
                                 </button>
                             </a>

@@ -17,6 +17,7 @@
                 <span>Datos Personales</span>
             </li>
         </a>
+        @if (session('rol'))
         <li class="apartado">
             <img src="{{asset('icons/general/administracion.png')}}" alt="Administración" class="icono">
             <a href="{{route('tiposProductos.index')}}"><span>Administración</span></a>
@@ -65,13 +66,14 @@
                 </div>
             </a>
         </ul>
+        @endif
     </ul>
     <div class="p-4">
         <form action="{{route('logout')}}" method="post">
             @csrf
-            <div class="hover:cursor-pointer fondo-secundario border-2 borde-primario rounded-[8px] flex items-center p-4 fondo-primario-hover hover:border-2 borde-secundario-hover">
+            <div class="hover:cursor-pointer fondo-secundario border-2 borde-primario whitespace-nowrap rounded-[8px] flex items-center p-4 fondo-primario-hover hover:border-2 borde-secundario-hover">
                 <img src="{{asset('icons/general/cerrar_sesion.png')}}" alt="Cerrar Sesión" class="icono">
-                <button type="submit">Cerrar Sesión</button>
+                <button type="submit" class="mr-6">Cerrar Sesión</button>
             </div>
         </form>
     </div>

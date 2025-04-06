@@ -31,6 +31,7 @@ class AuthenticatedSessionController extends Controller
 
         Session::put('id', Auth::user()->id);
         Session::put('name', Auth::user()->name);
+        Session::put('rol', Auth::user()->rol);
         
         return redirect()->intended(route('dashboard', absolute: false));
     }
