@@ -57,7 +57,15 @@ select:hover {
 }
 
 header img, footer img {
-    @apply w-[25px] hover:cursor-pointer;
+    @apply w-7 hover:cursor-pointer;
+}
+
+.apartado-header {
+    @apply p-2 hover:text-gray-300 transform transition-transform duration-300 hover:scale-110;
+}
+
+.icono-header {
+    @apply transform transition-transform duration-300 hover:scale-110;
 }
 
 .canal-soporte {
