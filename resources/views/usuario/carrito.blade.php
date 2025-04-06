@@ -58,7 +58,8 @@
                                             <div class="w-[20%] p-1">Color</div>
                                             <div class="w-[20%] p-1">Talla</div>
                                             <div class="w-[20%] p-1">Cantidad</div>
-                                            <div class="w-[20%] p-1">Precio</div>
+                                            <div class="w-[20%] p-1">Precio unidad</div>
+                                            <div class="w-[20%] p-1">Precio total</div>
                                         </div>
                                         <div class="flex justify-between">
                                             <div class="w-[20%] p-1">
@@ -73,6 +74,7 @@
                                                 </select>
                                             </div>
                                             <div class="w-[20%] p-1">{{$productoEnCarrito->producto->tipoProducto->precio}} €</div>
+                                            <div class="w-[20%] p-1 font-semibold">{{$productoEnCarrito->producto->tipoProducto->precio * $productoEnCarrito->cantidad}} €</div>
                                         </div>
                                     </div>
                                 </div>
