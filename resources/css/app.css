@@ -16,10 +16,6 @@ select:hover {
     cursor: pointer;
 }
 
-.seccion-principal {
-    @apply w-[85%] p-4;
-}
-
 .fondo-primario, .fondo-primario-hover:hover {
     background-color: #131620;
 }
@@ -82,4 +78,24 @@ header img, footer img {
 
 .icono {
     @apply w-[25px] hover:cursor-pointer;
+}
+
+.seccion-principal {
+    @apply w-[85%] p-4;
+}
+
+.buscador input {
+    @apply w-full border-2 border-gray-400 rounded-md p-2;
+}
+
+.filtros {
+    @apply flex flex-row gap-4;
+}
+
+.filtro {
+    @apply flex flex-row items-center hover:cursor-pointer;
+}
+
+.filtro > img {
+    @apply w-5;
 }

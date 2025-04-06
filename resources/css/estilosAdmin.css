@@ -26,22 +26,6 @@
     @apply w-1/4;
 }
 
-.buscador input {
-    @apply w-full border-2 border-gray-400 rounded-md p-2;
-}
-
-.filtros {
-    @apply flex flex-row gap-4;
-}
-
-.filtro {
-    @apply flex flex-row items-center hover:cursor-pointer;
-}
-
-.filtro > img {
-    @apply w-5;
-}
-
 .seccion-tabla {
     @apply flex flex-col justify-center;
 }

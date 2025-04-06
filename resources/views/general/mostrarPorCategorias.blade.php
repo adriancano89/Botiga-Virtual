@@ -31,7 +31,7 @@
                 </a>
             @endforeach
             </div>
-            <div class="flex justify-center mt-6">
+            <div class="flex justify-end mt-6">
                 {{ $productosCategoria->links() }}
             </div>
         </div>
