@@ -31,7 +31,7 @@
                         </div>
 
                         <div class="w-full hidden">
-                            <input type="hidden" name="tipoProducto" id="tipoProducto" value="{{ $tipoProducto->id }}" readonly>
+                            <input type="text" name="tipoProducto" id="tipoProducto" value="{{ $tipoProducto->id }}" readonly>
                         </div>
 
                         <div class="flex flex-col w-full">

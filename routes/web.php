@@ -57,6 +57,8 @@ Route::middleware('auth')->group(function () {
     Route::post('/fetch-InsertarCarritoenBD', [CarritoController::class, 'insertarCarritoenBD'])->name('carrito.insertarCarritoenBD');
 
     Route::get('/imprimirFactura/{id}', [PDFController::class, 'imprimirFactura'])->name('imprimirFactura');
+
+    Route::put('/productos/anadirStock', [ProductoController::class, 'updateOrCreate'])->name('productos.updateOrCreate');
 });
 
 Route::middleware(['auth', 'admin'])->group(function () {
@@ -77,7 +79,6 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::post('/fetch-TiposProductos', [TipoProductoController::class, 'obtenerProductos'])->name('tiposProductos.obtenerProductos');
     Route::delete('/fetch-EliminarImagen/{imagen}', [FotoController::class, 'destroy'])->name('fotos.destroy');
 
-    Route::put('/productos/anadirStock', [ProductoController::class, 'updateOrCreate'])->name('productos.updateOrCreate');
 
     Route::get('/graficos', [ProductoController::class, 'mostrarGraficos'])->name('productos.mostrarGraficos');
 
