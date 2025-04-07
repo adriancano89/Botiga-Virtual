@@ -21,7 +21,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('123'),
                 'email' => 'admin@gmail.com',
                 'telefono' => '638743492',
-                'direcion' => 'Carrer Europa 3r 2n, Barcelona',
+                'direccion' => 'Carrer Europa 3r 2n, Barcelona',
                 'rol' => true
             ],
             [
@@ -30,7 +30,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('123'),
                 'email' => 'pablo@gmail.com',
                 'telefono' => '628543546',
-                'direcion' => 'Carrer Montserrat 30 2n 1r, Tarragona',
+                'direccion' => 'Carrer Montserrat 30 2n 1r, Tarragona',
                 'rol' => true
             ],
             [
@@ -39,7 +39,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('123'),
                 'email' => 'marta@gmail.com',
                 'telefono' => '645848549',
-                'direcion' => 'Carrer Àngel Guimerà 30 4t 1r, Girona',
+                'direccion' => 'Carrer Àngel Guimerà 30 4t 1r, Girona',
                 'rol' => true
             ],
             [
@@ -48,7 +48,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('123'),
                 'email' => 'juan@gmail.com',
                 'telefono' => '634897512',
-                'direcion' => 'Calle Mayor 15 3º 1a, Madrid',
+                'direccion' => 'Calle Mayor 15 3º 1a, Madrid',
                 'rol' => false
             ],
             [
@@ -57,7 +57,7 @@ class UserSeeder extends Seeder
                 'password' => Hash::make('123'),
                 'email' => 'montse@gmail.com',
                 'telefono' => '629458371',
-                'direcion' => 'Avenida de la Libertad 32 2º 1a, Valencia',
+                'direccion' => 'Avenida de la Libertad 32 2º 1a, Valencia',
                 'rol' => false
             ]
         ]);
