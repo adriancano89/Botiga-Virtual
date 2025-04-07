@@ -40,9 +40,12 @@
             <h1 class="text-xl md:text-2xl font-semibold color-letra-primario mb-6">Productos destacados</h1>
 
             <div class="flex flex-col md:flex-row md:justify-between mb-6">
-                <div class="buscador mb-4 sm:mb-0 w-full md:w-1/4">
-                    <input type="search" name="buscarProductos" id="buscarProductos" placeholder="Buscar productos..." class="sm:w-auto">
-                </div>
+                <form action="{{ route('tiposProductos.destacados') }}" method="GET" class="w-full">
+                    <div class="buscador flex flex-row gap-2 mb-4 sm:mb-0 w-full md:w-1/3">
+                        <input type="search" name="busqueda" id="buscarProductos" placeholder="Buscar productos..." class="sm:w-auto">
+                        <button type="submit" class="fondo-cuaternario text-white px-4 py-1 rounded-md">Buscar</button>
+                    </div>
+                </form>
 
                 <div class="filtros justify-center">
                     <div class="filtro">
@@ -62,7 +65,9 @@
                     </div>
                 </div>
             </div>
-
+            @if($productos->isEmpty())
+                <span>No se han encontrado resultados.</span>
+            @else
             <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 justify-items-center">
                 @foreach ($productos as $producto)
                     <a href="{{ route('productos.show', $producto->id) }}">
@@ -82,6 +87,7 @@
                     </a>
                 @endforeach
             </div>
+            @endif
 
             <div class="flex justify-end mt-6">
                 {{ $productos->links() }}

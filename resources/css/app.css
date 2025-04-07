@@ -66,6 +66,46 @@ header img, footer img {
 
 .icono-header {
     @apply transform transition-transform duration-300 hover:scale-110;
+    width: 30px;
+    height: 30px;
+    cursor: pointer;
+}
+
+#menuPerfil {
+    display: none;
+    background-color: #131620;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    padding: 12px;
+    min-width: 180px;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: translateY(10px);
+    z-index: 10;
+}
+
+.group:hover #menuPerfil {
+    display: block;
+    opacity: 1;
+    transform: translateY(0);
+}
+
+#menuPerfil a, #menuPerfil button {
+    display: block;
+    text-decoration: none;
+    color: white;
+    padding: 10px;
+    border-radius: 6px;
+    transition: background-color 0.2s, color 0.2s;
+}
+
+#menuPerfil a:hover, #menuPerfil button:hover {
+    background-color: #0983AC;
+    color: white;
+}
+
+#menuPerfil a:active, #menuPerfil button:active {
+    background-color: #e85f53;
 }
 
 .canal-soporte {

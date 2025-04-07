@@ -18,9 +18,10 @@ class TipoProductoController extends Controller
         return view('admin.productos.productos');
     }
 
-    public function mostrarDestacados()
+    public function mostrarDestacados(Request $request)
     {
-        $productos = TipoProducto::where('destacado', 1)->with('categoria')->paginate(8);
+        $busqueda = $request->busqueda;
+        $productos = TipoProducto::where('destacado', 1)->where('nombre', 'like', "%$busqueda%")->with('categoria')->paginate(8);
         $categorias = Categoria::all();
 
         $usuario = User::find(session('id'));

@@ -20,12 +20,23 @@
         </ul>
     </nav>
 
-    <div class="flex flex-row gap-5 sm:mr-4 mt-4 sm:mt-0 sm:ml-4">
+    <div class="flex flex-row gap-5 sm:mr-4 mt-4 sm:mt-0 sm:ml-4 relative group">
         <a href="/carrito">
             <img src="{{asset('icons/general/carrito-de-compras.png')}}" alt="carrito" class="icono-header">
         </a>
-        <a href="/profile">
-            <img src="{{asset('icons/general/usuario.png')}}" alt="perfil" class="icono-header">
-        </a>
+        <div class="relative">
+            <a href="/login" id="iconoPerfil">
+                <img src="{{asset('icons/general/usuario.png')}}" alt="perfil" class="icono-header">
+            </a>
+            @if (session('name'))
+            <div id="menuPerfil" class="absolute fondo-primario p-3 rounded shadow-lg right-0 top-7 hidden group-hover:block">
+                <a href="/profile" class="block py-2">Mi perfil</a>
+                <form action="{{route('logout')}}" method="post">
+                    @csrf
+                    <button type="submit" class="block py-2 w-full text-start">Cerrar sesión</button>
+                </form>
+            </div>
+            @endif
+        </div>
     </div>
 </header>
