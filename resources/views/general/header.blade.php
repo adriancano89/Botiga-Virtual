@@ -1,5 +1,5 @@
 <header class="flex flex-col sm:flex-row items-center justify-between w-full fondo-primario text-white p-4">
-    <div class="ml-[10px] mb-4 sm:mb-0">
+    <div class="ml-7 mb-4 sm:mb-0">
         <a href="/" class="text-center">
             <h1 class="font-bold text-3xl">SUNDERO</h1>
             <h2 class="text-lg mt-[-5px]">Sweatshirt</h2>

@@ -78,7 +78,7 @@
                                 <img src="{{ asset('icons/general/con-capucha.png') }}" alt="imagen producto" class="imagen-producto rounded-lg object-cover mx-auto">
                             @endif
                             <h2 class="nombre-producto color-letra-primario mt-4 text-center">{{ $producto->nombre }}</h2>
-
+                            <span class="text-gray-400 mt-4">{{ $producto->categoria->nombre }}</span>
                             <div class="flex justify-between items-center mt-1 w-full">
                                 <span class="codigo-producto">{{ $producto->codigo }}</span>
                                 <span class="precio color-letra-secundaria text-lg font-bold whitespace-nowrap">{{ $producto->precio }} €</span>

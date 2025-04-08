@@ -36,5 +36,6 @@
                 </main>
             </div>
         </div>
+        @include('general.footer')
     </body>
 </html>

@@ -152,7 +152,7 @@ function mostrarJuego() {
     divJuego.appendChild(cubo);
     divConcurso.appendChild(divJuego);
 
-    dropZona.style.animationDuration = '2s';
+    dropZona.style.animationDuration = '3s';
     
     dropZona.addEventListener('dragover', arrastrandoSobreZona);
     dropZona.addEventListener('drop', soltar);

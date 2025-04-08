@@ -116,10 +116,25 @@ class UserController extends Controller
         return response()->json($data);
     }
 
-    public function misPedidos() {
+    public function misPedidos(Request $request) {
         $idUsuario = session('id');
         $usuario = User::find($idUsuario);
-        $pedidos = $usuario->pedidos()->paginate(8);
+
+        $ordenar = $request->ordenar;
+
+        if ($ordenar == 'importe') {
+            $pedidos = $usuario->pedidos()->orderBy('precio_total', 'asc')->paginate(8);
+        }
+        elseif ($ordenar == 'fecha') {
+            $pedidos = $usuario->pedidos()->orderBy('fecha_venta', 'desc')->paginate(8);
+        }
+        elseif ($ordenar == 'estado') {
+            $pedidos = $usuario->pedidos()->where('estado', 0)->paginate(8);
+        }
+        else {
+            $pedidos = $usuario->pedidos()->paginate(8);
+        }
+        
         
         return view("usuario.misPedidos", ["pedidos" => $pedidos]);
     }

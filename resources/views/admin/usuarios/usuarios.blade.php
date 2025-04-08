@@ -22,7 +22,7 @@
             <section class="contenido">
                 <div class="busqueda-filtros">
                     <div class="buscador">
-                        <input type="search" name="buscarProductos" id="buscarProductos" placeholder="Buscar productos...">
+                        <input type="search" name="buscarUsuarios" id="buscarUsuarios" placeholder="Buscar usuarios...">
                     </div>
                     <div class="filtros">
                         <div class="filtro">

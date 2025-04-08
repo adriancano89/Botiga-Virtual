@@ -22,22 +22,16 @@
                     </div>
                     <div class="filtros">
                         <div class="filtro">
-                            <img src="{{asset('icons/general/filtrar.svg')}}" alt="Filtrar por">
-                            <select name="filtrar" id="filtrar">
-                                <option value="" disabled selected>Filtrar por</option>
-                                <option value="pendiente">Pendiente</option>
-                                <option value="finalizado">Finalizado</option>
-                                <option value="fecha">Fecha compra</option>
-                            </select>
-                        </div>
-                        <div class="filtro">
                             <img src="{{asset('icons/general/ordenar.svg')}}" alt="Ordenar por">
-                            <select name="ordenar" id="ordenar">
-                                <option value="" disabled selected>Ordenar por</option>
-                                <option value="importe">Importe</option>
-                                <option value="fecha">Fecha compra</option>
-                                <option value="estado">Estado</option>
-                            </select>
+                            <form action="{{route('usuario.misPedidos')}}" method="GET">
+                                <select name="ordenar" id="ordenar">
+                                    <option value="" disabled selected>Ordenar por</option>
+                                    <option value="importe">Importe</option>
+                                    <option value="fecha">Fecha compra</option>
+                                    <option value="estado">Estado</option>
+                                </select>
+                                <button type="submit" class="ml-4 border-2 fondo-cuaternario text-white rounded-md px-2 py-1">Filtrar</button>
+                            </form>
                         </div>
                     </div>
                 </div>
