@@ -10,9 +10,22 @@ class ColorController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $colores = Color::paginate(8);
+        $busqueda = $request->busqueda;
+        $ordenar = $request->ordenar;
+
+        $consulta = Color::query();
+        if ($busqueda) {
+            $consulta->where('nombre', 'like', "%$busqueda%")
+                ->orWhere('hexadecimal', 'like', "%$busqueda%");
+        }
+        
+        if ($ordenar) {
+            $consulta->orderBy($ordenar, 'asc');
+        }
+        
+        $colores = $consulta->paginate(8);
         return view('admin.colores.colores', ["colores" => $colores]);
     }
 

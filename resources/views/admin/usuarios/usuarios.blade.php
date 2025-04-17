@@ -21,30 +21,42 @@
             </section>
             <section class="contenido">
                 <div class="busqueda-filtros">
-                    <div class="buscador">
-                        <input type="search" name="buscarUsuarios" id="buscarUsuarios" placeholder="Buscar usuarios...">
-                    </div>
+                    <form action="{{ route('usuarios.index') }}" method="GET">
+                        <div class="buscador">
+                            <input type="search" name="busqueda" id="busqueda" placeholder="Buscar usuarios...">
+                            <button type="submit" class="fondo-cuaternario btn-buscar">Buscar</button>
+                        </div>
+                    </form>
+
                     <div class="filtros">
-                        <div class="filtro">
-                            <img src="{{asset('icons/general/filtrar.svg')}}" alt="Filtrar por">
-                            <select name="filtrar" id="filtrar">
-                                <option value="" disabled selected>Filtrar por</option>
-                                <option value="todos">Todos</option>
-                                <option value="rol">Rol</option>
-                            </select>
-                        </div>
-                        <div class="filtro">
-                            <img src="{{asset('icons/general/ordenar.svg')}}" alt="Ordenar por">
-                            <select name="ordenar" id="ordenar">
-                                <option value="" disabled selected>Ordenar por</option>
-                                <option value="precio">Nombre</option>
-                                <option value="">Apellidos</option>
-                                <option value="inactivo">Email</option>
-                            </select>
-                        </div>
+                        <form action="{{route('usuarios.index')}}" method="GET">    
+                            <div class="filtro">
+                                <img src="{{asset('icons/general/filtrar.svg')}}" alt="Filtrar por">
+                                <select name="filtrar" id="filtrar">
+                                    <option value="" disabled selected>Filtrar por</option>
+                                    <option value="todos">Todos</option>
+                                    <option value="clientes">Clientes</option>
+                                    <option value="administradores">Administradores</option>
+                                </select>
+                            </div>
+                            <div class="filtro">
+                                <img src="{{asset('icons/general/ordenar.svg')}}" alt="Ordenar por">
+                                <select name="ordenar" id="ordenar">
+                                    <option value="" selected>Ordenar por</option>
+                                    <option value="name">Nombre</option>
+                                    <option value="apellidos">Apellidos</option>
+                                    <option value="email">Email</option>
+                                    <option value="telefono">Teléfono</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="fondo-cuaternario btn-filtrar">Filtrar</button>
+                        </form>
                     </div>
                 </div>
                 <div class="seccion-tabla">
+                @if($todosUsuarios->isEmpty())
+                    <span>No se han encontrado resultados.</span>
+                @else
                     <table>
                         <tr class="fondo-primario">
                             <th>Nombre</th>
@@ -68,6 +80,7 @@
                             </tr>
                         @endforeach
                     </table>
+                @endif
                 </div>
                 <div>
                     {{ $todosUsuarios->links() }}

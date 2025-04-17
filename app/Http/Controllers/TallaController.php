@@ -10,9 +10,21 @@ class TallaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $tallas = Talla::paginate(8);
+        $busqueda = $request->busqueda;
+        $ordenar = $request->ordenar;
+
+        $consulta = Talla::query();
+        if ($busqueda) {
+            $consulta->where('nombre', 'like', "%$busqueda%");
+        }
+        
+        if ($ordenar) {
+            $consulta->orderBy($ordenar, 'asc');
+        }
+
+        $tallas = $consulta->paginate(8);
         return view('admin.tallas.tallas', ["tallas" => $tallas]);
     }
 

@@ -11,9 +11,28 @@ class CategoriaController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $categorias = Categoria::paginate(8);
+        $busqueda = $request->busqueda;
+        $filtrar = $request->filtrar;
+        $ordenar = $request->ordenar;
+        
+        $consulta = Categoria::query();
+
+        if ($busqueda) {
+            $consulta->where('nombre', 'like', "%$busqueda%")
+                ->orWhere('codigo', 'like', "%$busqueda%");
+        }
+        
+        if ($filtrar && $filtrar != 'todos') {
+            $consulta->where('nombre', 'like', "%$filtrar%");
+        }
+        
+        if ($ordenar) {
+            $consulta->orderBy($ordenar, 'asc');
+        }
+        
+        $categorias = $consulta->paginate(8);
         return view('admin.categorias.categorias', ["categorias" => $categorias]);
     }
 
@@ -40,10 +59,46 @@ class CategoriaController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show(string $id, Request $request)
     {
         $categoria = Categoria::find($id);
-        $productosCategoria = TipoProducto::where('categoria_id', $id)->paginate(16);
+        $busqueda = $request->busqueda;
+        $filtrar = $request->filtrar;
+        $ordenar = $request->ordenar;
+
+        $consulta = TipoProducto::where('categoria_id', $id);
+        if ($busqueda) {
+            $consulta->where('nombre', 'like', "%$busqueda%");
+            if (!$consulta->exists()) {
+                $consulta = TipoProducto::where('categoria_id', $id)->where('codigo', 'like', "%$busqueda%");
+            }
+        }
+
+        if ($filtrar && $filtrar != 'todos') {
+            switch ($filtrar) {
+                case 'precio_bajo':
+                    $consulta->whereBetween('precio', [0, 25]);
+                    break;
+                case 'precio_medio':
+                    $consulta->whereBetween('precio', [26, 50]);
+                    break;
+                case 'precio_alto':
+                    $consulta->where('precio', '>', 50);
+            }
+        }
+
+        if ($ordenar) {
+            if ($ordenar != 'precio_asc' && $ordenar != 'precio_desc') {
+                $orden = 'asc';
+            }
+            else {
+                $orden = $ordenar == 'precio_asc' ? 'asc' : 'desc';
+                $ordenar = 'precio';
+            }
+            $consulta->orderBy($ordenar, $orden);
+        }
+
+        $productosCategoria = $consulta->paginate(16);
         return view('general.mostrarPorCategorias', ["categoria" => $categoria, "productosCategoria" => $productosCategoria]);
     }
     /**
@@ -78,10 +133,28 @@ class CategoriaController extends Controller
         //
     }
 
-    public function mostrarPorGenero(string $genero)
+    public function mostrarPorGenero(string $genero, Request $request)
     {
         $genero = ucfirst($genero);
-        $productosCategoria = Categoria::with('tiposProductos')->where('nombre', 'like', "%$genero%")->paginate(16);
+
+        $busqueda = $request->busqueda;
+
+        $consulta = Categoria::with('tiposProductos')->where('nombre', 'like', "%$genero%");
+        if ($busqueda) {
+            $consulta->whereHas('tiposProductos', function ($consulta) use ($busqueda) {
+                    $consulta->where('nombre', 'like', "%$busqueda%");
+                });
+    
+            if (!$consulta->exists()) {
+                $consulta = Categoria::with('tiposProductos')->where('nombre', 'like', "%$genero%")
+                    ->whereHas('tiposProductos', function ($consulta) use ($busqueda) {
+                        $consulta->where('codigo', 'like', "%$busqueda%");
+                    });
+            }
+        }
+        
+        $productosCategoria = $consulta->paginate(16);
+        
         return view('general.mostrarPorGenero', ["productosCategoria" => $productosCategoria, "genero" => $genero]);
     }
 }

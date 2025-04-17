@@ -17,25 +17,42 @@
             </section>
             <section class="contenido">
                 <div class="busqueda-filtros">
-                    <div class="buscador">
-                        <input type="search" name="buscarPedidos" id="buscarPedidos" placeholder="Buscar pedidos..." class="border-2 border-gray p-2">
-                    </div>
-                    <div class="filtros">
-                        <div class="filtro">
-                            <img src="{{asset('icons/general/ordenar.svg')}}" alt="Ordenar por">
-                            <form action="{{route('usuario.misPedidos')}}" method="GET">
-                                <select name="ordenar" id="ordenar">
-                                    <option value="" disabled selected>Ordenar por</option>
-                                    <option value="importe">Importe</option>
-                                    <option value="fecha">Fecha compra</option>
-                                    <option value="estado">Estado</option>
-                                </select>
-                                <button type="submit" class="ml-4 border-2 fondo-cuaternario text-white rounded-md px-2 py-1">Filtrar</button>
-                            </form>
+                    <form action="{{ route('usuario.misPedidos') }}" method="GET">
+                        <div class="buscador">
+                            <input type="search" name="busqueda" id="busqueda" placeholder="Buscar pedidos...">
+                            <button type="submit" class="fondo-cuaternario btn-buscar">Buscar</button>
                         </div>
+                    </form>
+                    <div class="filtros">
+                        <form action="{{route('usuario.misPedidos')}}" method="GET">    
+                            <div class="filtro">
+                                <img src="{{asset('icons/general/filtrar.svg')}}" alt="Filtrar por">
+                                <select name="filtrar" id="filtrar">
+                                    <option value="" disabled selected>Filtrar por</option>
+                                    <option value="todos">Todas</option>
+                                    <option value="pendiente">Pendiente</option>
+                                    <option value="finalizada">Finalizada</option>
+                                </select>
+                            </div>
+                            <div class="filtro">
+                                <img src="{{asset('icons/general/ordenar.svg')}}" alt="Ordenar por">
+                                <select name="ordenar" id="ordenar">
+                                    <option value="" selected>Ordenar por</option>
+                                    <option value="precio_asc">Precio: de menor a mayor</option>
+                                    <option value="precio_desc">Precio: de mayor a menor</option>
+                                    <option value="fecha_venta">Fecha compra</option>
+                                    <option value="fecha_envio">Fecha envío</option>
+                                    <option value="fecha_entrega">Fecha entrega</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="fondo-cuaternario btn-filtrar">Filtrar</button>
+                        </form>
                     </div>
                 </div>
                 <div class="seccion-tabla" id="pedidos">
+                @if($pedidos->isEmpty())
+                    <span>No se han encontrado resultados.</span>
+                @else
                     <table>
                         <tr class="fondo-primario">
                             <th>Precio final</th>
@@ -68,6 +85,7 @@
                             </tr>
                         @endforeach
                     </table>
+                @endif
                 </div>
                 <div class="flex flex-row justify-end gap-2" id="paginacion">
                     {{ $pedidos->links() }}

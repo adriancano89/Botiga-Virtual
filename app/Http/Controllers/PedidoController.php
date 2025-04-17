@@ -16,9 +16,38 @@ class PedidoController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        $pedidos = Pedido::with('usuario')->paginate(8);
+        $busqueda = $request->busqueda;
+        $filtrar = $request->filtrar;
+        $ordenar = $request->ordenar;
+
+        $consulta = Pedido::with('usuario');
+        
+        if ($busqueda) {
+            $consulta->where('precio_total', 'like', "%$busqueda%")
+                ->orWhere('fecha_venta', 'like', "%$busqueda%")
+                ->orWhere('fecha_envio', 'like', "%$busqueda%")
+                ->orWhere('fecha_entrega', 'like', "%$busqueda%");
+        }
+        
+        if ($filtrar && $filtrar != 'todos') {
+            $valor = $filtrar == 'pendiente' ? false : true;
+            $consulta->where('estado', $valor);
+        }
+
+        if ($ordenar) {
+            if ($ordenar != 'precio_asc' && $ordenar != 'precio_desc') {
+                $orden = 'asc';
+            }
+            else {
+                $orden = $ordenar == 'precio_asc' ? 'asc' : 'desc';
+                $ordenar = 'precio_total';
+            }
+            $consulta->orderBy($ordenar, $orden);
+        }
+
+        $pedidos = $consulta->paginate(8);
         return view("admin.ventas.ventas", ["pedidos" => $pedidos]);
     }
 

@@ -21,7 +21,44 @@ class TipoProductoController extends Controller
     public function mostrarDestacados(Request $request)
     {
         $busqueda = $request->busqueda;
-        $productos = TipoProducto::where('destacado', 1)->where('nombre', 'like', "%$busqueda%")->with('categoria')->paginate(8);
+        $filtrar = $request->filtrar;
+        $ordenar = $request->ordenar;
+
+        $consulta = TipoProducto::where('destacado', 1)->with('categoria');
+        if ($busqueda) {
+            $consulta->where('nombre', 'like', "%$busqueda%");
+
+            if (!$consulta->exists()) {
+                $consulta = TipoProducto::where('destacado', 1)->with('categoria')->where('codigo', 'like', "%$busqueda%");
+            }
+        }
+
+        if ($filtrar && $filtrar != 'todos') {
+            switch ($filtrar) {
+                case 'precio_bajo':
+                    $consulta->whereBetween('precio', [0, 25]);
+                    break;
+                case 'precio_medio':
+                    $consulta->whereBetween('precio', [26, 50]);
+                    break;
+                case 'precio_alto':
+                    $consulta->where('precio', '>', 50);
+            }
+        }
+
+        if ($ordenar) {
+            if ($ordenar != 'precio_asc' && $ordenar != 'precio_desc') {
+                $orden = 'asc';
+            }
+            else {
+                $orden = $ordenar == 'precio_asc' ? 'asc' : 'desc';
+                $ordenar = 'precio';
+            }
+            $consulta->orderBy($ordenar, $orden);
+        }
+        
+        $productos = $consulta->paginate(8);
+
         $categorias = Categoria::all();
 
         $usuario = User::find(session('id'));

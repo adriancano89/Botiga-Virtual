@@ -17,29 +17,40 @@
             </section>
             <section class="contenido">
                 <div class="busqueda-filtros">
-                    <div class="buscador">
-                        <input type="search" name="buscarCategorias" id="buscarCategorias" placeholder="Buscar categorias...">
-                    </div>
+                    <form action="{{ route('categorias.index') }}" method="GET">
+                        <div class="buscador">
+                            <input type="search" name="busqueda" id="busqueda" placeholder="Buscar categorias...">
+                            <button type="submit" class="fondo-cuaternario btn-buscar">Buscar</button>
+                        </div>
+                    </form>
                     <div class="filtros">
-                        <div class="filtro">
-                            <img src="{{asset('icons/general/filtrar.svg')}}" alt="Filtrar por">
-                            <select name="filtrar" id="filtrar">
-                                <option value="" disabled selected>Filtrar por</option>
-                                <option value="codigo">Código</option>
-                                <option value="nombre">Nombre</option>
-                            </select>
-                        </div>
-                        <div class="filtro">
-                            <img src="{{asset('icons/general/ordenar.svg')}}" alt="Ordenar por">
-                            <select name="ordenar" id="ordenar">
-                                <option value="" disabled selected>Ordenar por</option>
-                                <option value="codigo">Código</option>
-                                <option value="nombre">Nombre</option>
-                            </select>
-                        </div>
+                        <form action="{{route('categorias.index')}}" method="GET">    
+                            <div class="filtro">
+                                <img src="{{asset('icons/general/filtrar.svg')}}" alt="Filtrar por">
+                                <select name="filtrar" id="filtrar">
+                                    <option value="" disabled selected>Filtrar por</option>
+                                    <option value="todos">Todas</option>
+                                    <option value="Hombre">Hombre</option>
+                                    <option value="Mujer">Mujer</option>
+                                    <option value="Niño">Niño</option>
+                                </select>
+                            </div>
+                            <div class="filtro">
+                                <img src="{{asset('icons/general/ordenar.svg')}}" alt="Ordenar por">
+                                <select name="ordenar" id="ordenar">
+                                    <option value="" selected>Ordenar por</option>
+                                    <option value="codigo">Código</option>
+                                    <option value="nombre">Nombre</option>
+                                </select>
+                            </div>
+                            <button type="submit" class="fondo-cuaternario btn-filtrar">Filtrar</button>
+                        </form>
                     </div>
                 </div>
                 <div class="seccion-tabla">
+                @if($categorias->isEmpty())
+                    <span>No se han encontrado resultados.</span>
+                @else
                     <table>
                         <tr class="fondo-primario">
                             <th>Código</th>
@@ -58,6 +69,7 @@
                         </tr>
                     @endforeach
                     </table>
+                @endif
                 </div>
                 <div>
                     {{ $categorias->links() }}

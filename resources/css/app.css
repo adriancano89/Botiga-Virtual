@@ -132,16 +132,40 @@ header img, footer img {
     @apply w-[85%] p-4;
 }
 
-.buscador input {
-    @apply w-full border-2 border-gray-400 rounded-md p-2;
+.busqueda-filtros {
+    @apply flex flex-col sm:flex-row sm:justify-between mb-6;
 }
 
-.filtros {
-    @apply flex flex-row gap-4;
+.busqueda-filtros form {
+    @apply w-full;
+}
+
+.buscador {
+    @apply flex flex-row gap-2 mb-4 sm:mb-0 w-full pr-4;
+}
+
+.buscador input {
+    @apply w-full border-2 border-gray-400 rounded-md p-2 sm:w-auto;
+}
+
+.btn-buscar {
+    @apply text-white px-4 py-1 rounded-md;
+}
+
+.btn-filtrar {
+    @apply text-white px-4 py-1 rounded-md w-fit self-center md:ml-4 md:self-auto;
+}
+
+.filtros > form{
+    @apply flex flex-col gap-4 lg:flex-row lg:items-end lg:gap-8;
 }
 
 .filtro {
-    @apply flex flex-row items-center hover:cursor-pointer;
+    @apply flex flex-row items-center;
+}
+
+.filtro > select {
+    @apply p-2 ml-2 rounded-md border-2 border-slate-200 bg-white text-gray-700;
 }
 
 .filtro > img {

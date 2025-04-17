@@ -39,30 +39,38 @@
 
             <h1 class="text-xl md:text-2xl font-semibold color-letra-primario mb-6">Productos destacados</h1>
 
-            <div class="flex flex-col md:flex-row md:justify-between mb-6">
-                <form action="{{ route('tiposProductos.destacados') }}" method="GET" class="w-full">
-                    <div class="buscador flex flex-row gap-2 mb-4 sm:mb-0 w-full md:w-1/3">
-                        <input type="search" name="busqueda" id="buscarProductos" placeholder="Buscar productos..." class="sm:w-auto">
-                        <button type="submit" class="fondo-cuaternario text-white px-4 py-1 rounded-md">Buscar</button>
+            <div class="busqueda-filtros">
+                <form action="{{ route('tiposProductos.destacados') }}" method="GET">
+                    <div class="buscador">
+                        <input type="search" name="busqueda" id="busqueda" placeholder="Buscar productos...">
+                        <button type="submit" class="fondo-cuaternario btn-buscar">Buscar</button>
                     </div>
                 </form>
 
-                <div class="filtros justify-center">
-                    <div class="filtro">
-                        <img src="{{asset('icons/general/filtrar.svg')}}" alt="Filtrar por">
-                        <select name="filtrar" id="filtrar" class="p-2 rounded-md">
-                            <option value="" disabled selected>Filtrar por</option>
-                            <option value="todos">Todos</option>
-                            <option value="categoria">Categoria</option>
-                        </select>
-                    </div>
-                    <div class="filtro">
-                        <img src="{{asset('icons/general/ordenar.svg')}}" alt="Ordenar por">
-                        <select name="ordenar" id="ordenar" class="p-2 rounded-md">
-                            <option value="" disabled selected>Ordenar por</option>
-                            <option value="precio">Precio</option>
-                        </select>
-                    </div>
+                <div class="filtros">
+                    <form action="{{route('tiposProductos.destacados')}}" method="GET">    
+                        <div class="filtro">
+                            <img src="{{asset('icons/general/filtrar.svg')}}" alt="Filtrar por">
+                            <select name="filtrar" id="filtrar">
+                                <option value="" disabled selected>Filtrar por</option>
+                                <option value="todos">Todos</option>
+                                <option value="precio_bajo">Menos de 25 €</option>
+                                <option value="precio_medio">Entre 25 € y 50 €</option>
+                                <option value="precio_alto">Más de 50 €</option>
+                            </select>
+                        </div>
+                        <div class="filtro">
+                            <img src="{{asset('icons/general/ordenar.svg')}}" alt="Ordenar por">
+                            <select name="ordenar" id="ordenar">
+                                <option value="" selected>Ordenar por</option>
+                                <option value="precio_asc">Precio: de menor a mayor</option>
+                                <option value="precio_desc">Precio: de mayor a menor</option>
+                                <option value="nombre">Nombre</option>
+                                <option value="codigo">Código</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="fondo-cuaternario btn-filtrar">Filtrar</button>
+                    </form>
                 </div>
             </div>
             @if($productos->isEmpty())
