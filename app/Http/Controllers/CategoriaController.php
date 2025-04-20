@@ -157,4 +157,58 @@ class CategoriaController extends Controller
         
         return view('general.mostrarPorGenero', ["productosCategoria" => $productosCategoria, "genero" => $genero]);
     }
+
+    public function obtenerCodigoMasAlto(Request $request)
+    {
+        $letra = $request->letra;
+        
+        $registro = Categoria::where('codigo', 'like', $letra . '%')
+            ->orderByRaw('CAST(SUBSTRING(codigo, 2) AS UNSIGNED) DESC')
+            ->first();
+
+        $data = [
+            "codigo" => $registro->codigo
+        ];
+        return response()->json($data);
+    }
+
+    public function comprobarCodigo(Request $request)
+    {
+        $codigo = $request->codigo;
+
+        $existe = false;
+        $mensaje = '';
+        $categoria = Categoria::where('codigo', $codigo)->first();
+
+        if ($categoria) {
+            $existe = true;
+            $mensaje = 'El código introducido ya existe.';
+        }
+
+        $data = [
+            "existe" => $existe,
+            "mensaje" => $mensaje
+        ];
+        return response()->json($data);
+    }
+
+    public function comprobarNombre(Request $request)
+    {
+        $nombre = $request->nombre;
+
+        $existe = false;
+        $mensaje = '';
+        $categoria = Categoria::where('nombre', $nombre)->first();
+
+        if ($categoria) {
+            $existe = true;
+            $mensaje = 'El nombre introducido ya existe.';
+        }
+
+        $data = [
+            "existe" => $existe,
+            "mensaje" => $mensaje
+        ];
+        return response()->json($data);
+    }
 }

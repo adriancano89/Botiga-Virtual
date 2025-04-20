@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite(['resources/css/app.css', 'resources/css/estilosAdmin.css'])
+    <script src="{{ asset('js/validaciones.js') }}" defer></script>
+    <script src="{{ asset('js/tallas/validarForms.js') }}" defer></script>
     <title>Administrar - Editar Talla</title>
 </head>
 <body>
@@ -22,7 +24,7 @@
                     <div class="flex justify-center mb-6">
                         <div class="flex flex-col w-full max-w-md">
                             <label for="nombre" class="label">Nombre</label>
-                            <input type="text" name="nombre" id="nombre" value="{{ $talla->nombre }}" class="input borde-cuaternario">
+                            <input type="text" name="nombre" id="nombre" value="{{ $talla->nombre }}" class="input borde-cuaternario" maxlength="10" required>
                         </div>
                     </div>
 

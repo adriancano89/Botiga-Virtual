@@ -41,7 +41,7 @@
 
                         <div class="flex flex-col w-full">
                             <label for="color_id" class="label">Color</label>
-                            <select name="color_id" id="color_id" class="input borde-cuaternario">
+                            <select name="color_id" id="color_id" class="input borde-cuaternario" required>
                                 <option value="" disabled selected>-- Seleccionar --</option>
                                 @foreach($colores as $color)
                                     <option value="{{ $color->id }}" style="background-color: {{ $color->hexadecimal }};">{{ $color->nombre }}</option>
@@ -51,7 +51,7 @@
 
                         <div class="flex flex-col w-full">
                             <label for="talla_id" class="label">Talla</label>
-                            <select name="talla_id" id="talla_id" class="input borde-cuaternario">
+                            <select name="talla_id" id="talla_id" class="input borde-cuaternario" required>
                                 <option value="" disabled selected>-- Seleccionar --</option>
                                 @foreach($tallas as $talla)
                                     <option value="{{ $talla->id }}">{{ $talla->nombre }}</option>
@@ -60,8 +60,8 @@
                         </div>
 
                         <div class="flex flex-col w-full">
-                            <label for="stockAnadir" class="label">Stock a Añadir</label>
-                            <input type="text" name="stockAnadir" id="stockAnadir" class="input borde-cuaternario">
+                            <label for="stockAnadir" class="label">Stock a añadir</label>
+                            <input type="number" name="stockAnadir" id="stockAnadir" class="input borde-cuaternario" min="1" required>
                         </div>
                     </div>
 

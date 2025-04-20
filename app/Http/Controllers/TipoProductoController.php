@@ -229,4 +229,40 @@ class TipoProductoController extends Controller
     {
         //
     }
+
+    public function obtenerCodigoMasAlto(Request $request)
+    {
+
+        $registro = TipoProducto::orderByRaw('CAST(SUBSTRING(codigo, 5) AS UNSIGNED) DESC')
+            ->first();
+
+        $codigoMasAlto = $registro->codigo;
+
+        $data = [
+            "codigo" => $codigoMasAlto
+        ];
+
+        return response()->json($data);
+    }
+
+    public function comprobarCodigo(Request $request)
+    {
+        $codigo = $request->codigo;
+
+        $existe = false;
+        $mensaje = '';
+
+        $tipoProducto = TipoProducto::where('codigo', $codigo)->first();
+
+        if ($tipoProducto) {
+            $existe = true;
+            $mensaje = 'El código introducido ya existe. Introduce otro código o haz clic en el botón de generar código para obtener uno recomendado.';
+        }
+
+        $data = [
+            "existe" => $existe,
+            "mensaje" => $mensaje
+        ];
+        return response()->json($data);
+    }
 }

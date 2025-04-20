@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     @vite(['resources/css/app.css', 'resources/css/estilosAdmin.css'])
+    <script src="{{ asset('js/validaciones.js') }}" defer></script>
+    <script src="{{ asset('js/tallas/validarForms.js') }}" defer></script>
     <title>Administrar - Crear talla</title>
 </head>
 <body>
@@ -19,7 +21,7 @@
                     @csrf
                     <div class="flex flex-col mb-6">
                         <label for="nombre" class="label">Nombre</label>
-                        <input type="text" name="nombre" id="nombre" class="input borde-cuaternario">
+                        <input type="text" name="nombre" id="nombre" class="input borde-cuaternario" maxlength="10" required>
                     </div>
 
                     <div class="flex flex-row justify-center mt-6">

@@ -77,8 +77,12 @@ Route::middleware(['auth', 'admin'])->group(function () {
     Route::put('/pedidos/{pedido}', [PedidoController::class, 'update'])->name('pedidos.update');
 
     Route::post('/fetch-TiposProductos', [TipoProductoController::class, 'obtenerProductos'])->name('tiposProductos.obtenerProductos');
+    Route::post('/fetch-codigoMasAltoTipoProducto', [TipoProductoController::class, 'obtenerCodigoMasAlto'])->name('tiposProductos.obtenerCodigoMasAlto');
+    Route::post('/fetch-comprobarCodigoTipoProducto', [TipoProductoController::class, 'comprobarCodigo'])->name('tiposProductos.comprobarCodigo');
     Route::delete('/fetch-EliminarImagen/{imagen}', [FotoController::class, 'destroy'])->name('fotos.destroy');
-
+    Route::post('/fetch-codigoMasAltoCategoria', [CategoriaController::class, 'obtenerCodigoMasAlto'])->name('categorias.obtenerCodigoMasAlto');
+    Route::post('/fetch-comprobarCodigoCategoria', [CategoriaController::class, 'comprobarCodigo'])->name('categorias.comprobarCodigo');
+    Route::post('/fetch-comprobarNombreCategoria', [CategoriaController::class, 'comprobarNombre'])->name('categorias.comprobarNombre');
 
     Route::get('/graficos', [ProductoController::class, 'mostrarGraficos'])->name('productos.mostrarGraficos');
 

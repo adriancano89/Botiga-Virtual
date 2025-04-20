@@ -6,6 +6,8 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css', 'resources/css/estilosAdmin.css'])
     <script src="{{ asset('js/fetch.js') }}" defer></script>
+    <script src="{{ asset('js/validaciones.js') }}" defer></script>
+    <script src="{{ asset('js/productos/validarForms.js') }}" defer></script>
     <script src="{{ asset('js/productos/eliminarImagenesAdicionales.js') }}" defer></script>
     <title>Administrar - Editar Producto</title>
 </head>
@@ -18,18 +20,21 @@
                 <h1>Editar producto</h1>
             </section>
             <section class="contenido">
-                <form action="{{ route('tiposProductos.update', $producto->id) }}" method="POST" enctype="multipart/form-data" class="formulario">
+                <form action="{{ route('tiposProductos.update', $producto->id) }}" method="POST" enctype="multipart/form-data" class="formulario" id="formEditar">
                     @csrf
                     @method('PUT')
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-6">
                         <div class="flex flex-col w-full">
                             <label for="codigo" class="label">Código</label>
-                            <input type="text" name="codigo" id="codigo" value="{{ $producto->codigo }}" class="input borde-cuaternario">
+                            <div class="flex flex-row gap-4">
+                                <input type="text" name="codigo" id="codigo" value="{{ $producto->codigo }}" class="input borde-cuaternario w-full" maxlength="7" required>
+                                <img src="{{ asset('icons/general/actualizar-flecha.png') }}" alt="Sugerir código" class="w-11 hover:cursor-pointer" title="Sugerir código" id="iconoSugerirCodigo">
+                            </div>
                         </div>
 
                         <div class="flex flex-col w-full">
                             <label for="nombre" class="label">Nombre</label>
-                            <input type="text" name="nombre" id="nombre" value="{{ $producto->nombre }}" class="input borde-cuaternario">
+                            <input type="text" name="nombre" id="nombre" value="{{ $producto->nombre }}" class="input borde-cuaternario" required>
                         </div>
 
                         <div class="col-span-1 md:col-span-2">
@@ -52,7 +57,7 @@
 
                         <div class="flex flex-col w-full">
                             <label for="categoria_id" class="label">Categoría</label>
-                            <select name="categoria_id" id="categoria_id" class="input borde-cuaternario">
+                            <select name="categoria_id" id="categoria_id" class="input borde-cuaternario" required>
                                 @foreach($categorias as $categoria)
                                     <option value="{{ $categoria->id }}" {{ $categoria->id == $producto->categoria_id ? 'selected' : '' }}>
                                         {{ $categoria->nombre }}
@@ -63,7 +68,7 @@
 
                         <div class="flex flex-col w-full">
                             <label for="precio" class="label">Precio</label>
-                            <input type="number" name="precio" id="precio" value="{{ $producto->precio }}" class="input borde-cuaternario" step="0.01" min="0">
+                            <input type="number" name="precio" id="precio" value="{{ $producto->precio }}" class="input borde-cuaternario" step="0.01" min="0" max="200" required>
                         </div>
 
                         <div class="flex flex-col w-full md:col-span-2">
@@ -108,6 +113,7 @@
             </section>
         </section>
     </div>
+    @include('popups.popupErroresFormulario')
     @include('general.footer')
 </body>
 </html>
