@@ -1,19 +1,22 @@
 const divProductos = document.getElementById('productos');
 const divPaginacion = document.getElementById('paginacion');
 const buscarProductos = document.getElementById('buscarProductos');
+const filtrar = document.getElementById('filtrar');
+const ordenar = document.getElementById('ordenar');
 const animacionCarga = document.getElementById('animacionCarga');
 
-async function obtenerProductos(pagina, busqueda) {
+async function obtenerProductos(pagina) {
     let dataBusqueda = {
-        "busqueda": busqueda.trim()
+        "busqueda": buscarProductos.value.trim(),
+        "filtrar" : filtrar.value,
+        "ordenar" : ordenar.value
     }
-    let data = enviarDatos(pagina, dataBusqueda, 'POST', 'Error al obtener los productos');
+    let data = await enviarDatos(pagina, dataBusqueda, 'POST', 'Error al obtener los productos');
     return data;
 }
 
 function dibujarProductos(dataProductos) {
     for (let clave in dataProductos) {
-        console.log(dataProductos[clave]);
         let datosProducto = dataProductos[clave];
         let id = datosProducto.id;
         let codigo = datosProducto.codigo;
@@ -60,7 +63,7 @@ function mostrarProductos(datos) {
         }
     }
     else {
-        divProductos.innerHTML = "<span class='centrado'>No se han encontrado productos</span>";
+        divProductos.innerHTML = "<span class='centrado'>No se han encontrado productos.</span>";
     }
     
 }
@@ -119,7 +122,7 @@ function crearEnlace(url, texto) {
             });
         }
         mostrarAnimacionCarga();
-        let datos = await obtenerProductos(enlace.href, '');
+        let datos = await obtenerProductos(enlace.href);
         ocultarAnimacionCarga();
         mostrarProductos(datos);
         actualizarPaginacion(datos.productos);
@@ -167,9 +170,9 @@ function restablecerPaginacion() {
     divPaginacion.appendChild(paginaSiguiente);
 }
 
-async function cargarProductos(url, busqueda) {
+async function cargarProductos(url) {
     mostrarAnimacionCarga();
-    let datos = await obtenerProductos(url, busqueda);
+    let datos = await obtenerProductos(url);
     ocultarAnimacionCarga();
     mostrarProductos(datos);
     restablecerPaginacion();
@@ -178,8 +181,15 @@ async function cargarProductos(url, busqueda) {
 }
 
 buscarProductos.addEventListener('input', function() {
-    const busqueda = buscarProductos.value;
-    cargarProductos('/fetch-TiposProductos', busqueda);
+    cargarProductos('/fetch-TiposProductos');
+});
+
+filtrar.addEventListener('input', function() {
+    cargarProductos('/fetch-TiposProductos');
+});
+
+ordenar.addEventListener('input', function() {
+    cargarProductos('/fetch-TiposProductos');
 });
 
 cargarProductos('/fetch-TiposProductos', '');

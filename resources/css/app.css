@@ -156,7 +156,7 @@ header img, footer img {
     @apply text-white px-4 py-1 rounded-md w-fit self-center md:ml-4 md:self-auto;
 }
 
-.filtros > form{
+.filtros > form, .filtros{
     @apply flex flex-col gap-4 lg:flex-row lg:items-end lg:gap-8;
 }
 
