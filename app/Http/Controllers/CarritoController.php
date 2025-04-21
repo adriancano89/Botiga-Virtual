@@ -108,6 +108,12 @@ class CarritoController extends Controller
         $carrito->update([
             'cantidad' => $request->cantidad,
         ]);
+
+        $data = [
+            "nuevaCantidad" => $carrito->cantidad
+        ];
+
+        return response()->json($data);
     }
 
     /**

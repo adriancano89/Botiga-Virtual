@@ -157,7 +157,7 @@ class ProductoController extends Controller
         $idTalla = $request->input('idTalla');
         $idColor = $request->input('idColor');
         
-        $producto = Producto::with(['tipoProducto', 'talla', 'color'])->where([
+        $producto = Producto::with(['tipoProducto.categoria', 'talla', 'color'])->where([
             'tipos_producto_id' => intval($idTipoProducto),
             'talla_id' => intval($idTalla),
             'color_id' => intval($idColor)

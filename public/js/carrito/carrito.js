@@ -11,6 +11,7 @@ function guardarCarritoLS(clave, jsonProducto) {
 }
 
 formularioAnadirCarrito.addEventListener('submit', async function(event) {
+    event.preventDefault();
     if (!validado) {
         const datosEnvio = {
             "idTipoProducto": tipoProducto.value,
@@ -20,8 +21,7 @@ formularioAnadirCarrito.addEventListener('submit', async function(event) {
         const jsonProducto = await enviarDatos('/fetch-DatosProducto', datosEnvio, 'POST', 'Error al obtener los datos del producto');
         const idProducto = jsonProducto.producto[0].id; // Obtenemos el id del producto
         jsonProducto.producto[0].cantidad = cantidad.value;
-        event.preventDefault();
-        jsonProducto.producto[0].precio = jsonProducto.producto[0].tipo_producto.precio;
+        jsonProducto.producto[0].precio = jsonProducto.producto[0].tipo_producto.precio * cantidad.value;
 
         if (localStorage.getItem('carrito-' + idProducto) != null) {
             let cantidadActual = parseInt(jsonProducto.producto[0].cantidad);
@@ -34,6 +34,9 @@ formularioAnadirCarrito.addEventListener('submit', async function(event) {
             }
         }
         guardarCarritoLS('carrito-' + idProducto, jsonProducto);
+    }
+    else {
+        formularioAnadirCarrito.submit();
     }
 });
 

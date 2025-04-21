@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     @vite(['resources/css/app.css'])
     <script src="{{ asset('js/fetch.js') }}" defer></script>
+    <script src="{{ asset('js/carrito/actualizarPrecioTotal.js') }}" defer></script>
     <script src="{{ asset('js/carrito/mostrarCarrito.js') }}" defer></script>
     <script src="{{ asset('js/chatbot.js') }}" defer></script>
     <title>Carrito</title>
@@ -34,7 +35,7 @@
                                                     @csrf
                                                     @method('DELETE')
                                                     <button type="submit" class="hover:cursor-pointer">
-                                                        <img src="{{ asset('icons/general/borrar.png') }}" alt="Eliminar Producto del Carrito" class="w-[25px]">
+                                                        <img src="{{ asset('icons/general/borrar.png') }}" alt="Eliminar Producto del Carrito" class="w-[25px]" title="Quitar del carrito">
                                                     </button>
                                                 </form>
                                             </div>
@@ -45,7 +46,7 @@
                                                 {{$productoEnCarrito->producto->tipoProducto->categoria->nombre}}
                                             </div>
                                             <div class="w-[50%] p-1 text-right color-letra-secundaria flex justify-end">
-                                                <a href="{{route('productos.show', $productoEnCarrito->producto->id)}}" target="_blank">
+                                                <a href="{{route('productos.show', $productoEnCarrito->producto->tipoProducto->id)}}" target="_blank">
                                                     <button class="flex items-center">
                                                         <img src="icons/general/ojo.png" alt="Ver Producto" class="w-6 h-6 mr-2">
                                                         Ver Producto
@@ -61,7 +62,7 @@
                                             <div class="w-[20%] p-1">Precio unidad</div>
                                             <div class="w-[20%] p-1">Precio total</div>
                                         </div>
-                                        <div class="flex justify-between">
+                                        <div class="flex justify-between" id="datosProducto-{{ $productoEnCarrito->id }}">
                                             <div class="w-[20%] p-1">
                                                 <div class="rounded-[100px]" style="background-color: {{$productoEnCarrito->producto->color->hexadecimal}}; height: 20px;"></div>
                                             </div>
@@ -73,31 +74,24 @@
                                                     @endfor
                                                 </select>
                                             </div>
-                                            <div class="w-[20%] p-1">{{$productoEnCarrito->producto->tipoProducto->precio}} €</div>
-                                            <div class="w-[20%] p-1 font-semibold">{{$productoEnCarrito->producto->tipoProducto->precio * $productoEnCarrito->cantidad}} €</div>
+                                            <div class="w-[20%] p-1 precio-unidad">{{$productoEnCarrito->producto->tipoProducto->precio}} €</div>
+                                            <div class="w-[20%] p-1 font-semibold precio-total">{{$productoEnCarrito->producto->tipoProducto->precio * $productoEnCarrito->cantidad}} €</div>
                                         </div>
                                     </div>
                                 </div>
                             @endforeach
                         </div>
                     @else
-                        <div id="tablaCarritoLS">
-                            <tr class="w-full shadow-xl rounded-[15px] p-4 hover:bg-slate-300 hover:cursor-pointer">
-                                <th class="border-2 border-[#131620] text-center">Nombre</th>
-                                <th class="border-2 border-[#131620] text-center">Talla</th>
-                                <th class="border-2 border-[#131620] text-center">Color</th>
-                                <th class="border-2 border-[#131620] text-center">Cantidad</th>
-                                <th class="border-2 border-[#131620] text-center">Precio</th>
-                                <th class="border-2 border-[#131620] text-center">Eliminar</th>
-                            </tr>
+                        <div id="tablaCarritoLS" class="w-[65%] p-4">
+                            
                         </div>
                     @endif
                     <div class="flex flex-col w-[25%] p-4 shadow-xl rounded-[15px] bg-white text-center space-y-4 mt-9 max-h-[350px] overflow-y-auto">
-                        <b class="text-left text-2xl">Pedido</b>
+                        <b class="text-left text-2xl">Carrito</b>
                         <div class="flex flex-col space-y-2">
                             <div class="flex justify-between">
-                                <span>Envio</span>
-                                <span>4.99 €</span>
+                                <span>Subtotal</span>
+                                <span id="subtotal">{{ number_format($precioTotal, 2) }} €</span>
                             </div>
                             <div class="flex justify-between">
                                 <span>IVA</span>
@@ -105,18 +99,18 @@
                                     $iva = $precioTotal * 0.21;
                                     $iva = number_format($iva, 2);
                                 @endphp
-                                <span>{{ $iva }} €</span>
+                                <span id="iva">{{ $iva }} €</span>
                             </div>
                             <div class="flex justify-between">
-                                <span>Subtotal</span>
-                                <span>{{ number_format($precioTotal, 2) }} €</span>
+                                <span>Envio</span>
+                                <span>4.99 €</span>
                             </div>
                             <div class="flex justify-between">
-                                <b class="text-left text-xl">Total</b>
+                                <span class="text-xl font-bold">Total</span>
                                 @php
-                                    $precioTotalTotal = $precioTotal + 4.99 + $iva;
+                                    $precioTotalTotal = $precioTotal == 0 ? 0.00 : $precioTotal + 4.99 + $iva;
                                 @endphp
-                                <b class="text-left text-xl">{{ number_format($precioTotalTotal, 2) }} €</b>
+                                <span id="total" class="text-xl font-bold">{{ number_format($precioTotalTotal, 2) }} €</span>
                             </div>
                         </div>
                         <a href="{{route('pedidos.create')}}">

@@ -10,7 +10,7 @@
     <script src="https://js.stripe.com/v3/" defer></script>
     <script src="{{ asset('js/carrito/pedido.js') }}" defer></script>
     <script src="{{ asset('js/chatbot.js') }}" defer></script>
-    <title>Sundero Sweatshirt</title>
+    <title>Realizar pedido - SUNDERO Sweatshirt</title>
 </head>
 <body>
     @include('general.header')
@@ -67,27 +67,27 @@
         <div class="flex flex-col w-1/3 p-8 shadow-xl rounded-[15px] bg-white text-center space-y-4 m-9">
             <form action="{{ route('pedidos.store') }}" method="post" id="formPedido">
                 @csrf
-                <b class="text-left text-2xl">Pedido</b>
+                <span class="font-bold text-2xl">Pedido</span>
                 <div id="detallesPedido">
                     @php
                     $iva = $precioTotal * 21/100;
                     $total = $precioTotal + $iva + 4.99;
                     @endphp
                     <div class="flex flex-row justify-between mt-2">
-                        <span>Subtotal</span>
+                        <span class="font-bold">Subtotal</span>
                         <span id="subtotal">{{ $precioTotal }} €</span>
                     </div>
                     <div class="flex flex-row justify-between mt-2">
-                        <span>Envío</span>
-                        <span>4.99 €</span>
-                    </div>
-                    <div class="flex flex-row justify-between mt-2">
-                        <span>IVA</span>
+                        <span class="font-bold">IVA</span>
                         <span id="iva">{{ number_format($iva, 2) }} €</span>
                     </div>
                     <div class="flex flex-row justify-between mt-2">
-                        <b class="text-left text-xl">Total</b>
-                        <b id="total" class="text-left text-xl">{{ number_format($total, 2) }} €</b>
+                        <span class="font-bold">Envío</span>
+                        <span>4.99 €</span>
+                    </div>
+                    <div class="flex flex-row justify-between mt-2">
+                        <span class="font-bold text-xl">Total</span>
+                        <span id="total" class="font-bold text-xl">{{ number_format($total, 2) }} €</span>
                     </div>
                 </div>
                 <div>
@@ -99,7 +99,7 @@
                 <div>
                     <div id="divCupon" class="mt-2">
                         <label for="cupon">Cupón de descuento:</label>
-                        <input type="text" name="cupon" id="cupon">
+                        <input type="text" name="cupon" id="cupon" class="border-2 borde-primario rounded-sm px-1 py-1">
                     </div>
                     <button type="submit" class="py-2 w-full text-white fondo-secundario rounded-md font-medium fondo-primario-hover mt-5">Pagar</button>
                 </div>
