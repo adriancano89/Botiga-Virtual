@@ -8,6 +8,7 @@
     <script src="{{ asset('js/fetch.js') }}" defer></script>
     <script src="{{ asset('js/pedidos/cupon.js') }}" defer></script>
     <script src="https://js.stripe.com/v3/" defer></script>
+    <script src="{{ asset('js/validaciones.js') }}" defer></script>
     <script src="{{ asset('js/carrito/pedido.js') }}" defer></script>
     <script src="{{ asset('js/chatbot.js') }}" defer></script>
     <title>Realizar pedido - SUNDERO Sweatshirt</title>
@@ -21,15 +22,13 @@
             <span>No hay productos en el carrito.</span>
         @endif
         @foreach ($productosCarrito as $productoCarrito)
-
-
-            <div class="shadow-xl rounded-[15px] p-4 bg-white text-center flex space-x-4 mt-5">
+            <div class="producto-carrito shadow-xl rounded-[15px] p-4 bg-white text-center flex space-x-4 mt-5" data-stock="{{ $productoCarrito->producto->stock }}">
                 <div class="w-[25%] p-1 flex justify-center items-center">
                     <img src="{{ asset('storage/' . $productoCarrito->producto->tipoProducto->foto) }}" alt="imagen sudadera {{$productoCarrito->producto->tipoProducto->nombre}}">
                 </div>
                 <div class="w-[75%] p-1">
                     <div class="flex justify-between items-center">
-                        <div class="w-[80%] p-1 text-left text-2xl">{{$productoCarrito->producto->tipoProducto->nombre}}</div>
+                        <div class="producto-nombre w-[80%] p-1 text-left text-2xl">{{$productoCarrito->producto->tipoProducto->nombre}}</div>
                     </div>
 
                     <div class="flex justify-between items-center">
@@ -54,10 +53,10 @@
                     </div>
                     <div class="flex justify-between">
                         <div class="w-[20%] p-1">
-                            <div class="rounded-[100px]" style="background-color: {{$productoCarrito->producto->color->hexadecimal}}; height: 20px;"></div>
+                            <div class="producto-color rounded-[100px]" style="background-color: {{$productoCarrito->producto->color->hexadecimal}}; height: 20px;" data-color="{{ $productoCarrito->producto->color->nombre }}"></div>
                         </div>
-                        <div class="w-[20%] p-1">{{$productoCarrito->producto->talla->nombre}}</div>
-                        <div class="w-[20%] p-1">{{$productoCarrito->cantidad}}</div>
+                        <div class="producto-talla w-[20%] p-1">{{$productoCarrito->producto->talla->nombre}}</div>
+                        <div class="cantidad w-[20%] p-1">{{$productoCarrito->cantidad}}</div>
                         <div class="w-[20%] p-1">{{$productoCarrito->producto->tipoProducto->precio}} €</div>
                     </div>
                 </div>
@@ -106,6 +105,7 @@
             </form>
         </div>
     </section>
+    @include('popups.popupErroresFormulario')
     @include('popups.popupError')
     @include('general.footer')
 </body>

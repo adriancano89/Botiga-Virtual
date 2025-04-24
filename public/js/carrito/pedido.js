@@ -15,25 +15,67 @@ card.on('change', function(event) {
     }
 });
 
-// Manejar el formulario de envío
+function validarCarrito() {
+    let errores = [];
+    let carritoItems = document.querySelectorAll('.producto-carrito');
+    let resultado;
+    
+    if (carritoItems.length === 0) {
+        errores.push('No hay productos en el Carrito');
+    } else {
+        carritoItems.forEach(item => {
+            let stock = parseInt(item.getAttribute('data-stock'));
+            let cantidad = parseInt(item.querySelector('.cantidad').textContent);
+            
+            // Obtener el nombre del producto, talla y color
+            let nombreProducto = item.querySelector('.producto-nombre').textContent;
+            let talla = item.querySelector('.producto-talla').textContent;
+            let colorElement = item.querySelector('.producto-color');
+            let color = colorElement.getAttribute('data-color');
+
+            if (cantidad > stock) {
+                errores.push(`La cantidad del producto "${nombreProducto}" (Talla: ${talla}, Color: ${color}) supera el stock disponible.`);
+            }
+        });
+    }
+
+    if (errores.length > 0) {
+        mostrarPopupConErrores(errores);
+        resultado = false;
+    } else {
+        resultado = true;
+    }
+    return resultado;
+}
+
+
+function mostrarPopupConErrores(errores) {
+    eliminarMensajesPopup();
+    errores.forEach(error => {
+        anadirErrorPopup(error);
+    });
+    mostrarPopup();
+}
+
+
 let form = document.getElementById('formPedido');
 form.addEventListener('submit', function(event) {
     event.preventDefault();
     
-    stripe.createToken(card).then(function(result) {
-        if (result.error) {
-            // Mostrar error en la interfaz
-            let errorElement = document.getElementById('card-errors');
-            errorElement.textContent = result.error.message;
-        } else {
-            // Enviar el token al servidor
-            let tokenInput = document.createElement('input');
-            tokenInput.setAttribute('type', 'hidden');
-            tokenInput.setAttribute('name', 'stripeToken');
-            tokenInput.setAttribute('value', result.token.id);
-            form.appendChild(tokenInput);
-            
-            form.submit();
-        }
-    });
+    if (validarCarrito()) {
+        stripe.createToken(card).then(function(result) {
+            if (result.error) {
+                let errorElement = document.getElementById('card-errors');
+                errorElement.textContent = result.error.message;
+            } else {
+                let tokenInput = document.createElement('input');
+                tokenInput.setAttribute('type', 'hidden');
+                tokenInput.setAttribute('name', 'stripeToken');
+                tokenInput.setAttribute('value', result.token.id);
+                form.appendChild(tokenInput);
+                
+                form.submit();
+            }
+        });
+    }
 });

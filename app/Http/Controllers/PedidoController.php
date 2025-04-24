@@ -81,83 +81,99 @@ class PedidoController extends Controller
 
         $carrito = Carrito::with('producto')->where('usuario_id', $idUsuario)->get();
 
+        $resultado = [];
+        $hayStock = true;
+
         $precioTotal = 0.0;
 
         foreach ($carrito as $productoCarrito) {
-            $precioTotal += $productoCarrito->producto->tipoProducto->precio * $productoCarrito->cantidad;
-        }
-
-        if ($request->cupon) {
-            $cupon = Cupon::where('codigo', $request->cupon)->first();
-            $descuento = $cupon->descuento;
-            $precioTotal -= ($precioTotal * ($descuento / 100)); //Calculamos el precio con el descuento
-        }
-
-        $precioTotal += ($precioTotal * 0.21) + 4.99;
-
-        $precioTotal = round($precioTotal, 2);
-        
-        // Intentamos realizar el cargo a través de Stripe
-        $charge = Charge::create([
-            'amount' => $precioTotal * 100, // Convertir a centavos
-            'currency' => 'eur',
-            'description' => 'Pago en tu tienda online',
-            'source' => $request->stripeToken, // Token de Stripe recibido
-        ]);
-        
-        if ($charge) {
-
-            $fecha_venta = date('Y-m-d');
+            $productoActual = Producto::find($productoCarrito->productos_id);
             
-            $pedido = Pedido::create([
-                "usuario_id" => $idUsuario,
-                "precio_total" => $precioTotal,
-                "fecha_venta" => $fecha_venta,
-                "fecha_envio" => null,
-                "fecha_entrega" => null,
-                "estado" => false,
-            ]);
-
+            if (!$productoActual || $productoCarrito->cantidad > $productoActual->stock) {
+                $hayStock = false;
+            } else {
+                $precioTotal += $productoCarrito->producto->tipoProducto->precio * $productoCarrito->cantidad;
+            }
+        }
+        if ($hayStock) {
             if ($request->cupon) {
                 $cupon = Cupon::where('codigo', $request->cupon)->first();
-                Cupon::destroy($cupon->id);
+                $descuento = $cupon->descuento;
+                $precioTotal -= ($precioTotal * ($descuento / 100)); //Calculamos el precio con el descuento
             }
     
-            foreach ($carrito as $productoCarrito) {
-                if ($productoCarrito->producto->stock >= $productoCarrito->cantidad) {
-                    ProductoPedido::create([
-                        "pedidos_id" => $pedido->id,
-                        "productos_id" => $productoCarrito->producto->id,
-                        "cantidad" => $productoCarrito->cantidad
-                    ]);
+            $precioTotal += ($precioTotal * 0.21) + 4.99;
     
-                    $producto = Producto::findOrFail($productoCarrito->producto->id);
+            $precioTotal = round($precioTotal, 2);
+            
+            // Intentamos realizar el cargo a través de Stripe
+            $charge = Charge::create([
+                'amount' => $precioTotal * 100, // Convertir a centavos
+                'currency' => 'eur',
+                'description' => 'Pago en tu tienda online',
+                'source' => $request->stripeToken, // Token de Stripe recibido
+            ]);
+            
+            if ($charge) {
     
-                    $producto->update([
-                        'stock' => $productoCarrito->producto->stock - $productoCarrito->cantidad,
-                    ]);
-                } else {
-                    ProductoPedido::create([
-                        "pedidos_id" => $pedido->id,
-                        "productos_id" => $productoCarrito->producto->id,
-                        "cantidad" => $productoCarrito->producto->stock
-                    ]);
+                $fecha_venta = date('Y-m-d');
+                
+                $pedido = Pedido::create([
+                    "usuario_id" => $idUsuario,
+                    "precio_total" => $precioTotal,
+                    "fecha_venta" => $fecha_venta,
+                    "fecha_envio" => null,
+                    "fecha_entrega" => null,
+                    "estado" => false,
+                ]);
     
-                    $producto = Producto::findOrFail($productoCarrito->producto->id);
-    
-                    $producto->update([
-                        'stock' => $productoCarrito->producto->stock - $productoCarrito->producto->stock,
-                    ]);
+                if ($request->cupon) {
+                    $cupon = Cupon::where('codigo', $request->cupon)->first();
+                    Cupon::destroy($cupon->id);
+                }
+        
+                foreach ($carrito as $productoCarrito) {
+                    if ($productoCarrito->producto->stock >= $productoCarrito->cantidad) {
+                        ProductoPedido::create([
+                            "pedidos_id" => $pedido->id,
+                            "productos_id" => $productoCarrito->producto->id,
+                            "cantidad" => $productoCarrito->cantidad
+                        ]);
+        
+                        $producto = Producto::findOrFail($productoCarrito->producto->id);
+        
+                        $producto->update([
+                            'stock' => $productoCarrito->producto->stock - $productoCarrito->cantidad,
+                        ]);
+                    } else {
+                        ProductoPedido::create([
+                            "pedidos_id" => $pedido->id,
+                            "productos_id" => $productoCarrito->producto->id,
+                            "cantidad" => $productoCarrito->producto->stock
+                        ]);
+        
+                        $producto = Producto::findOrFail($productoCarrito->producto->id);
+        
+                        $producto->update([
+                            'stock' => $productoCarrito->producto->stock - $productoCarrito->producto->stock,
+                        ]);
+                    }
+                }
+        
+                $carritoUsuario = Carrito::where('usuario_id', $idUsuario);
+        
+                if ($carritoUsuario) {
+                    $carritoUsuario->delete();
                 }
             }
-    
-            $carritoUsuario = Carrito::where('usuario_id', $idUsuario);
-    
-            if ($carritoUsuario) {
-                $carritoUsuario->delete();
-            }
+            $resultado = view("pedidos.pedidoRealizado", ["idPedido" => $pedido->id]);
+        } else {
+            $resultado = view("pedidos.pedido", [
+                'productosCarrito' => $carrito,
+                'precioTotal' => 0
+            ]);
         }
-        return view("pedidos.pedidoRealizado", ["idPedido" => $pedido->id]);
+        return $resultado;
     }
 
     /**
